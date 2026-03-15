@@ -4714,6 +4714,233 @@
       color: #999;
       font-style: italic;
     }
+
+    /* ===== FIX 1: WEBSITE LOCK MODAL STYLES (NEW) ===== */
+    .website-lock-modal {
+      background: linear-gradient(135deg, #7d5ba6, #b8a3d9) !important;
+      color: white;
+      text-align: center;
+    }
+    .website-lock-modal .modal-header h2 {
+      color: white !important;
+    }
+    .website-lock-modal .close-btn {
+      color: white !important;
+    }
+    .website-lock-icon {
+      font-size: 4rem;
+      margin: 20px 0;
+    }
+    .website-lock-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    .website-lock-message {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      white-space: pre-line;
+    }
+    .website-lock-logout {
+      background: white;
+      color: #7d5ba6;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s;
+      margin-top: 20px;
+    }
+    .website-lock-logout:hover {
+      transform: scale(1.05);
+      background: #f0f0f0;
+    }
+
+    /* ===== FIX 2: REFERRAL NETWORK VIEWER STYLES (NEW) ===== */
+    .referral-network-container {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    .referral-network-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #7d5ba6;
+    }
+    .referral-network-header h4 {
+      color: #4a3b5e;
+      font-size: 1.2rem;
+      margin: 0;
+    }
+    .referral-network-header span {
+      background: #f5edff;
+      padding: 5px 12px;
+      border-radius: 30px;
+      font-weight: 600;
+      color: #7d5ba6;
+    }
+    .referral-leaderboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    .leaderboard-column {
+      background: #f9f9f9;
+      border-radius: 15px;
+      padding: 15px;
+    }
+    .leaderboard-title {
+      font-weight: 700;
+      text-align: center;
+      padding: 8px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    .leaderboard-title.a-level { background: #ffebee; color: #c62828; }
+    .leaderboard-title.b-level { background: #e3f2fd; color: #1565c0; }
+    .leaderboard-title.c-level { background: #e8f5e9; color: #2e7d32; }
+    .leaderboard-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .leaderboard-item:hover {
+      background: #f5f5f5;
+      transform: translateX(5px);
+    }
+    .leaderboard-item:last-child {
+      border-bottom: none;
+    }
+    .leaderboard-phone {
+      font-weight: 600;
+      color: #333;
+    }
+    .leaderboard-count {
+      background: #7d5ba6;
+      color: white;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .referral-drilldown {
+      background: #f5edff;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .drilldown-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .drilldown-title {
+      font-weight: 700;
+      color: #4a3b5e;
+      font-size: 1.1rem;
+    }
+    .drilldown-back {
+      background: none;
+      border: none;
+      color: #7d5ba6;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .drilldown-back:hover {
+      text-decoration: underline;
+    }
+    .drilldown-list {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .drilldown-item {
+      background: white;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 8px;
+      border-left: 4px solid #7d5ba6;
+    }
+    .drilldown-item-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    .drilldown-name {
+      font-weight: 600;
+      color: #4a3b5e;
+    }
+    .drilldown-level {
+      background: #7d5ba6;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+    }
+    .drilldown-phone {
+      color: #666;
+      font-size: 0.8rem;
+      margin-bottom: 5px;
+    }
+    .drilldown-stats {
+      display: flex;
+      gap: 10px;
+      font-size: 0.75rem;
+    }
+    .drilldown-stats span {
+      background: #f0f0f0;
+      padding: 2px 8px;
+      border-radius: 15px;
+    }
+    .drilldown-stats .a-stat { color: #c62828; }
+    .drilldown-stats .b-stat { color: #1565c0; }
+    .drilldown-stats .c-stat { color: #2e7d32; }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 15px;
+    }
+    .pagination button {
+      background: white;
+      border: 1px solid #e0d0eb;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pagination button:hover {
+      background: #7d5ba6;
+      color: white;
+    }
+    .pagination button.active {
+      background: #7d5ba6;
+      color: white;
+    }
+    .export-btn {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -4777,6 +5004,10 @@
           <div class="admin-tab" onclick="switchAdminTab('mxl')"><i class="fas fa-key"></i> MXL Password</div>
           <!-- FIX 6: Testimonianza Gallery Tab -->
           <div class="admin-tab" onclick="switchAdminTab('testimonianza')"><i class="fas fa-images"></i> Testimonianza</div>
+          <!-- FIX 1: Website Lock Tab (NEW) -->
+          <div class="admin-tab" onclick="switchAdminTab('websiteLock')"><i class="fas fa-globe"></i> Website Lock</div>
+          <!-- FIX 2: Referral Viewer Tab (NEW) -->
+          <div class="admin-tab" onclick="switchAdminTab('referralViewer')"><i class="fas fa-chart-pie"></i> Referral Viewer</div>
         </div>
 
         <!-- Deposits Section (FIX 6 actions) -->
@@ -5442,6 +5673,135 @@
             </div>
           </div>
         </div>
+
+        <!-- FIX 1: WEBSITE LOCK SECTION (NEW) -->
+        <div id="adminWebsiteLockSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-globe"></i> Website Lock Control</h3>
+          
+          <div class="admin-company-settings">
+            <div style="margin-bottom: 20px; text-align: center;">
+              <div style="font-size: 2rem; margin-bottom: 10px;">🔒</div>
+              <h4 style="color: #7d5ba6;">Current Website Status</h4>
+              
+              <div style="display: flex; justify-content: center; gap: 30px; margin: 20px 0;">
+                <label style="display: flex; align-items: center; gap: 10px; font-size: 1.2rem; cursor: pointer;">
+                  <input type="radio" name="websiteLockStatus" value="active" onchange="toggleWebsiteLock(true)"> 🔴 LOCKED
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; font-size: 1.2rem; cursor: pointer;">
+                  <input type="radio" name="websiteLockStatus" value="inactive" onchange="toggleWebsiteLock(false)" checked> 🟢 OPEN
+                </label>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <h4 style="color: #7d5ba6; margin-bottom: 15px;">Lock Message Settings</h4>
+              
+              <div class="company-setting-row">
+                <label>Title:</label>
+                <input type="text" id="websiteLockTitle" placeholder="🔒 SYSTEM UPDATE" style="flex: 1;">
+              </div>
+              
+              <div class="company-setting-row">
+                <label>Icon:</label>
+                <select id="websiteLockIcon" style="flex: 1; padding: 8px; border: 2px solid #e0d0eb; border-radius: 20px;">
+                  <option value="💰">💰 Financial Day</option>
+                  <option value="📅">📅 Holiday</option>
+                  <option value="⚙️">⚙️ Maintenance</option>
+                  <option value="🎉">🎉 Special Event</option>
+                  <option value="🔧">🔧 Upgrade</option>
+                  <option value="🌙">🌙 Night Mode</option>
+                </select>
+              </div>
+              
+              <div style="margin: 15px 0;">
+                <label>Message:</label>
+                <textarea id="websiteLockMessage" rows="4" style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 15px; margin-top: 5px;" placeholder="Enter your lock message...">Today is Financial Day! System maintenance in progress. Please check back tomorrow. Thank you for your patience! 💚</textarea>
+              </div>
+              
+              <div style="margin: 15px 0;">
+                <label style="display: flex; align-items: center; gap: 10px;">
+                  <input type="checkbox" id="websiteLockAllowLogout" checked> Allow users to logout
+                </label>
+              </div>
+            </div>
+
+            <div style="background: #e8f0e8; padding: 15px; border-radius: 15px; margin-top: 20px;">
+              <h4 style="color: #28a745; margin-bottom: 10px;">📋 Sweet Message Templates</h4>
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                <button class="edit-btn" onclick="setWebsiteLockTemplate('financial')" style="padding: 10px;">💰 Financial Day</button>
+                <button class="edit-btn" onclick="setWebsiteLockTemplate('holiday')" style="padding: 10px;">📅 Holiday</button>
+                <button class="edit-btn" onclick="setWebsiteLockTemplate('maintenance')" style="padding: 10px;">⚙️ Maintenance</button>
+                <button class="edit-btn" onclick="setWebsiteLockTemplate('event')" style="padding: 10px;">🎉 Special Event</button>
+                <button class="edit-btn" onclick="setWebsiteLockTemplate('upgrade')" style="padding: 10px;">🔧 Upgrade</button>
+                <button class="edit-btn" onclick="setWebsiteLockTemplate('night')" style="padding: 10px;">🌙 Night Mode</button>
+              </div>
+            </div>
+
+            <div style="background: #f5edff; border-radius: 15px; padding: 15px; margin: 20px 0;">
+              <h4 style="color: #4a3b5e; margin-bottom: 10px;">🔍 Preview</h4>
+              <div style="background: linear-gradient(135deg, #7d5ba6, #b8a3d9); border-radius: 15px; padding: 20px; color: white; text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 10px;" id="previewLockIcon">💰</div>
+                <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 10px;" id="previewLockTitle">🔒 SYSTEM UPDATE</div>
+                <div style="font-size: 1rem; margin-bottom: 15px;" id="previewLockMessage">Today is Financial Day! System maintenance in progress. Please check back tomorrow. Thank you for your patience! 💚</div>
+                <div style="background: white; color: #7d5ba6; padding: 10px; border-radius: 30px; width: 100%;">LOGOUT</div>
+              </div>
+            </div>
+
+            <button onclick="saveWebsiteLockSettings()" style="background: #28a745; color: white; border: none; padding: 15px; border-radius: 30px; width: 100%; font-size: 1.2rem; font-weight: 600; margin-top: 20px; cursor: pointer;">
+              <i class="fas fa-save"></i> SAVE LOCK SETTINGS
+            </button>
+          </div>
+        </div>
+
+        <!-- FIX 2: REFERRAL VIEWER SECTION (NEW) -->
+        <div id="adminReferralViewerSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-chart-pie"></i> Referral Network Viewer</h3>
+          
+          <div class="admin-company-settings">
+            <!-- Search Bar -->
+            <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+              <input type="text" id="referralViewerSearch" placeholder="Search by phone or name..." style="flex: 1; padding: 12px; border: 2px solid #e0d0eb; border-radius: 30px;">
+              <button onclick="searchReferralViewer()" style="background: #7d5ba6; color: white; border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer;">🔍</button>
+              <button onclick="loadTopReferrers()" style="background: #28a745; color: white; border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer;">TOP</button>
+            </div>
+
+            <!-- Leaderboards -->
+            <div class="referral-leaderboard">
+              <div class="leaderboard-column">
+                <div class="leaderboard-title a-level">🔴 A-LEVEL</div>
+                <div id="aLeaderboard"></div>
+              </div>
+              <div class="leaderboard-column">
+                <div class="leaderboard-title b-level">🔵 B-LEVEL</div>
+                <div id="bLeaderboard"></div>
+              </div>
+              <div class="leaderboard-column">
+                <div class="leaderboard-title c-level">🟢 C-LEVEL</div>
+                <div id="cLeaderboard"></div>
+              </div>
+            </div>
+
+            <!-- Drill Down View -->
+            <div id="referralDrillDown" class="referral-drilldown" style="display: none;">
+              <div class="drilldown-header">
+                <span class="drilldown-title" id="drilldownTitle">A-Level Referrals</span>
+                <button class="drilldown-back" onclick="closeDrillDown()">← Back</button>
+              </div>
+              <div class="drilldown-list" id="drilldownList"></div>
+              <div class="pagination" id="drilldownPagination"></div>
+              <button class="export-btn" onclick="exportDrilldownList()">📋 Export List</button>
+            </div>
+
+            <!-- Search Results -->
+            <div id="referralSearchResults" class="referral-drilldown" style="display: none;">
+              <div class="drilldown-header">
+                <span class="drilldown-title">Search Results</span>
+                <button class="drilldown-back" onclick="closeSearchResults()">← Back</button>
+              </div>
+              <div class="drilldown-list" id="searchResultsList"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -5452,6 +5812,16 @@
       <div class="announcement-title" id="announcementTitle">📢 SPECIAL PROMOTION!</div>
       <div class="announcement-message" id="announcementMessage">Upgrade to D1 this week and get 10% bonus on your first deposit!</div>
       <button class="announcement-dismiss" onclick="dismissAnnouncement()">DISMISS</button>
+    </div>
+  </div>
+
+  <!-- FIX 1: WEBSITE LOCK MODAL (NEW) -->
+  <div class="modal-overlay" id="websiteLockModal" style="display: none; z-index: 10001;">
+    <div class="modal-content website-lock-modal">
+      <div class="website-lock-icon" id="websiteLockModalIcon">💰</div>
+      <div class="website-lock-title" id="websiteLockModalTitle">🔒 SYSTEM UPDATE</div>
+      <div class="website-lock-message" id="websiteLockModalMessage">Today is Financial Day! System maintenance in progress. Please check back tomorrow. Thank you for your patience! 💚</div>
+      <button class="website-lock-logout" id="websiteLockModalLogout" onclick="logoutFromLock()">LOGOUT</button>
     </div>
   </div>
 
@@ -7466,6 +7836,29 @@ const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID"; // Replace with your EmailJS tem
 // Initialize EmailJS
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
+// ========== FIX 1: WEBSITE LOCK CONFIGURATION (NEW) ==========
+let websiteLockConfig = {
+  locked: false,
+  title: "🔒 SYSTEM UPDATE",
+  message: "Today is Financial Day! System maintenance in progress. Please check back tomorrow. Thank you for your patience! 💚",
+  icon: "💰",
+  allowLogout: true
+};
+
+// ========== FIX 1: TASK LOCK CONFIGURATION (NEW) ==========
+let taskLockConfig = {
+  locked: false,
+  message: "Task system is currently paused for maintenance. Please try again later. Thank you!",
+  title: "📚 TASKS PAUSED",
+  allowedLevels: [] // Empty means all locked
+};
+
+// ========== FIX 2: REFERRAL VIEWER VARIABLES (NEW) ==========
+let currentDrilldownUser = null;
+let currentDrilldownLevel = 'a';
+let drilldownPage = 1;
+const itemsPerPage = 10;
+
 // ========== LOAD DATA FROM FIREBASE ==========
 function loadFromFirebase() {
   db.ref('users').on('value', (snapshot) => {
@@ -7594,6 +7987,24 @@ function loadFromFirebase() {
     displayTestimonianzaGallery();
     if (document.getElementById('adminTestimonianzaSection')?.classList.contains('active')) {
       loadTestimonianzaAdmin();
+    }
+  });
+
+  // FIX 1: Load website lock config
+  db.ref('websiteLockConfig').on('value', (snapshot) => {
+    const config = snapshot.val();
+    if (config) {
+      websiteLockConfig = config;
+    }
+    checkWebsiteLock();
+    updateWebsiteLockPreview();
+  });
+
+  // FIX 1: Load task lock config
+  db.ref('taskLockConfig').on('value', (snapshot) => {
+    const config = snapshot.val();
+    if (config) {
+      taskLockConfig = config;
     }
   });
 }
@@ -7774,6 +8185,8 @@ function saveSupportTickets() { db.ref('supportTickets').set(supportTickets); }
 function saveGirareConfig() { db.ref('girareConfig').set(girareConfig); }
 function saveStakesConfig() { db.ref('stakesConfig').set(stakesConfig); }
 function saveLevelLockConfig() { db.ref('levelLockConfig').set(levelLockConfig); }
+function saveWebsiteLockConfig() { db.ref('websiteLockConfig').set(websiteLockConfig); }
+function saveTaskLockConfig() { db.ref('taskLockConfig').set(taskLockConfig); }
 
 // FIX 7: Announcement configuration
 let announcementConfig = {
@@ -7885,18 +8298,35 @@ function isWeekend() {
 
 function isReadingAllowed(user) {
   if (!user) return false;
+  
+  // FIX 1: Check if tasks are locked
+  if (taskLockConfig.locked) {
+    if (taskLockConfig.allowedLevels && taskLockConfig.allowedLevels.length > 0) {
+      // If allowed levels specified, check if user's level is allowed
+      return taskLockConfig.allowedLevels.includes(user.memberLevel);
+    }
+    // If no allowed levels, all users are locked
+    return false;
+  }
+  
+  // Original Sunday restriction
   if (user.memberLevel === 0) return true; // Interns can read any day
   return !isSunday(); // D-level cannot read on Sunday
 }
 
 function getReadingRestrictionMessage() {
+  // FIX 1: Task lock message
+  if (taskLockConfig.locked) {
+    return taskLockConfig.message || "Task system is currently paused for maintenance. Please try again later. Thank you!";
+  }
+  
   if (isSunday()) {
     return "📖 Sunday is a rest day for D-level members. No reading today. Enjoy your day off! ☕";
   }
   return "";
 }
 
-// ===== UPDATE loadTaskBooks WITH FIX 2 =====
+// ===== UPDATE loadTaskBooks WITH FIX 1 & 2 =====
 function loadTaskBooks() {
   const user = users[currentUser];
   if (!user) return;
@@ -7904,17 +8334,17 @@ function loadTaskBooks() {
   const level = user.memberLevel || 0;
   const levelData = levels[level];
   
-  // FIX 2: Check if reading is allowed
+  // FIX 1 & 2: Check if reading is allowed
   if (!isReadingAllowed(user)) {
     const restrictionMsg = getReadingRestrictionMessage();
     document.getElementById('taskBookGrid').innerHTML = `
       <div style="grid-column: span 2; text-align: center; padding: 40px 20px; background: #f5edff; border-radius: 20px;">
         <i class="fas fa-calendar-alt" style="font-size: 3rem; color: #7d5ba6; margin-bottom: 15px;"></i>
-        <h3 style="color: #4a3b5e; margin-bottom: 10px;">🌴 REST DAY</h3>
+        <h3 style="color: #4a3b5e; margin-bottom: 10px;">${taskLockConfig.locked ? '📚 TASKS PAUSED' : '🌴 REST DAY'}</h3>
         <p style="color: #666; margin-bottom: 20px;">${restrictionMsg}</p>
         <div style="background: white; border-radius: 15px; padding: 15px; margin-top: 15px;">
-          <p style="color: #4a3b5e; font-weight: 600;">Enjoy your Sunday! ☕</p>
-          <p style="color: #8a7a9c; font-size: 0.9rem;">Reading will be available again tomorrow.</p>
+          <p style="color: #4a3b5e; font-weight: 600;">${taskLockConfig.locked ? 'Thank you for your patience!' : 'Enjoy your Sunday! ☕'}</p>
+          <p style="color: #8a7a9c; font-size: 0.9rem;">Reading will be available again later.</p>
         </div>
       </div>
     `;
@@ -11737,6 +12167,17 @@ function adminLoginModal() {
     
     // FIX 6: Load testimonianza admin
     loadTestimonianzaAdmin();
+
+    // FIX 1: Load website lock settings
+    document.querySelector('input[name="websiteLockStatus"][value="' + (websiteLockConfig.locked ? 'active' : 'inactive') + '"]').checked = true;
+    document.getElementById('websiteLockTitle').value = websiteLockConfig.title;
+    document.getElementById('websiteLockMessage').value = websiteLockConfig.message;
+    document.getElementById('websiteLockIcon').value = websiteLockConfig.icon;
+    document.getElementById('websiteLockAllowLogout').checked = websiteLockConfig.allowLogout;
+    updateWebsiteLockPreview();
+
+    // FIX 2: Load referral viewer
+    loadTopReferrers();
     
   } else {
     showConfirmModal('Error', 'Invalid admin password', 'warning');
@@ -11806,6 +12247,17 @@ function adminLogin() {
     
     // FIX 6: Load testimonianza admin
     loadTestimonianzaAdmin();
+
+    // FIX 1: Load website lock settings
+    document.querySelector('input[name="websiteLockStatus"][value="' + (websiteLockConfig.locked ? 'active' : 'inactive') + '"]').checked = true;
+    document.getElementById('websiteLockTitle').value = websiteLockConfig.title;
+    document.getElementById('websiteLockMessage').value = websiteLockConfig.message;
+    document.getElementById('websiteLockIcon').value = websiteLockConfig.icon;
+    document.getElementById('websiteLockAllowLogout').checked = websiteLockConfig.allowLogout;
+    updateWebsiteLockPreview();
+
+    // FIX 2: Load referral viewer
+    loadTopReferrers();
     
   } else {
     showConfirmModal('Error', 'Invalid admin password', 'warning');
@@ -11874,6 +12326,13 @@ function switchAdminTab(tab) {
     document.querySelectorAll('.admin-tab')[14].classList.add('active');
     document.getElementById('adminTestimonianzaSection').classList.add('active');
     loadTestimonianzaAdmin();
+  } else if (tab === 'websiteLock') { // FIX 1
+    document.querySelectorAll('.admin-tab')[15].classList.add('active');
+    document.getElementById('adminWebsiteLockSection').classList.add('active');
+  } else if (tab === 'referralViewer') { // FIX 2
+    document.querySelectorAll('.admin-tab')[16].classList.add('active');
+    document.getElementById('adminReferralViewerSection').classList.add('active');
+    loadTopReferrers();
   }
 }
 
@@ -13745,6 +14204,430 @@ window.openDepositModal = function() {
   setTimeout(initModalCloseButtons, 100);
 };
 
+// ===== FIX 1: WEBSITE LOCK FUNCTIONS =====
+function checkWebsiteLock() {
+  // Don't check if user is on login/register page or if admin is logged in
+  if (document.getElementById('authContainer').style.display === 'block' || isAdminLoggedIn) {
+    return;
+  }
+  
+  if (websiteLockConfig.locked && currentUser) {
+    showWebsiteLockModal();
+  }
+}
+
+function showWebsiteLockModal() {
+  document.getElementById('websiteLockModalIcon').textContent = websiteLockConfig.icon || '💰';
+  document.getElementById('websiteLockModalTitle').textContent = websiteLockConfig.title || '🔒 SYSTEM UPDATE';
+  document.getElementById('websiteLockModalMessage').textContent = websiteLockConfig.message || 'System maintenance in progress. Please check back later.';
+  
+  if (!websiteLockConfig.allowLogout) {
+    document.getElementById('websiteLockModalLogout').style.display = 'none';
+  } else {
+    document.getElementById('websiteLockModalLogout').style.display = 'block';
+  }
+  
+  document.getElementById('websiteLockModal').style.display = 'flex';
+}
+
+function logoutFromLock() {
+  document.getElementById('websiteLockModal').style.display = 'none';
+  logout();
+}
+
+function toggleWebsiteLock(locked) {
+  websiteLockConfig.locked = locked;
+  saveWebsiteLockConfig();
+}
+
+function updateWebsiteLockPreview() {
+  document.getElementById('previewLockIcon').textContent = document.getElementById('websiteLockIcon').value;
+  document.getElementById('previewLockTitle').textContent = document.getElementById('websiteLockTitle').value;
+  document.getElementById('previewLockMessage').textContent = document.getElementById('websiteLockMessage').value;
+}
+
+function setWebsiteLockTemplate(template) {
+  const templates = {
+    financial: {
+      icon: '💰',
+      title: '🔒 FINANCIAL DAY',
+      message: 'Today is Financial Day! System maintenance in progress. Please check back tomorrow. Thank you for your patience! 💚'
+    },
+    holiday: {
+      icon: '📅',
+      title: '🎉 HOLIDAY CLOSURE',
+      message: 'Our offices are closed today in celebration. Withdrawals and reading will resume tomorrow at 8am. Happy Holiday! ✨'
+    },
+    maintenance: {
+      icon: '⚙️',
+      title: '🔧 SYSTEM MAINTENANCE',
+      message: 'We are performing scheduled maintenance to serve you better. Expected completion in 2-3 hours. Thank you! 🚀'
+    },
+    event: {
+      icon: '🎉',
+      title: '🎊 SPECIAL EVENT',
+      message: 'Join us for our Coffee Festival! Platform will be back online tomorrow with double rewards! ☕'
+    },
+    upgrade: {
+      icon: '🚀',
+      title: '⚡ SYSTEM UPGRADE',
+      message: 'We are upgrading to bring you new features! Back online in 24 hours. Exciting times ahead! ✨'
+    },
+    night: {
+      icon: '🌙',
+      title: '🌙 NIGHT MODE',
+      message: 'Platform is resting for the night. See you at sunrise for fresh reads and earnings! ☕'
+    }
+  };
+  
+  const t = templates[template];
+  if (t) {
+    document.getElementById('websiteLockIcon').value = t.icon;
+    document.getElementById('websiteLockTitle').value = t.title;
+    document.getElementById('websiteLockMessage').value = t.message;
+    updateWebsiteLockPreview();
+  }
+}
+
+function saveWebsiteLockSettings() {
+  websiteLockConfig.icon = document.getElementById('websiteLockIcon').value;
+  websiteLockConfig.title = document.getElementById('websiteLockTitle').value;
+  websiteLockConfig.message = document.getElementById('websiteLockMessage').value;
+  websiteLockConfig.allowLogout = document.getElementById('websiteLockAllowLogout').checked;
+  
+  saveWebsiteLockConfig();
+  showConfirmModal('Success', 'Website lock settings saved!', 'success');
+}
+
+// ===== FIX 2: REFERRAL VIEWER FUNCTIONS =====
+function getReferralCounts() {
+  const counts = { a: {}, b: {}, c: {} };
+  
+  Object.values(users).forEach(user => {
+    if (user.memberLevel === 0) return;
+    
+    // Count A-level (direct referrals that are D-level)
+    if (user.referrals) {
+      const aCount = user.referrals.filter(refPhone => {
+        const refUser = users[refPhone];
+        return refUser && refUser.memberLevel > 0;
+      }).length;
+      
+      if (aCount > 0) {
+        counts.a[user.phone] = {
+          name: user.fullName,
+          phone: user.phone,
+          count: aCount,
+          level: user.memberLevel
+        };
+      }
+    }
+    
+    // Count B-level (referrals of referrals that are D-level)
+    let bCount = 0;
+    if (user.referrals) {
+      user.referrals.forEach(aPhone => {
+        const aUser = users[aPhone];
+        if (aUser && aUser.referrals) {
+          bCount += aUser.referrals.filter(refPhone => {
+            const refUser = users[refPhone];
+            return refUser && refUser.memberLevel > 0;
+          }).length;
+        }
+      });
+    }
+    if (bCount > 0) {
+      counts.b[user.phone] = {
+        name: user.fullName,
+        phone: user.phone,
+        count: bCount,
+        level: user.memberLevel
+      };
+    }
+    
+    // Count C-level (third level)
+    let cCount = 0;
+    if (user.referrals) {
+      user.referrals.forEach(aPhone => {
+        const aUser = users[aPhone];
+        if (aUser && aUser.referrals) {
+          aUser.referrals.forEach(bPhone => {
+            const bUser = users[bPhone];
+            if (bUser && bUser.referrals) {
+              cCount += bUser.referrals.filter(refPhone => {
+                const refUser = users[refPhone];
+                return refUser && refUser.memberLevel > 0;
+              }).length;
+            }
+          });
+        }
+      });
+    }
+    if (cCount > 0) {
+      counts.c[user.phone] = {
+        name: user.fullName,
+        phone: user.phone,
+        count: cCount,
+        level: user.memberLevel
+      };
+    }
+  });
+  
+  return counts;
+}
+
+function loadTopReferrers() {
+  const counts = getReferralCounts();
+  
+  // Sort and get top 5 for each level
+  const aTop = Object.values(counts.a).sort((x, y) => y.count - x.count).slice(0, 5);
+  const bTop = Object.values(counts.b).sort((x, y) => y.count - x.count).slice(0, 5);
+  const cTop = Object.values(counts.c).sort((x, y) => y.count - x.count).slice(0, 5);
+  
+  // Render A leaderboard
+  let aHtml = '';
+  aTop.forEach((item, idx) => {
+    aHtml += `
+      <div class="leaderboard-item" onclick="openDrilldown('${item.phone}', 'a')">
+        <span class="leaderboard-phone">${maskPhone(item.phone)}</span>
+        <span class="leaderboard-count">${item.count}</span>
+      </div>
+    `;
+  });
+  if (aTop.length === 0) aHtml = '<div style="color:#999; text-align:center;">No A-level referrals</div>';
+  document.getElementById('aLeaderboard').innerHTML = aHtml;
+  
+  // Render B leaderboard
+  let bHtml = '';
+  bTop.forEach((item, idx) => {
+    bHtml += `
+      <div class="leaderboard-item" onclick="openDrilldown('${item.phone}', 'b')">
+        <span class="leaderboard-phone">${maskPhone(item.phone)}</span>
+        <span class="leaderboard-count">${item.count}</span>
+      </div>
+    `;
+  });
+  if (bTop.length === 0) bHtml = '<div style="color:#999; text-align:center;">No B-level referrals</div>';
+  document.getElementById('bLeaderboard').innerHTML = bHtml;
+  
+  // Render C leaderboard
+  let cHtml = '';
+  cTop.forEach((item, idx) => {
+    cHtml += `
+      <div class="leaderboard-item" onclick="openDrilldown('${item.phone}', 'c')">
+        <span class="leaderboard-phone">${maskPhone(item.phone)}</span>
+        <span class="leaderboard-count">${item.count}</span>
+      </div>
+    `;
+  });
+  if (cTop.length === 0) cHtml = '<div style="color:#999; text-align:center;">No C-level referrals</div>';
+  document.getElementById('cLeaderboard').innerHTML = cHtml;
+}
+
+function searchReferralViewer() {
+  const searchTerm = document.getElementById('referralViewerSearch').value.toLowerCase();
+  if (!searchTerm) {
+    document.getElementById('referralSearchResults').style.display = 'none';
+    return;
+  }
+  
+  const results = [];
+  Object.values(users).forEach(user => {
+    if (user.memberLevel === 0) return;
+    
+    if (user.phone.includes(searchTerm) || user.fullName.toLowerCase().includes(searchTerm)) {
+      // Count A, B, C
+      let aCount = 0, bCount = 0, cCount = 0;
+      
+      if (user.referrals) {
+        aCount = user.referrals.filter(refPhone => {
+          const refUser = users[refPhone];
+          return refUser && refUser.memberLevel > 0;
+        }).length;
+        
+        user.referrals.forEach(aPhone => {
+          const aUser = users[aPhone];
+          if (aUser && aUser.referrals) {
+            bCount += aUser.referrals.filter(refPhone => {
+              const refUser = users[refPhone];
+              return refUser && refUser.memberLevel > 0;
+            }).length;
+            
+            aUser.referrals.forEach(bPhone => {
+              const bUser = users[bPhone];
+              if (bUser && bUser.referrals) {
+                cCount += bUser.referrals.filter(refPhone => {
+                  const refUser = users[refPhone];
+                  return refUser && refUser.memberLevel > 0;
+                }).length;
+              }
+            });
+          }
+        });
+      }
+      
+      results.push({
+        phone: user.phone,
+        name: user.fullName,
+        level: user.memberLevel,
+        a: aCount,
+        b: bCount,
+        c: cCount
+      });
+    }
+  });
+  
+  if (results.length === 0) {
+    document.getElementById('searchResultsList').innerHTML = '<div style="text-align:center; color:#999; padding:20px;">No users found</div>';
+    document.getElementById('referralSearchResults').style.display = 'block';
+    return;
+  }
+  
+  let html = '';
+  results.forEach(r => {
+    html += `
+      <div class="drilldown-item">
+        <div class="drilldown-item-header">
+          <span class="drilldown-name">${r.name}</span>
+          <span class="drilldown-level">D${r.level}</span>
+        </div>
+        <div class="drilldown-phone">${maskPhone(r.phone)}</div>
+        <div class="drilldown-stats">
+          <span class="a-stat" onclick="openDrilldown('${r.phone}', 'a')" style="cursor:pointer;">🔴 A: ${r.a}</span>
+          <span class="b-stat" onclick="openDrilldown('${r.phone}', 'b')" style="cursor:pointer;">🔵 B: ${r.b}</span>
+          <span class="c-stat" onclick="openDrilldown('${r.phone}', 'c')" style="cursor:pointer;">🟢 C: ${r.c}</span>
+        </div>
+      </div>
+    `;
+  });
+  
+  document.getElementById('searchResultsList').innerHTML = html;
+  document.getElementById('referralSearchResults').style.display = 'block';
+}
+
+function closeSearchResults() {
+  document.getElementById('referralSearchResults').style.display = 'none';
+}
+
+function openDrilldown(phone, level) {
+  currentDrilldownUser = phone;
+  currentDrilldownLevel = level;
+  drilldownPage = 1;
+  
+  const user = users[phone];
+  if (!user) return;
+  
+  let title = '';
+  if (level === 'a') title = `🔴 A-Level Referrals of ${user.fullName}`;
+  else if (level === 'b') title = `🔵 B-Level Referrals of ${user.fullName}`;
+  else title = `🟢 C-Level Referrals of ${user.fullName}`;
+  
+  document.getElementById('drilldownTitle').textContent = title;
+  
+  loadDrilldownPage();
+  document.getElementById('referralDrillDown').style.display = 'block';
+}
+
+function loadDrilldownPage() {
+  const user = users[currentDrilldownUser];
+  if (!user) return;
+  
+  let members = [];
+  
+  if (currentDrilldownLevel === 'a') {
+    // Direct referrals
+    if (user.referrals) {
+      members = user.referrals
+        .map(refPhone => users[refPhone])
+        .filter(refUser => refUser && refUser.memberLevel > 0);
+    }
+  } else if (currentDrilldownLevel === 'b') {
+    // Second level
+    if (user.referrals) {
+      user.referrals.forEach(aPhone => {
+        const aUser = users[aPhone];
+        if (aUser && aUser.referrals) {
+          const bMembers = aUser.referrals
+            .map(bPhone => users[bPhone])
+            .filter(bUser => bUser && bUser.memberLevel > 0)
+            .map(bUser => ({ ...bUser, via: aUser }));
+          members.push(...bMembers);
+        }
+      });
+    }
+  } else if (currentDrilldownLevel === 'c') {
+    // Third level
+    if (user.referrals) {
+      user.referrals.forEach(aPhone => {
+        const aUser = users[aPhone];
+        if (aUser && aUser.referrals) {
+          aUser.referrals.forEach(bPhone => {
+            const bUser = users[bPhone];
+            if (bUser && bUser.referrals) {
+              const cMembers = bUser.referrals
+                .map(cPhone => users[cPhone])
+                .filter(cUser => cUser && cUser.memberLevel > 0)
+                .map(cUser => ({ ...cUser, via: bUser }));
+              members.push(...cMembers);
+            }
+          });
+        }
+      });
+    }
+  }
+  
+  // Pagination
+  const totalPages = Math.ceil(members.length / itemsPerPage);
+  const start = (drilldownPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const pageMembers = members.slice(start, end);
+  
+  let html = '';
+  pageMembers.forEach(m => {
+    html += `
+      <div class="drilldown-item">
+        <div class="drilldown-item-header">
+          <span class="drilldown-name">${m.fullName}</span>
+          <span class="drilldown-level">D${m.memberLevel}</span>
+        </div>
+        <div class="drilldown-phone">${maskPhone(m.phone)}</div>
+        ${m.via ? `<div style="font-size:0.7rem; color:#666;">via ${m.via.fullName}</div>` : ''}
+        <div class="drilldown-stats">
+          <span onclick="openDrilldown('${m.phone}', 'a')" style="cursor:pointer;">🔴 A: ${m.referrals ? m.referrals.filter(r => users[r]?.memberLevel > 0).length : 0}</span>
+        </div>
+      </div>
+    `;
+  });
+  
+  if (pageMembers.length === 0) {
+    html = '<div style="text-align:center; color:#999; padding:20px;">No referrals found</div>';
+  }
+  
+  document.getElementById('drilldownList').innerHTML = html;
+  
+  // Pagination controls
+  let paginationHtml = '';
+  for (let i = 1; i <= totalPages; i++) {
+    paginationHtml += `<button class="${i === drilldownPage ? 'active' : ''}" onclick="goToDrilldownPage(${i})">${i}</button>`;
+  }
+  document.getElementById('drilldownPagination').innerHTML = paginationHtml;
+}
+
+function goToDrilldownPage(page) {
+  drilldownPage = page;
+  loadDrilldownPage();
+}
+
+function closeDrillDown() {
+  document.getElementById('referralDrillDown').style.display = 'none';
+  currentDrilldownUser = null;
+}
+
+function exportDrilldownList() {
+  // This would generate a CSV or text file of the current drilldown list
+  showConfirmModal('Coming Soon', 'Export feature will be available in the next update.', 'success');
+}
+
 // ========== INIT ==========
 window.onload = function() {
   loadFromFirebase();
@@ -14066,6 +14949,9 @@ window.onload = function() {
 
   // Initialize modal close buttons
   initModalCloseButtons();
+
+  // FIX 1: Check website lock
+  setInterval(checkWebsiteLock, 1000);
 };
 
 function showAuthPage() {
