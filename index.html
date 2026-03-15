@@ -249,7 +249,7 @@
       outline: none;
     }
 
-    /* Password field with eye icon */
+    /* Password field with eye icon - FIX 2: Modified */
     .password-wrapper {
       position: relative;
       width: 100%;
@@ -265,19 +265,23 @@
       background: white;
     }
     
-    .password-wrapper i {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #b8a3d9;
+    /* FIX 2: Eye icon moved below field */
+    .password-eye-container {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
       cursor: pointer;
-      font-size: 1.2rem;
-      z-index: 10;
+      color: #7d5ba6;
+      font-size: 0.9rem;
     }
     
-    .password-wrapper i:hover {
-      color: #7d5ba6;
+    .password-eye-container i {
+      font-size: 1.1rem;
+    }
+    
+    .password-eye-container:hover {
+      color: #4a3b5e;
     }
 
     .auth-btn {
@@ -1385,7 +1389,7 @@
       z-index: 2000;
     }
 
-    /* ===== FIX: Admin crown changed to GREEN ===== */
+    /* ===== FIX 1: Admin crown changed to East African Community globe ===== */
     .admin-toggle button {
       background: #28a745;
       color: white;
@@ -4944,9 +4948,9 @@
   </style>
 </head>
 <body>
-  <!-- Admin Toggle Button -->
+  <!-- Admin Toggle Button - FIX 1: Changed from crown to globe -->
   <div class="admin-toggle">
-    <button onclick="handleAdminCrownClick()"><i class="fas fa-crown"></i></button>
+    <button onclick="handleAdminCrownClick()"><i class="fas fa-globe-africa"></i></button>
   </div>
 
   <!-- Admin Login Modal (FIX 3: MXL Password) -->
@@ -4969,7 +4973,7 @@
   <div class="admin-panel" id="adminPanel">
     <div class="admin-container">
       <div class="admin-header">
-        <h2><i class="fas fa-crown"></i> UIC Admin Dashboard</h2>
+        <h2><i class="fas fa-globe-africa"></i> UIC Admin Dashboard</h2>
         <button class="close-admin" onclick="toggleAdminPanel()"><i class="fas fa-times"></i></button>
       </div>
 
@@ -4994,7 +4998,10 @@
           <div class="admin-tab" onclick="switchAdminTab('positionMembers')"><i class="fas fa-trophy"></i> Position Members</div>
           <div class="admin-tab" onclick="switchAdminTab('referralNetwork')"><i class="fas fa-network-wired"></i> Referral Network</div>
           <div class="admin-tab" onclick="switchAdminTab('companySettings')"><i class="fas fa-building"></i> Company Settings</div>
+          
+          <!-- FIX 3: Girare Wheel Tab with enhanced controls -->
           <div class="admin-tab" onclick="switchAdminTab('girare')"><i class="fas fa-dice"></i> Girare Wheel</div>
+          
           <div class="admin-tab" onclick="switchAdminTab('stakes')"><i class="fas fa-trophy"></i> Stakes</div>
           <div class="admin-tab" onclick="switchAdminTab('support')"><i class="fas fa-headset"></i> Support</div>
           <div class="admin-tab" onclick="switchAdminTab('withdrawalControl')"><i class="fas fa-lock"></i> Withdrawal Control</div>
@@ -5204,7 +5211,7 @@
           </div>
         </div>
 
-        <!-- GIRARE ADMIN SECTION -->
+        <!-- GIRARE ADMIN SECTION - FIX 3: Enhanced with message dropdown -->
         <div id="adminGirareSection" class="admin-section">
           <h3 style="margin-bottom: 20px;"><i class="fas fa-dice"></i> Girare Wheel Control</h3>
           
@@ -5228,10 +5235,10 @@
             </div>
           </div>
 
-          <!-- Master Lock -->
+          <!-- Master Lock - FIX 3: Added message dropdown -->
           <div class="master-lock-control">
             <h4 style="color: #f44336; margin-bottom: 10px;">🔒 Master Wheel Lock</h4>
-            <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
               <label style="display: flex; align-items: center; gap: 5px;">
                 <input type="radio" name="wheelLock" value="false" onclick="toggleMasterWheelLock(false)"> 🔓 Unlocked
               </label>
@@ -5239,9 +5246,27 @@
                 <input type="radio" name="wheelLock" value="true" onclick="toggleMasterWheelLock(true)"> 🔒 Locked
               </label>
             </div>
+            
+            <!-- FIX 3: Message dropdown -->
+            <div style="margin-bottom: 15px;">
+              <label style="font-weight: 600; display: block; margin-bottom: 5px;">📋 Lock Message:</label>
+              <select id="girareLockMessageSelect" style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px; margin-bottom: 10px;" onchange="updateGirareLockMessageFromSelect()">
+                <option value="🎡 Coming Soon! Get ready to spin and win!">🎡 Coming Soon! Get ready to spin and win!</option>
+                <option value="🚀 Launching Soon! The wheel is being prepared.">🚀 Launching Soon! The wheel is being prepared.</option>
+                <option value="⚙️ Under Maintenance - Back in a few hours.">⚙️ Under Maintenance - Back in a few hours.</option>
+                <option value="🔧 System Upgrade - Better rewards coming!">🔧 System Upgrade - Better rewards coming!</option>
+                <option value="🎉 New Version Coming! Stay tuned.">🎉 New Version Coming! Stay tuned.</option>
+                <option value="custom">✏️ Custom Message...</option>
+              </select>
+              
+              <div id="girareCustomMessageContainer" style="display: none;">
+                <input type="text" id="girareCustomLockMessage" placeholder="Enter custom message..." style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px; margin-top: 5px;">
+              </div>
+            </div>
+            
             <div style="margin-top: 10px;">
-              <label>Lock Message:</label>
-              <input type="text" id="wheelLockMessage" placeholder="Wheel under maintenance..." style="width: 100%; padding: 8px; margin-top: 5px; border: 2px solid #e0d0eb; border-radius: 20px;">
+              <label>Current Message:</label>
+              <input type="text" id="wheelLockMessage" value="Wheel under maintenance..." style="width: 100%; padding: 8px; margin-top: 5px; border: 2px solid #e0d0eb; border-radius: 20px;">
               <button onclick="saveWheelLockMessage()" style="margin-top: 10px; background: #7d5ba6; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">Save Message</button>
             </div>
           </div>
@@ -5874,7 +5899,7 @@
         </form>
       </div>
 
-      <!-- REGISTRATION FORM -->
+      <!-- REGISTRATION FORM - FIX 2: Eye icon moved below field -->
       <div id="registerForm" class="auth-form">
         <form onsubmit="handleRegister(event)">
           <!-- 1. Full Name -->
@@ -5911,15 +5936,19 @@
             </div>
           </div>
           
-          <!-- 4. Password only (no confirm password) -->
+          <!-- 4. Password only (no confirm password) - FIX 2: Eye icon moved below -->
           <div class="form-group">
             <label>Password (minimum 6 characters)</label>
             <div class="input-icon">
               <i class="fas fa-lock"></i>
               <div class="password-wrapper">
                 <input type="password" id="regPassword" placeholder="Create a password" minlength="6" required>
-                <i class="fas fa-eye" id="togglePassword" onclick="togglePasswordVisibility('regPassword', this)"></i>
               </div>
+            </div>
+            <!-- FIX 2: Eye icon moved here -->
+            <div class="password-eye-container" onclick="togglePasswordVisibility('regPassword', this.querySelector('i'))">
+              <i class="fas fa-eye"></i>
+              <span>Show/Hide Password</span>
             </div>
           </div>
           
@@ -8588,6 +8617,7 @@ function shareReferralLink() {
   }
 }
 
+// FIX 2: Updated togglePasswordVisibility function for new eye location
 function togglePasswordVisibility(inputId, icon) {
   const input = document.getElementById(inputId);
   input.type = input.type === 'password' ? 'text' : 'password';
@@ -13198,11 +13228,16 @@ function loadGirarePage() {
   const contentDiv = document.getElementById('girareContent');
   
   if (girareConfig.wheelLocked) {
+    // FIX 3: Use configured lock message instead of hardcoded
     contentDiv.innerHTML = `
       <div class="girare-access-denied">
-        <i class="fas fa-lock"></i>
-        <h3>🔒 WHEEL LOCKED</h3>
-        <p>${girareConfig.lockMessage || 'Wheel temporarily unavailable'}</p>
+        <i class="fas fa-clock"></i>
+        <h3>${girareConfig.lockTitle || '🎡 COMING SOON'}</h3>
+        <p style="font-size: 1.2rem; margin-bottom: 15px;">${girareConfig.lockMessage || 'The Girare wheel is being prepared!'}</p>
+        <div style="background: white; border-radius: 15px; padding: 20px; margin-top: 15px;">
+          <p style="color: #4a3b5e;">⏰ Expected launch soon!</p>
+          <p style="color: #8a7a9c; font-size: 0.9rem; margin-top: 10px;">Get ready to spin and win exciting prizes!</p>
+        </div>
       </div>
     `;
     return;
@@ -13451,6 +13486,25 @@ function loadGirareAdminControls() {
     lockMsg.value = girareConfig.lockMessage || '';
   }
   
+  // FIX 3: Set the dropdown to match current message
+  const messageSelect = document.getElementById('girareLockMessageSelect');
+  if (messageSelect) {
+    const currentMsg = girareConfig.lockMessage || '';
+    let found = false;
+    for (let i = 0; i < messageSelect.options.length; i++) {
+      if (messageSelect.options[i].value === currentMsg) {
+        messageSelect.selectedIndex = i;
+        found = true;
+        break;
+      }
+    }
+    if (!found && currentMsg) {
+      messageSelect.value = 'custom';
+      document.getElementById('girareCustomMessageContainer').style.display = 'block';
+      document.getElementById('girareCustomLockMessage').value = currentMsg;
+    }
+  }
+  
   const week1 = document.getElementById('week1Locks');
   const week2 = document.getElementById('week2Locks');
   const week3 = document.getElementById('week3Locks');
@@ -13477,6 +13531,21 @@ function loadGirareAdminControls() {
   });
   
   container.innerHTML = html;
+}
+
+// FIX 3: New function to handle message dropdown changes
+function updateGirareLockMessageFromSelect() {
+  const select = document.getElementById('girareLockMessageSelect');
+  const customContainer = document.getElementById('girareCustomMessageContainer');
+  const lockMsgInput = document.getElementById('wheelLockMessage');
+  
+  if (select.value === 'custom') {
+    customContainer.style.display = 'block';
+    lockMsgInput.value = document.getElementById('girareCustomLockMessage').value;
+  } else {
+    customContainer.style.display = 'none';
+    lockMsgInput.value = select.value;
+  }
 }
 
 function saveGirareMinLevel() {
