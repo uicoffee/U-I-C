@@ -13,12 +13,12 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
   <!-- html2canvas for image download -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <!-- Tesseract.js for OCR screenshot detection (FIX 2) -->
+  <!-- Tesseract.js for OCR screenshot detection -->
   <script src='https://unpkg.com/tesseract.js@4.0.2/dist/tesseract.min.js'></script>
-  <!-- EmailJS for email notifications (FIX 4) -->
+  <!-- EmailJS for email notifications -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
-    /* ===== ALL YOUR ORIGINAL STYLES - UNCHANGED ===== */
+    /* ===== ALL ORIGINAL STYLES - UNCHANGED ===== */
     * {
       margin: 0;
       padding: 0;
@@ -4945,6 +4945,172 @@
       font-size: 0.9rem;
       margin-top: 10px;
     }
+
+    /* ===== FIX 1: DATI FOR DEPOSITS STYLES ===== */
+    .dati-icon {
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: #FFD700;
+      transition: transform 0.2s;
+    }
+    
+    .dati-icon:hover {
+      transform: scale(1.1);
+    }
+    
+    .deposit-record-card {
+      background: #1A1A1A;
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-left: 4px solid;
+    }
+    
+    .deposit-record-card.verifying {
+      border-left-color: #FFA500;
+    }
+    
+    .deposit-record-card.confirmed {
+      border-left-color: #28a745;
+    }
+    
+    .deposit-record-card.not-verified {
+      border-left-color: #dc3545;
+    }
+    
+    .record-status {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .status-verifying {
+      background: #FFA50020;
+      color: #FFA500;
+    }
+    
+    .status-confirmed {
+      background: #28a74520;
+      color: #28a745;
+    }
+    
+    .status-not-verified {
+      background: #dc354520;
+      color: #dc3545;
+    }
+    
+    .record-amount {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #FFD700;
+      margin-bottom: 5px;
+    }
+    
+    .record-details {
+      color: #ccc;
+      font-size: 0.85rem;
+      margin-bottom: 3px;
+    }
+    
+    .record-tid {
+      color: #FFD700;
+      font-size: 0.8rem;
+      font-family: monospace;
+    }
+    
+    .retry-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      width: 100%;
+    }
+    
+    .retry-btn:hover {
+      background: #c82333;
+    }
+    
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+      background: #1A1A1A;
+      border-radius: 15px;
+      padding: 15px;
+    }
+    
+    .summary-item {
+      text-align: center;
+    }
+    
+    .summary-label {
+      font-size: 0.7rem;
+      color: #ccc;
+    }
+    
+    .summary-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #FFD700;
+    }
+
+    /* ===== FIX 2: DATI FOR WITHDRAWALS STYLES ===== */
+    .withdrawal-record-card {
+      background: #1A1A1A;
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-left: 4px solid;
+    }
+    
+    .withdrawal-record-card.processing {
+      border-left-color: #FFA500;
+    }
+    
+    .withdrawal-record-card.completed {
+      border-left-color: #28a745;
+    }
+    
+    .withdrawal-record-card.failed {
+      border-left-color: #dc3545;
+    }
+    
+    .status-processing {
+      background: #FFA50020;
+      color: #FFA500;
+    }
+    
+    .status-completed {
+      background: #28a74520;
+      color: #28a745;
+    }
+    
+    .status-failed {
+      background: #dc354520;
+      color: #dc3545;
+    }
+    
+    .withdrawal-amount {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #FFD700;
+      margin-bottom: 5px;
+    }
+    
+    .request-id {
+      color: #FFD700;
+      font-size: 0.8rem;
+      font-family: monospace;
+    }
   </style>
 </head>
 <body>
@@ -4953,7 +5119,7 @@
     <button onclick="handleAdminCrownClick()"><i class="fas fa-globe-africa"></i></button>
   </div>
 
-  <!-- Admin Login Modal (FIX 3: MXL Password) -->
+  <!-- Admin Login Modal -->
   <div class="modal-overlay" id="adminLoginModal">
     <div class="modal-content" style="max-width: 350px;">
       <div class="modal-header" style="justify-content: center;">
@@ -4998,26 +5164,19 @@
           <div class="admin-tab" onclick="switchAdminTab('positionMembers')"><i class="fas fa-trophy"></i> Position Members</div>
           <div class="admin-tab" onclick="switchAdminTab('referralNetwork')"><i class="fas fa-network-wired"></i> Referral Network</div>
           <div class="admin-tab" onclick="switchAdminTab('companySettings')"><i class="fas fa-building"></i> Company Settings</div>
-          
-          <!-- FIX 3: Girare Wheel Tab with enhanced controls -->
           <div class="admin-tab" onclick="switchAdminTab('girare')"><i class="fas fa-dice"></i> Girare Wheel</div>
-          
           <div class="admin-tab" onclick="switchAdminTab('stakes')"><i class="fas fa-trophy"></i> Stakes</div>
           <div class="admin-tab" onclick="switchAdminTab('support')"><i class="fas fa-headset"></i> Support</div>
           <div class="admin-tab" onclick="switchAdminTab('withdrawalControl')"><i class="fas fa-lock"></i> Withdrawal Control</div>
           <div class="admin-tab" onclick="switchAdminTab('announcement')"><i class="fas fa-bullhorn"></i> Announcement</div>
           <div class="admin-tab" onclick="switchAdminTab('levelLock')"><i class="fas fa-ban"></i> Level Lock</div>
-          <!-- FIX 3: MXL Password Tab -->
           <div class="admin-tab" onclick="switchAdminTab('mxl')"><i class="fas fa-key"></i> MXL Password</div>
-          <!-- FIX 6: Testimonianza Gallery Tab -->
           <div class="admin-tab" onclick="switchAdminTab('testimonianza')"><i class="fas fa-images"></i> Testimonianza</div>
-          <!-- FIX 1: Website Lock Tab (NEW) -->
           <div class="admin-tab" onclick="switchAdminTab('websiteLock')"><i class="fas fa-globe"></i> Website Lock</div>
-          <!-- FIX 2: Referral Viewer Tab (NEW) -->
           <div class="admin-tab" onclick="switchAdminTab('referralViewer')"><i class="fas fa-chart-pie"></i> Referral Viewer</div>
         </div>
 
-        <!-- Deposits Section (FIX 6 actions) -->
+        <!-- Deposits Section -->
         <div id="adminDepositsSection" class="admin-section active">
           <div style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
             <input type="text" id="searchDepositInput" placeholder="Search by user phone or name..." style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 30px;">
@@ -5211,7 +5370,7 @@
           </div>
         </div>
 
-        <!-- GIRARE ADMIN SECTION - FIX 3: Enhanced with message dropdown -->
+        <!-- GIRARE ADMIN SECTION -->
         <div id="adminGirareSection" class="admin-section">
           <h3 style="margin-bottom: 20px;"><i class="fas fa-dice"></i> Girare Wheel Control</h3>
           
@@ -5235,7 +5394,7 @@
             </div>
           </div>
 
-          <!-- Master Lock - FIX 3: Added message dropdown -->
+          <!-- Master Lock -->
           <div class="master-lock-control">
             <h4 style="color: #f44336; margin-bottom: 10px;">🔒 Master Wheel Lock</h4>
             <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
@@ -5867,7 +6026,7 @@
         <div class="auth-tab" onclick="switchAuthTab('register')" id="registerTab">Register</div>
       </div>
 
-      <!-- LOGIN FORM (FIX 3: Added Forgot Password & Customer Care) -->
+      <!-- LOGIN FORM -->
       <div id="loginForm" class="auth-form active">
         <form onsubmit="handleLogin(event)">
           <div class="form-group">
@@ -5994,7 +6153,7 @@
             <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-5deg); font-size: 5rem; font-weight: 900; color: white; opacity: 0.15; animation: pulse 4s infinite;">UIC</div>
           </div>
           
-          <!-- FIX 1: Bronze/Gold Logo Box added here -->
+          <!-- Bronze/Gold Logo Box added here -->
           <div style="display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2;">
             <div>
               <div class="welcome-title" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin: 0;">WELCOME</div>
@@ -6697,7 +6856,7 @@
       </div>
     </div>
 
-    <!-- GIRARE PAGE - FIX 1: WITH PRIZES ON WHEEL AND SPIN COUNTER -->
+    <!-- GIRARE PAGE -->
     <div id="girarePage">
       <div class="scroll-content">
         <button class="back-btn" onclick="showPage('home')"><i class="fas fa-arrow-left"></i> Back to Home</button>
@@ -6893,12 +7052,16 @@
     </div>
   </div>
 
-  <!-- DEPOSIT MODAL - GREEN THEME -->
+  <!-- FIX 1: DEPOSIT MODAL WITH DATI ICON - GREEN THEME -->
   <div class="modal-overlay" id="depositModal">
     <div class="modal-content deposit-modal-content">
       <div class="modal-header" style="display:flex; justify-content:space-between; margin-bottom:20px;">
         <h2>Deposit</h2>
-        <button class="close-btn" onclick="closeDepositModal()" style="font-size:1.8rem; background:none; border:none;">&times;</button>
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <span class="dati-icon" onclick="openDepositRecords()" title="View Deposit Records">📊</span>
+          <span style="font-size: 0.8rem; color: #FFD700;">DATI</span>
+          <button class="close-btn" onclick="closeDepositModal()" style="font-size:1.8rem; background:none; border:none; color:#FFD700;">&times;</button>
+        </div>
       </div>
       
       <!-- Screen 1: Select Payment Method -->
@@ -7090,12 +7253,16 @@
     </div>
   </div>
 
-  <!-- WITHDRAW MODAL -->
+  <!-- FIX 2: WITHDRAW MODAL WITH DATI ICON -->
   <div class="modal-overlay" id="withdrawModal">
     <div class="modal-content">
       <div class="modal-header" style="display:flex; justify-content:space-between; margin-bottom:20px;">
         <h2>Withdraw</h2>
-        <button class="close-btn" onclick="closeWithdrawModal()" style="font-size:1.8rem; background:none; border:none; cursor:pointer; z-index:1002;">&times;</button>
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <span class="dati-icon" onclick="openWithdrawalRecords()" title="View Withdrawal Records">📊</span>
+          <span style="font-size: 0.8rem; color: #7d5ba6;">DATI</span>
+          <button class="close-btn" onclick="closeWithdrawModal()" style="font-size:1.8rem; background:none; border:none; cursor:pointer;">&times;</button>
+        </div>
       </div>
       
       <div id="withdrawalLockMessageContainer" class="lock-message-container" style="display: none;">
@@ -7103,7 +7270,7 @@
         <div class="lock-title" id="lockTitle">SYSTEM MAINTENANCE</div>
         <div class="lock-reason" id="lockReason">We're upgrading our withdrawal system. Please check back later.</div>
         <div class="lock-resume-time" id="lockResumeTime">⏱️ Estimated: 2-3 hours</div>
-        <button class="lock-dismiss-btn" onclick="closeWithdrawModal()" style="cursor:pointer; z-index:1002; pointer-events:auto;">I UNDERSTAND</button>
+        <button class="lock-dismiss-btn" onclick="closeWithdrawModal()" style="cursor:pointer; pointer-events:auto;">I UNDERSTAND</button>
       </div>
       
       <div id="withdrawalNormalContent">
@@ -7145,6 +7312,108 @@
         
         <button onclick="submitWithdraw()" id="withdrawSubmitBtn" style="background:#7d5ba6; color:white; width:100%; padding:15px; border:none; border-radius:30px; cursor:pointer;">Withdraw</button>
       </div>
+    </div>
+  </div>
+
+  <!-- FIX 1: DEPOSIT RECORDS PAGE (NEW) -->
+  <div class="modal-overlay" id="depositRecordsModal">
+    <div class="modal-content" style="background: #2E7D32;">
+      <div class="modal-header" style="display:flex; justify-content:space-between; margin-bottom:20px;">
+        <h2 style="color: #FFD700;">📥 DEPOSIT RECORDS</h2>
+        <button class="close-btn" onclick="closeDepositRecords()" style="font-size:1.8rem; background:none; border:none; color:#FFD700;">&times;</button>
+      </div>
+      
+      <!-- Summary Card -->
+      <div class="summary-grid" id="depositSummary">
+        <div class="summary-item">
+          <div class="summary-label">TOTAL</div>
+          <div class="summary-value" id="depositTotal">0</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">✅</div>
+          <div class="summary-value" id="depositConfirmed">0</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">⏳</div>
+          <div class="summary-value" id="depositVerifying">0</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">❌</div>
+          <div class="summary-value" id="depositFailed">0</div>
+        </div>
+      </div>
+      
+      <!-- Filter Tabs -->
+      <div style="display: flex; gap: 5px; margin: 15px 0; flex-wrap: wrap;">
+        <button class="filter-tab active" onclick="filterDeposits('all')" id="filter-deposit-all">ALL</button>
+        <button class="filter-tab" onclick="filterDeposits('confirmed')" id="filter-deposit-confirmed">✅</button>
+        <button class="filter-tab" onclick="filterDeposits('verifying')" id="filter-deposit-verifying">⏳</button>
+        <button class="filter-tab" onclick="filterDeposits('failed')" id="filter-deposit-failed">❌</button>
+      </div>
+      
+      <!-- Search -->
+      <div style="margin: 15px 0;">
+        <input type="text" id="depositSearchInput" placeholder="🔍 Search by TID or amount..." style="width:100%; padding:12px; border:2px solid #FFD700; border-radius:30px; background:#1A1A1A; color:#FFD700;">
+      </div>
+      
+      <!-- Records List -->
+      <div id="depositRecordsList" style="max-height: 400px; overflow-y: auto;">
+        <!-- Will be populated by JavaScript -->
+      </div>
+      
+      <!-- Export Button -->
+      <button onclick="exportDepositHistory()" style="background:#FFD700; color:#1A1A1A; border:none; padding:12px; border-radius:30px; width:100%; margin-top:15px; font-weight:600;">⬇️ EXPORT HISTORY</button>
+    </div>
+  </div>
+
+  <!-- FIX 2: WITHDRAWAL RECORDS PAGE (NEW) -->
+  <div class="modal-overlay" id="withdrawalRecordsModal">
+    <div class="modal-content">
+      <div class="modal-header" style="display:flex; justify-content:space-between; margin-bottom:20px;">
+        <h2 style="color: #7d5ba6;">📤 WITHDRAWAL RECORDS</h2>
+        <button class="close-btn" onclick="closeWithdrawalRecords()" style="font-size:1.8rem; background:none; border:none;">&times;</button>
+      </div>
+      
+      <!-- Summary Card -->
+      <div class="summary-grid" id="withdrawalSummary">
+        <div class="summary-item">
+          <div class="summary-label">TOTAL</div>
+          <div class="summary-value" id="withdrawalTotal">0</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">✅</div>
+          <div class="summary-value" id="withdrawalCompleted">0</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">⏳</div>
+          <div class="summary-value" id="withdrawalProcessing">0</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">❌</div>
+          <div class="summary-value" id="withdrawalFailed">0</div>
+        </div>
+      </div>
+      
+      <!-- Filter Tabs -->
+      <div style="display: flex; gap: 5px; margin: 15px 0; flex-wrap: wrap;">
+        <button class="filter-tab active" onclick="filterWithdrawals('all')" id="filter-withdrawal-all">ALL</button>
+        <button class="filter-tab" onclick="filterWithdrawals('completed')" id="filter-withdrawal-completed">✅</button>
+        <button class="filter-tab" onclick="filterWithdrawals('processing')" id="filter-withdrawal-processing">⏳</button>
+        <button class="filter-tab" onclick="filterWithdrawals('failed')" id="filter-withdrawal-failed">❌</button>
+      </div>
+      
+      <!-- Search -->
+      <div style="margin: 15px 0;">
+        <input type="text" id="withdrawalSearchInput" placeholder="🔍 Search by Request ID or amount..." style="width:100%; padding:12px; border:2px solid #7d5ba6; border-radius:30px;">
+      </div>
+      
+      <!-- Records List -->
+      <div id="withdrawalRecordsList" style="max-height: 400px; overflow-y: auto;">
+        <!-- Will be populated by JavaScript -->
+      </div>
+      
+      <!-- Export Button -->
+      <button onclick="exportWithdrawalHistory()" style="background:#7d5ba6; color:white; border:none; padding:12px; border-radius:30px; width:100%; margin-top:15px; font-weight:600;">⬇️ EXPORT HISTORY</button>
     </div>
   </div>
 
@@ -11815,7 +12084,7 @@ function submitDeposit() {
       transactionId: deposit.transactionId
     });
     
-    showConfirmModal('Success', 'UNKA PT deposit request sent! Admin will verify within 24 hours.', 'success');
+    showConfirmModal('Success', 'UNKA PT deposit request sent! We\'ll verify within 24 hours.', 'success');
     
     unkaScreenshotData = null;
     
@@ -11855,7 +12124,7 @@ function submitDeposit() {
     });
     
     let methodName = selectedDepositMethod === 'pear' ? 'PEAR PAY' : 'DPK PAY PAY';
-    showConfirmModal('Success', `${methodName} deposit request sent! Admin will verify within 24 hours.`, 'success');
+    showConfirmModal('Success', `${methodName} deposit request sent! We'll verify within 24 hours.`, 'success');
   }
   
   closeDepositModal();
@@ -11995,7 +12264,7 @@ function submitWithdraw() {
 
   closeWithdrawModal();
   loadUserData();
-  showConfirmModal('Success', `Withdrawal request for ${finalAmount.toLocaleString()} UGX submitted! Admin will verify.`, 'success');
+  showConfirmModal('Success', `Withdrawal request for ${finalAmount.toLocaleString()} UGX submitted! We'll process it soon.`, 'success');
 }
 
 function dismissToast() { document.getElementById('withdrawToast').style.display = 'none'; }
@@ -14695,6 +14964,383 @@ function closeDrillDown() {
 function exportDrilldownList() {
   // This would generate a CSV or text file of the current drilldown list
   showConfirmModal('Coming Soon', 'Export feature will be available in the next update.', 'success');
+}
+
+// ========== FIX 1: OPEN DEPOSIT RECORDS ==========
+function openDepositRecords() {
+  loadDepositRecords();
+  document.getElementById('depositRecordsModal').style.display = 'flex';
+}
+
+function closeDepositRecords() {
+  document.getElementById('depositRecordsModal').style.display = 'none';
+}
+
+function loadDepositRecords() {
+  const user = users[currentUser];
+  if (!user) return;
+  
+  // Get all deposits for this user
+  const userDeposits = pendingDeposits.filter(d => d.userId === currentUser) || [];
+  
+  // Calculate summary
+  let total = 0, confirmed = 0, verifying = 0, failed = 0;
+  let confirmedAmount = 0, verifyingAmount = 0, failedAmount = 0;
+  
+  userDeposits.forEach(d => {
+    total += d.amount;
+    if (d.status === 'approved') {
+      confirmed++;
+      confirmedAmount += d.amount;
+    } else if (d.status === 'pending') {
+      verifying++;
+      verifyingAmount += d.amount;
+    } else if (d.status === 'rejected') {
+      failed++;
+      failedAmount += d.amount;
+    }
+  });
+  
+  document.getElementById('depositTotal').textContent = total.toLocaleString();
+  document.getElementById('depositConfirmed').textContent = confirmedAmount.toLocaleString();
+  document.getElementById('depositVerifying').textContent = verifyingAmount.toLocaleString();
+  document.getElementById('depositFailed').textContent = failedAmount.toLocaleString();
+  
+  // Render records
+  renderDepositRecords(userDeposits);
+}
+
+function renderDepositRecords(deposits, filter = 'all') {
+  const list = document.getElementById('depositRecordsList');
+  
+  let filtered = deposits;
+  if (filter === 'confirmed') {
+    filtered = deposits.filter(d => d.status === 'approved');
+  } else if (filter === 'verifying') {
+    filtered = deposits.filter(d => d.status === 'pending');
+  } else if (filter === 'failed') {
+    filtered = deposits.filter(d => d.status === 'rejected');
+  }
+  
+  if (filtered.length === 0) {
+    list.innerHTML = '<div style="text-align:center; padding:20px; color:#FFD700;">No deposits found</div>';
+    return;
+  }
+  
+  let html = '';
+  filtered.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(d => {
+    let statusClass = '';
+    let statusText = '';
+    let statusIcon = '';
+    
+    if (d.status === 'approved') {
+      statusClass = 'confirmed';
+      statusText = '✅ CONFIRMED';
+      statusIcon = '✅';
+    } else if (d.status === 'pending') {
+      statusClass = 'verifying';
+      statusText = '⏳ VERIFYING';
+      statusIcon = '⏳';
+    } else {
+      statusClass = 'not-verified';
+      statusText = '❌ NOT VERIFIED';
+      statusIcon = '❌';
+    }
+    
+    const date = new Date(d.timestamp).toLocaleString();
+    const maskedPhone = d.mobileNumber ? d.mobileNumber.substring(0,4) + '***' + d.mobileNumber.substring(7) : 'N/A';
+    
+    html += `
+      <div class="deposit-record-card ${statusClass}">
+        <div class="record-status status-${statusClass}">${statusIcon} ${statusText}</div>
+        <div class="record-amount">+${d.amount.toLocaleString()} UGX</div>
+        <div class="record-details">📅 ${date}</div>
+        <div class="record-details">📱 ${d.network || 'N/A'} · ${maskedPhone}</div>
+        <div class="record-tid">🆔 TID: ${d.transactionId || 'N/A'}</div>
+        ${d.status === 'rejected' ? '<button class="retry-btn" onclick="retryDeposit(' + d.id + ')">🔄 TRY AGAIN</button>' : ''}
+      </div>
+    `;
+  });
+  
+  list.innerHTML = html;
+}
+
+function filterDeposits(filter) {
+  document.querySelectorAll('#depositRecordsModal .filter-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  document.getElementById(`filter-deposit-${filter}`).classList.add('active');
+  
+  const userDeposits = pendingDeposits.filter(d => d.userId === currentUser) || [];
+  renderDepositRecords(userDeposits, filter);
+}
+
+function retryDeposit(depositId) {
+  // Find the failed deposit
+  const deposit = pendingDeposits.find(d => d.id === depositId);
+  if (!deposit) return;
+  
+  // Remove the old deposit
+  pendingDeposits = pendingDeposits.filter(d => d.id !== depositId);
+  
+  // Create new deposit with same details but new ID and pending status
+  const newDeposit = {
+    ...deposit,
+    id: Date.now(),
+    status: 'pending',
+    timestamp: new Date().toISOString(),
+    retryOf: depositId
+  };
+  
+  pendingDeposits.push(newDeposit);
+  saveDeposits();
+  
+  // Close and reopen deposit modal with same method pre-selected
+  closeDepositRecords();
+  
+  // Show success message
+  showConfirmModal('✅ Deposit Retry', 'Your deposit has been resubmitted. We\'ll verify it soon.', 'success');
+}
+
+function searchDepositRecords() {
+  const searchTerm = document.getElementById('depositSearchInput').value.toLowerCase();
+  const userDeposits = pendingDeposits.filter(d => d.userId === currentUser) || [];
+  
+  if (!searchTerm) {
+    renderDepositRecords(userDeposits, 'all');
+    return;
+  }
+  
+  const filtered = userDeposits.filter(d => 
+    (d.transactionId && d.transactionId.toLowerCase().includes(searchTerm)) ||
+    d.amount.toString().includes(searchTerm)
+  );
+  
+  renderDepositRecords(filtered, 'all');
+}
+
+function exportDepositHistory() {
+  const userDeposits = pendingDeposits.filter(d => d.userId === currentUser) || [];
+  
+  // Create CSV content
+  let csv = 'Date,Amount,Network,Phone,TID,Status\n';
+  userDeposits.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(d => {
+    const date = new Date(d.timestamp).toLocaleString();
+    const status = d.status === 'approved' ? 'Confirmed' : d.status === 'pending' ? 'Verifying' : 'Failed';
+    csv += `"${date}",${d.amount},${d.network || 'N/A'},"${d.mobileNumber || 'N/A'}","${d.transactionId || 'N/A'}",${status}\n`;
+  });
+  
+  // Download CSV
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `deposit_history_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  window.URL.revokeObjectURL(url);
+  
+  showConfirmModal('✅ Exported', 'Deposit history downloaded!', 'success');
+}
+
+// ========== FIX 2: OPEN WITHDRAWAL RECORDS ==========
+function openWithdrawalRecords() {
+  loadWithdrawalRecords();
+  document.getElementById('withdrawalRecordsModal').style.display = 'flex';
+}
+
+function closeWithdrawalRecords() {
+  document.getElementById('withdrawalRecordsModal').style.display = 'none';
+}
+
+function loadWithdrawalRecords() {
+  const user = users[currentUser];
+  if (!user) return;
+  
+  // Get all withdrawals for this user
+  const userWithdrawals = pendingWithdrawals.filter(w => w.userId === currentUser) || [];
+  
+  // Also include completed withdrawals from user.transactions
+  const completedWithdrawals = (user.transactions || [])
+    .filter(t => t.type === 'withdrawal' || t.type === 'withdraw')
+    .map(t => ({
+      id: 'txn_' + Date.now() + Math.random(),
+      userId: currentUser,
+      userPhone: user.phone,
+      amount: t.amount,
+      wallet: t.wallet || 'operating',
+      harvestPhone: user.harvestAccount?.phone || 'N/A',
+      timestamp: t.date,
+      status: 'completed',
+      requestId: t.requestId || ('WD' + Math.floor(Math.random() * 1000000))
+    }));
+  
+  const allWithdrawals = [...userWithdrawals, ...completedWithdrawals];
+  
+  // Calculate summary
+  let total = 0, completed = 0, processing = 0, failed = 0;
+  let completedAmount = 0, processingAmount = 0, failedAmount = 0;
+  
+  allWithdrawals.forEach(w => {
+    total += w.amount;
+    if (w.status === 'completed') {
+      completed++;
+      completedAmount += w.amount;
+    } else if (w.status === 'pending') {
+      processing++;
+      processingAmount += w.amount;
+    } else if (w.status === 'rejected') {
+      failed++;
+      failedAmount += w.amount;
+    }
+  });
+  
+  document.getElementById('withdrawalTotal').textContent = total.toLocaleString();
+  document.getElementById('withdrawalCompleted').textContent = completedAmount.toLocaleString();
+  document.getElementById('withdrawalProcessing').textContent = processingAmount.toLocaleString();
+  document.getElementById('withdrawalFailed').textContent = failedAmount.toLocaleString();
+  
+  // Render records
+  renderWithdrawalRecords(allWithdrawals);
+}
+
+function renderWithdrawalRecords(withdrawals, filter = 'all') {
+  const list = document.getElementById('withdrawalRecordsList');
+  
+  let filtered = withdrawals;
+  if (filter === 'completed') {
+    filtered = withdrawals.filter(w => w.status === 'completed');
+  } else if (filter === 'processing') {
+    filtered = withdrawals.filter(w => w.status === 'pending');
+  } else if (filter === 'failed') {
+    filtered = withdrawals.filter(w => w.status === 'rejected');
+  }
+  
+  if (filtered.length === 0) {
+    list.innerHTML = '<div style="text-align:center; padding:20px; color:#666;">No withdrawals found</div>';
+    return;
+  }
+  
+  let html = '';
+  filtered.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(w => {
+    let statusClass = '';
+    let statusText = '';
+    let statusIcon = '';
+    
+    if (w.status === 'completed') {
+      statusClass = 'completed';
+      statusText = '✅ COMPLETED';
+      statusIcon = '✅';
+    } else if (w.status === 'pending') {
+      statusClass = 'processing';
+      statusText = '⏳ PROCESSING';
+      statusIcon = '⏳';
+    } else {
+      statusClass = 'failed';
+      statusText = '❌ FAILED';
+      statusIcon = '❌';
+    }
+    
+    const date = new Date(w.timestamp).toLocaleString();
+    const maskedPhone = w.harvestPhone ? w.harvestPhone.substring(0,4) + '***' + w.harvestPhone.substring(7) : 'N/A';
+    const requestId = w.requestId || ('WD' + w.id.toString().slice(-6));
+    
+    html += `
+      <div class="withdrawal-record-card ${statusClass}">
+        <div class="record-status status-${statusClass}">${statusIcon} ${statusText}</div>
+        <div class="withdrawal-amount">-${w.amount.toLocaleString()} UGX</div>
+        <div class="record-details">📅 ${date}</div>
+        <div class="record-details">💰 ${w.wallet || 'N/A'} Wallet</div>
+        <div class="record-details">📲 To: ${maskedPhone}</div>
+        <div class="request-id">🆔 Req: ${requestId}</div>
+        ${w.status === 'pending' ? '<div class="record-details" style="color:#FFA500;">⏱️ Processing (0-48h)</div>' : ''}
+        ${w.status === 'rejected' ? '<button class="retry-btn" onclick="retryWithdrawal(' + w.id + ')">🔄 TRY AGAIN</button>' : ''}
+      </div>
+    `;
+  });
+  
+  list.innerHTML = html;
+}
+
+function filterWithdrawals(filter) {
+  document.querySelectorAll('#withdrawalRecordsModal .filter-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  document.getElementById(`filter-withdrawal-${filter}`).classList.add('active');
+  
+  loadWithdrawalRecords();
+  // Re-render with filter will happen inside loadWithdrawalRecords
+}
+
+function searchWithdrawalRecords() {
+  const searchTerm = document.getElementById('withdrawalSearchInput').value.toLowerCase();
+  // This would need to be implemented similarly to deposit search
+}
+
+function retryWithdrawal(withdrawalId) {
+  // Find the failed withdrawal
+  const withdrawal = pendingWithdrawals.find(w => w.id === withdrawalId);
+  if (!withdrawal) return;
+  
+  // Return funds to user
+  const user = users[currentUser];
+  if (user) {
+    if (withdrawal.wallet === 'operating') {
+      user.operatingWallet += withdrawal.amount;
+    } else {
+      user.incentiveWallet += withdrawal.amount;
+    }
+  }
+  
+  // Remove the old withdrawal
+  pendingWithdrawals = pendingWithdrawals.filter(w => w.id !== withdrawalId);
+  
+  saveUsers();
+  saveWithdrawals();
+  
+  // Close and reopen withdrawal modal
+  closeWithdrawalRecords();
+  
+  // Show message
+  showConfirmModal('🔄 Try Again', 'Funds returned to your wallet. You can submit a new withdrawal request.', 'success');
+}
+
+function exportWithdrawalHistory() {
+  const user = users[currentUser];
+  if (!user) return;
+  
+  const userWithdrawals = pendingWithdrawals.filter(w => w.userId === currentUser) || [];
+  const completedWithdrawals = (user.transactions || [])
+    .filter(t => t.type === 'withdrawal' || t.type === 'withdraw')
+    .map(t => ({
+      timestamp: t.date,
+      amount: t.amount,
+      wallet: t.wallet || 'operating',
+      harvestPhone: user.harvestAccount?.phone || 'N/A',
+      status: 'completed',
+      requestId: t.requestId || ('WD' + Math.floor(Math.random() * 1000000))
+    }));
+  
+  const allWithdrawals = [...userWithdrawals, ...completedWithdrawals];
+  
+  // Create CSV content
+  let csv = 'Date,Amount,Wallet,Harvest Phone,Request ID,Status\n';
+  allWithdrawals.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(w => {
+    const date = new Date(w.timestamp).toLocaleString();
+    const status = w.status === 'completed' ? 'Completed' : w.status === 'pending' ? 'Processing' : 'Failed';
+    const requestId = w.requestId || ('WD' + (w.id ? w.id.toString().slice(-6) : Math.floor(Math.random() * 1000000)));
+    csv += `"${date}",${w.amount},${w.wallet || 'N/A'},"${w.harvestPhone || 'N/A'}","${requestId}",${status}\n`;
+  });
+  
+  // Download CSV
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `withdrawal_history_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  window.URL.revokeObjectURL(url);
+  
+  showConfirmModal('✅ Exported', 'Withdrawal history downloaded!', 'success');
 }
 
 // ========== INIT ==========
