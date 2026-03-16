@@ -1109,86 +1109,153 @@
       margin-bottom: 15px;
     }
 
-    /* Team Report Page Styles - UPDATED for 3 columns */
-    .team-report-container {
+    /* Team Report Page Styles - UPDATED for FIX 2 */
+    .team-report-tabs {
       display: flex;
       gap: 10px;
       margin-bottom: 20px;
     }
     
-    .team-column {
+    .team-tab {
       flex: 1;
-      background: #f9f9f9;
+      text-align: center;
+      padding: 15px;
+      background: #f5edff;
       border-radius: 15px;
-      padding: 12px;
-      border: 1px solid #e0d0eb;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
     }
     
-    .team-column .team-letter {
-      font-size: 1.3rem;
+    .team-tab.active {
+      border-color: #7d5ba6;
+      background: white;
+      box-shadow: 0 4px 10px rgba(125,91,166,0.15);
+    }
+    
+    .team-tab .letter {
+      font-size: 1.5rem;
       font-weight: 700;
       color: #7d5ba6;
-      margin-bottom: 10px;
-      text-align: center;
+    }
+    
+    .team-tab .count {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .team-level-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
       border-bottom: 2px solid #7d5ba6;
-      padding-bottom: 5px;
     }
     
-    .team-member {
-      padding: 6px 0;
+    .team-level-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #4a3b5e;
+    }
+    
+    .team-level-title i {
+      margin-right: 5px;
+    }
+    
+    .team-level-total {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #28a745;
+    }
+    
+    .team-members-list {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+      border: 1px solid #e0d0eb;
+      border-radius: 15px;
+      padding: 10px;
+    }
+    
+    .team-member-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
       border-bottom: 1px solid #f0f0f0;
-      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
     }
     
-    .team-member:last-child {
+    .team-member-item:last-child {
       border-bottom: none;
     }
     
-    .member-phone {
+    .team-member-item:hover {
+      background: #f5edff;
+      transform: translateX(5px);
+    }
+    
+    .team-member-info {
+      flex: 1;
+    }
+    
+    .team-member-phone {
       font-weight: 600;
-      display: block;
+      color: #4a3b5e;
     }
     
-    .member-level {
-      color: #666;
+    .team-member-level {
       font-size: 0.7rem;
+      background: #7d5ba6;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-left: 5px;
     }
     
-    .member-deposit {
-      color: #ff0000;
+    .team-member-deposit {
       font-weight: 600;
-      font-size: 0.7rem;
     }
     
-    .member-tasks {
-      color: #7d5ba6;
-      font-size: 0.7rem;
+    .team-member-deposit.a-level {
+      color: #c62828;
     }
     
-    .empty-section {
-      padding: 8px 0;
-      color: #999;
-      font-style: italic;
-      text-align: center;
-      font-size: 0.8rem;
+    .team-member-deposit.b-level {
+      color: #1565c0;
     }
     
-    .column-total {
-      margin-top: 8px;
-      padding: 6px;
-      background: #f0f0f0;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.75rem;
-      text-align: center;
+    .team-member-deposit.c-level {
+      color: #2e7d32;
     }
     
-    .total-deposit {
-      color: #ff0000;
+    .team-pagination {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin: 15px 0;
     }
     
-    .total-tasks {
-      color: #7d5ba6;
+    .team-pagination button {
+      background: white;
+      border: 1px solid #e0d0eb;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .team-pagination button:hover {
+      background: #7d5ba6;
+      color: white;
+    }
+    
+    .team-pagination button.active {
+      background: #7d5ba6;
+      color: white;
     }
     
     .team-stats {
@@ -5111,6 +5178,170 @@
       font-size: 0.8rem;
       font-family: monospace;
     }
+
+    /* ===== FIX 1: USER WITHDRAWAL CONTROL (NEW) ===== */
+    .user-withdraw-control {
+      background: #f9f9f9;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .user-withdraw-search {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .user-withdraw-search input {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #e0d0eb;
+      border-radius: 30px;
+    }
+    
+    .user-withdraw-search button {
+      background: #7d5ba6;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    
+    .user-withdraw-card {
+      background: white;
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 2px solid #e0d0eb;
+    }
+    
+    .user-withdraw-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .user-withdraw-phone {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #4a3b5e;
+    }
+    
+    .user-withdraw-level {
+      background: #7d5ba6;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+    
+    .user-withdraw-status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .status-active {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .status-locked {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .user-withdraw-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .user-withdraw-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .user-withdraw-btn.lock {
+      background: #dc3545;
+      color: white;
+    }
+    
+    .user-withdraw-btn.unlock {
+      background: #28a745;
+      color: white;
+    }
+    
+    .locked-users-list {
+      margin-top: 20px;
+    }
+    
+    .locked-user-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: white;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      border-left: 4px solid #dc3545;
+    }
+    
+    .locked-user-info {
+      flex: 1;
+    }
+    
+    .locked-user-phone {
+      font-weight: 600;
+      color: #4a3b5e;
+    }
+    
+    .locked-user-level {
+      font-size: 0.7rem;
+      background: #7d5ba6;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-left: 5px;
+    }
+    
+    .locked-user-unlock {
+      background: #28a745;
+      color: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    
+    .locked-user-unlock:hover {
+      transform: scale(1.1);
+      background: #218838;
+    }
+    
+    .empty-locked {
+      color: #999;
+      text-align: center;
+      padding: 20px;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
@@ -5168,6 +5399,8 @@
           <div class="admin-tab" onclick="switchAdminTab('stakes')"><i class="fas fa-trophy"></i> Stakes</div>
           <div class="admin-tab" onclick="switchAdminTab('support')"><i class="fas fa-headset"></i> Support</div>
           <div class="admin-tab" onclick="switchAdminTab('withdrawalControl')"><i class="fas fa-lock"></i> Withdrawal Control</div>
+          <!-- FIX 1: New User Withdraw Lock Tab -->
+          <div class="admin-tab" onclick="switchAdminTab('userWithdrawLock')"><i class="fas fa-user-lock"></i> User Withdraw Lock</div>
           <div class="admin-tab" onclick="switchAdminTab('announcement')"><i class="fas fa-bullhorn"></i> Announcement</div>
           <div class="admin-tab" onclick="switchAdminTab('levelLock')"><i class="fas fa-ban"></i> Level Lock</div>
           <div class="admin-tab" onclick="switchAdminTab('mxl')"><i class="fas fa-key"></i> MXL Password</div>
@@ -5685,6 +5918,40 @@
             <div id="withdrawalCurrentStatus">
               <p>🔓 Withdrawals: <strong>Active</strong></p>
               <p>🌍 Today's holidays: <span id="todaysHolidaysDisplay">None</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FIX 1: USER WITHDRAWAL LOCK SECTION (NEW) -->
+        <div id="adminUserWithdrawLockSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-user-lock"></i> User Withdrawal Control</h3>
+          
+          <div class="user-withdraw-control">
+            <div class="user-withdraw-search">
+              <input type="text" id="userWithdrawSearch" placeholder="Enter phone number...">
+              <button onclick="searchUserForWithdrawLock()"><i class="fas fa-search"></i> Search</button>
+            </div>
+            
+            <div id="userWithdrawCard" class="user-withdraw-card" style="display: none;">
+              <div class="user-withdraw-info">
+                <div>
+                  <span class="user-withdraw-phone" id="withdrawUserPhone">0756673144</span>
+                  <span class="user-withdraw-level" id="withdrawUserLevel">D9</span>
+                </div>
+                <span class="user-withdraw-status" id="withdrawUserStatus">Active</span>
+              </div>
+              <div style="margin-bottom: 10px; color: #666;">
+                <i class="fas fa-user"></i> <span id="withdrawUserName">Admin User</span>
+              </div>
+              <div class="user-withdraw-buttons">
+                <button class="user-withdraw-btn lock" onclick="lockUserWithdraw()" id="lockWithdrawBtn"><i class="fas fa-lock"></i> LOCK</button>
+                <button class="user-withdraw-btn unlock" onclick="unlockUserWithdraw()" id="unlockWithdrawBtn"><i class="fas fa-lock-open"></i> UNLOCK</button>
+              </div>
+            </div>
+            
+            <div class="locked-users-list">
+              <h4 style="margin-bottom: 15px; color: #4a3b5e;">🔒 Locked Users</h4>
+              <div id="lockedUsersContainer"></div>
             </div>
           </div>
         </div>
@@ -6405,14 +6672,41 @@
       </div>
     </div>
 
-    <!-- TEAM REPORT PAGE -->
+    <!-- TEAM REPORT PAGE - FIX 2 (ENHANCED) -->
     <div id="teamReportPage">
       <div class="scroll-content">
         <button class="back-btn" onclick="showPage('profile')"><i class="fas fa-arrow-left"></i> Back to Profile</button>
         <h3 style="margin-bottom:20px;">👥 Team Report</h3>
-        <div class="team-report-container" id="teamReportContainer">
-          <!-- Columns will be filled by JavaScript -->
+        
+        <!-- Tabs -->
+        <div class="team-report-tabs">
+          <div class="team-tab active" onclick="switchTeamTab('a')" id="tabA">
+            <div class="letter">A</div>
+            <div class="count" id="aCount">0</div>
+          </div>
+          <div class="team-tab" onclick="switchTeamTab('b')" id="tabB">
+            <div class="letter">B</div>
+            <div class="count" id="bCount">0</div>
+          </div>
+          <div class="team-tab" onclick="switchTeamTab('c')" id="tabC">
+            <div class="letter">C</div>
+            <div class="count" id="cCount">0</div>
+          </div>
         </div>
+        
+        <!-- Level Header -->
+        <div class="team-level-header">
+          <span class="team-level-title" id="teamLevelTitle"><i class="fas fa-users"></i> A-LEVEL MEMBERS</span>
+          <span class="team-level-total" id="teamLevelTotal">0 UGX</span>
+        </div>
+        
+        <!-- Members List (Scrollable) -->
+        <div class="team-members-list" id="teamMembersList"></div>
+        
+        <!-- Pagination -->
+        <div class="team-pagination" id="teamPagination"></div>
+        
+        <!-- Stats -->
         <div class="team-stats">
           <div><span>Total Team Members:</span> <span id="totalTeamMembers">0</span></div>
           <div><span>Active Today:</span> <span id="activeTeamMembers">0</span></div>
@@ -8157,6 +8451,9 @@ let currentDrilldownLevel = 'a';
 let drilldownPage = 1;
 const itemsPerPage = 10;
 
+// ========== FIX 1: USER WITHDRAWAL LOCK VARIABLES ==========
+let userWithdrawLocks = {}; // phone -> { locked: true, lockedAt: timestamp }
+
 // ========== LOAD DATA FROM FIREBASE ==========
 function loadFromFirebase() {
   db.ref('users').on('value', (snapshot) => {
@@ -8303,6 +8600,14 @@ function loadFromFirebase() {
     const config = snapshot.val();
     if (config) {
       taskLockConfig = config;
+    }
+  });
+
+  // FIX 1: Load user withdrawal locks
+  db.ref('userWithdrawLocks').on('value', (snapshot) => {
+    userWithdrawLocks = snapshot.val() || {};
+    if (document.getElementById('adminUserWithdrawLockSection')?.classList.contains('active')) {
+      loadLockedUsersList();
     }
   });
 }
@@ -8485,6 +8790,7 @@ function saveStakesConfig() { db.ref('stakesConfig').set(stakesConfig); }
 function saveLevelLockConfig() { db.ref('levelLockConfig').set(levelLockConfig); }
 function saveWebsiteLockConfig() { db.ref('websiteLockConfig').set(websiteLockConfig); }
 function saveTaskLockConfig() { db.ref('taskLockConfig').set(taskLockConfig); }
+function saveUserWithdrawLocks() { db.ref('userWithdrawLocks').set(userWithdrawLocks); }
 
 // FIX 7: Announcement configuration
 let announcementConfig = {
@@ -8703,6 +9009,20 @@ function openWithdrawModal() {
   loadUserData();
   const user = users[currentUser];
   if (!user) return;
+  
+  // FIX 1: Check if user is individually locked
+  if (userWithdrawLocks[user.phone] && userWithdrawLocks[user.phone].locked) {
+    document.getElementById('withdrawalLockMessageContainer').style.display = 'block';
+    document.getElementById('withdrawalNormalContent').style.display = 'none';
+    
+    document.getElementById('lockIcon').textContent = '🔒';
+    document.getElementById('lockTitle').textContent = 'WITHDRAWALS LOCKED';
+    document.getElementById('lockReason').textContent = 'Your account has been temporarily locked for withdrawals. Please contact support for assistance.';
+    document.getElementById('lockResumeTime').style.display = 'none';
+    
+    document.getElementById('withdrawModal').style.display = 'flex';
+    return;
+  }
   
   // FIX 2: Weekend restriction
   if (isWeekend()) {
@@ -11079,10 +11399,16 @@ function countCompletedTasks(user) {
   return user.taskHistory.filter(task => task.status === 'complete').length;
 }
 
+// ===== FIX 2: ENHANCED TEAM REPORT FUNCTIONS =====
+let currentTeamTab = 'a';
+let teamPage = 1;
+const teamItemsPerPage = 10;
+
 function loadTeamReport() {
   const user = users[currentUser];
   if (!user) return;
 
+  // Get all members at each level
   const aMembers = Object.values(users).filter(u => u.referredBy === user.referralCode);
   
   const bMembers = [];
@@ -11097,114 +11423,10 @@ function loadTeamReport() {
     cMembers.push(...bReferrals);
   });
 
-  const container = document.getElementById('teamReportContainer');
-  
-  let aHtml = '<div class="team-column"><div class="team-letter">A</div>';
-  if (aMembers.length === 0) {
-    aHtml += '<div class="empty-section">(empty)</div>';
-  } else {
-    let aTotalDeposit = 0;
-    let aTotalTasks = 0;
-    
-    aMembers.forEach(member => {
-      const levelText = member.memberLevel === 0 ? 'intern' : `D${member.memberLevel}`;
-      const maskedPhone = maskPhone(member.phone);
-      const deposit = member.operatingWallet || 0;
-      aTotalDeposit += deposit;
-      
-      aHtml += `<div class="team-member">`;
-      aHtml += `<span class="member-phone">${maskedPhone}</span> `;
-      aHtml += `<span class="member-level">${levelText}</span><br>`;
-      aHtml += `<span class="member-deposit">💰 ${deposit.toLocaleString()}</span>`;
-      
-      if (member.memberLevel > 0) {
-        const tasks = countCompletedTasks(member);
-        aTotalTasks += tasks;
-        aHtml += ` <span class="member-tasks">📚 ${tasks}</span>`;
-      }
-      aHtml += `</div>`;
-    });
-    
-    aHtml += `<div class="column-total">`;
-    aHtml += `<span class="total-deposit">🔴 ${aTotalDeposit.toLocaleString()}</span>`;
-    if (aTotalTasks > 0) {
-      aHtml += ` | <span class="total-tasks">📚 ${aTotalTasks}</span>`;
-    }
-    aHtml += `</div>`;
-  }
-  aHtml += '</div>';
-
-  let bHtml = '<div class="team-column"><div class="team-letter">B</div>';
-  if (bMembers.length === 0) {
-    bHtml += '<div class="empty-section">(empty)</div>';
-  } else {
-    let bTotalDeposit = 0;
-    let bTotalTasks = 0;
-    
-    bMembers.forEach(member => {
-      const levelText = member.memberLevel === 0 ? 'intern' : `D${member.memberLevel}`;
-      const maskedPhone = maskPhone(member.phone);
-      const deposit = member.operatingWallet || 0;
-      bTotalDeposit += deposit;
-      
-      bHtml += `<div class="team-member">`;
-      bHtml += `<span class="member-phone">${maskedPhone}</span> `;
-      bHtml += `<span class="member-level">${levelText}</span><br>`;
-      bHtml += `<span class="member-deposit">💰 ${deposit.toLocaleString()}</span>`;
-      
-      if (member.memberLevel > 0) {
-        const tasks = countCompletedTasks(member);
-        bTotalTasks += tasks;
-        bHtml += ` <span class="member-tasks">📚 ${tasks}</span>`;
-      }
-      bHtml += `</div>`;
-    });
-    
-    bHtml += `<div class="column-total">`;
-    bHtml += `<span class="total-deposit">🔴 ${bTotalDeposit.toLocaleString()}</span>`;
-    if (bTotalTasks > 0) {
-      bHtml += ` | <span class="total-tasks">📚 ${bTotalTasks}</span>`;
-    }
-    bHtml += `</div>`;
-  }
-  bHtml += '</div>';
-
-  let cHtml = '<div class="team-column"><div class="team-letter">C</div>';
-  if (cMembers.length === 0) {
-    cHtml += '<div class="empty-section">(empty)</div>';
-  } else {
-    let cTotalDeposit = 0;
-    let cTotalTasks = 0;
-    
-    cMembers.forEach(member => {
-      const levelText = member.memberLevel === 0 ? 'intern' : `D${member.memberLevel}`;
-      const maskedPhone = maskPhone(member.phone);
-      const deposit = member.operatingWallet || 0;
-      cTotalDeposit += deposit;
-      
-      cHtml += `<div class="team-member">`;
-      cHtml += `<span class="member-phone">${maskedPhone}</span> `;
-      cHtml += `<span class="member-level">${levelText}</span><br>`;
-      cHtml += `<span class="member-deposit">💰 ${deposit.toLocaleString()}</span>`;
-      
-      if (member.memberLevel > 0) {
-        const tasks = countCompletedTasks(member);
-        cTotalTasks += tasks;
-        cHtml += ` <span class="member-tasks">📚 ${tasks}</span>`;
-      }
-      cHtml += `</div>`;
-    });
-    
-    cHtml += `<div class="column-total">`;
-    cHtml += `<span class="total-deposit">🔴 ${cTotalDeposit.toLocaleString()}</span>`;
-    if (cTotalTasks > 0) {
-      cHtml += ` | <span class="total-tasks">📚 ${cTotalTasks}</span>`;
-    }
-    cHtml += `</div>`;
-  }
-  cHtml += '</div>';
-
-  container.innerHTML = aHtml + bHtml + cHtml;
+  // Update counts
+  document.getElementById('aCount').textContent = aMembers.length;
+  document.getElementById('bCount').textContent = bMembers.length;
+  document.getElementById('cCount').textContent = cMembers.length;
 
   const total = aMembers.length + bMembers.length + cMembers.length;
   document.getElementById('totalTeamMembers').textContent = total;
@@ -11212,6 +11434,111 @@ function loadTeamReport() {
   const today = new Date().toDateString();
   const activeCount = [aMembers, bMembers, cMembers].flat().filter(m => m.lastReadDate === today).length;
   document.getElementById('activeTeamMembers').textContent = activeCount;
+
+  // Load current tab
+  switchTeamTab(currentTeamTab);
+}
+
+function switchTeamTab(tab) {
+  currentTeamTab = tab;
+  teamPage = 1;
+  
+  // Update tab UI
+  document.getElementById('tabA').classList.toggle('active', tab === 'a');
+  document.getElementById('tabB').classList.toggle('active', tab === 'b');
+  document.getElementById('tabC').classList.toggle('active', tab === 'c');
+  
+  loadTeamTabData();
+}
+
+function loadTeamTabData() {
+  const user = users[currentUser];
+  if (!user) return;
+  
+  let members = [];
+  let title = '';
+  let levelColor = '';
+  
+  if (currentTeamTab === 'a') {
+    members = Object.values(users).filter(u => u.referredBy === user.referralCode);
+    title = '🔴 A-LEVEL MEMBERS';
+    levelColor = '#c62828';
+  } else if (currentTeamTab === 'b') {
+    const aMembers = Object.values(users).filter(u => u.referredBy === user.referralCode);
+    members = [];
+    aMembers.forEach(aMember => {
+      const aReferrals = Object.values(users).filter(u => u.referredBy === aMember.referralCode);
+      members.push(...aReferrals);
+    });
+    title = '🔵 B-LEVEL MEMBERS';
+    levelColor = '#1565c0';
+  } else {
+    const aMembers = Object.values(users).filter(u => u.referredBy === user.referralCode);
+    const bMembers = [];
+    aMembers.forEach(aMember => {
+      const aReferrals = Object.values(users).filter(u => u.referredBy === aMember.referralCode);
+      bMembers.push(...aReferrals);
+    });
+    members = [];
+    bMembers.forEach(bMember => {
+      const bReferrals = Object.values(users).filter(u => u.referredBy === bMember.referralCode);
+      members.push(...bReferrals);
+    });
+    title = '🟢 C-LEVEL MEMBERS';
+    levelColor = '#2e7d32';
+  }
+  
+  document.getElementById('teamLevelTitle').innerHTML = `<i class="fas fa-users"></i> ${title}`;
+  
+  // Calculate total deposit for this level
+  const totalDeposit = members.reduce((sum, m) => sum + (m.operatingWallet || 0), 0);
+  document.getElementById('teamLevelTotal').textContent = totalDeposit.toLocaleString() + ' UGX';
+  
+  // Pagination
+  const totalPages = Math.ceil(members.length / teamItemsPerPage);
+  const start = (teamPage - 1) * teamItemsPerPage;
+  const end = start + teamItemsPerPage;
+  const pageMembers = members.slice(start, end);
+  
+  // Render members list
+  let html = '';
+  if (pageMembers.length === 0) {
+    html = '<div style="text-align:center; color:#999; padding:20px;">No members found</div>';
+  } else {
+    pageMembers.forEach(m => {
+      const levelText = m.memberLevel === 0 ? 'Intern' : `D${m.memberLevel}`;
+      const deposit = m.operatingWallet || 0;
+      const levelClass = currentTeamTab === 'a' ? 'a-level' : currentTeamTab === 'b' ? 'b-level' : 'c-level';
+      
+      html += `
+        <div class="team-member-item" onclick="viewMemberDetails('${m.phone}')">
+          <div class="team-member-info">
+            <span class="team-member-phone">${maskPhone(m.phone)}</span>
+            <span class="team-member-level">${levelText}</span>
+          </div>
+          <div class="team-member-deposit ${levelClass}">${deposit.toLocaleString()} UGX</div>
+        </div>
+      `;
+    });
+  }
+  document.getElementById('teamMembersList').innerHTML = html;
+  
+  // Render pagination
+  let paginationHtml = '';
+  for (let i = 1; i <= totalPages; i++) {
+    paginationHtml += `<button class="${i === teamPage ? 'active' : ''}" onclick="goToTeamPage(${i})">${i}</button>`;
+  }
+  document.getElementById('teamPagination').innerHTML = paginationHtml;
+}
+
+function goToTeamPage(page) {
+  teamPage = page;
+  loadTeamTabData();
+}
+
+function viewMemberDetails(phone) {
+  // Optional: Show member details modal
+  console.log('View member:', phone);
 }
 
 // ========== ACTIVITY LOG ==========
@@ -12610,26 +12937,30 @@ function switchAdminTab(tab) {
     document.querySelectorAll('.admin-tab')[10].classList.add('active');
     document.getElementById('adminWithdrawalControlSection').classList.add('active');
     loadWithdrawalAdminControls();
-  } else if (tab === 'announcement') {
+  } else if (tab === 'userWithdrawLock') { // FIX 1
     document.querySelectorAll('.admin-tab')[11].classList.add('active');
+    document.getElementById('adminUserWithdrawLockSection').classList.add('active');
+    loadLockedUsersList();
+  } else if (tab === 'announcement') {
+    document.querySelectorAll('.admin-tab')[12].classList.add('active');
     document.getElementById('adminAnnouncementSection').classList.add('active');
   } else if (tab === 'levelLock') {
-    document.querySelectorAll('.admin-tab')[12].classList.add('active');
+    document.querySelectorAll('.admin-tab')[13].classList.add('active');
     document.getElementById('adminLevelLockSection').classList.add('active');
     loadLevelLockControls();
   } else if (tab === 'mxl') { // FIX 3
-    document.querySelectorAll('.admin-tab')[13].classList.add('active');
+    document.querySelectorAll('.admin-tab')[14].classList.add('active');
     document.getElementById('adminMxlSection').classList.add('active');
     document.getElementById('currentMxlDisplay').textContent = '••••••••';
   } else if (tab === 'testimonianza') { // FIX 6
-    document.querySelectorAll('.admin-tab')[14].classList.add('active');
+    document.querySelectorAll('.admin-tab')[15].classList.add('active');
     document.getElementById('adminTestimonianzaSection').classList.add('active');
     loadTestimonianzaAdmin();
   } else if (tab === 'websiteLock') { // FIX 1
-    document.querySelectorAll('.admin-tab')[15].classList.add('active');
+    document.querySelectorAll('.admin-tab')[16].classList.add('active');
     document.getElementById('adminWebsiteLockSection').classList.add('active');
   } else if (tab === 'referralViewer') { // FIX 2
-    document.querySelectorAll('.admin-tab')[16].classList.add('active');
+    document.querySelectorAll('.admin-tab')[17].classList.add('active');
     document.getElementById('adminReferralViewerSection').classList.add('active');
     loadTopReferrers();
   }
@@ -15341,6 +15672,114 @@ function exportWithdrawalHistory() {
   window.URL.revokeObjectURL(url);
   
   showConfirmModal('✅ Exported', 'Withdrawal history downloaded!', 'success');
+}
+
+// ===== FIX 1: USER WITHDRAWAL LOCK FUNCTIONS =====
+function searchUserForWithdrawLock() {
+  const phone = document.getElementById('userWithdrawSearch').value;
+  if (!phone) {
+    showConfirmModal('Error', 'Please enter a phone number', 'warning');
+    return;
+  }
+  
+  const user = users[phone];
+  if (!user) {
+    showConfirmModal('Error', 'User not found', 'warning');
+    document.getElementById('userWithdrawCard').style.display = 'none';
+    return;
+  }
+  
+  document.getElementById('withdrawUserPhone').textContent = user.phone;
+  document.getElementById('withdrawUserLevel').textContent = user.memberLevel === 0 ? 'Intern' : `D${user.memberLevel}`;
+  document.getElementById('withdrawUserName').textContent = user.fullName;
+  
+  const isLocked = userWithdrawLocks[phone] && userWithdrawLocks[phone].locked;
+  document.getElementById('withdrawUserStatus').textContent = isLocked ? 'Locked' : 'Active';
+  document.getElementById('withdrawUserStatus').className = `user-withdraw-status ${isLocked ? 'status-locked' : 'status-active'}`;
+  
+  document.getElementById('userWithdrawCard').style.display = 'block';
+}
+
+function lockUserWithdraw() {
+  const phone = document.getElementById('withdrawUserPhone').textContent;
+  if (!phone) return;
+  
+  const user = users[phone];
+  if (!user) return;
+  
+  showConfirmModal('Lock Withdrawals', `Lock withdrawals for ${user.fullName}?`, 'confirm', () => {
+    userWithdrawLocks[phone] = {
+      locked: true,
+      lockedAt: new Date().toISOString(),
+      lockedBy: currentUser
+    };
+    saveUserWithdrawLocks();
+    searchUserForWithdrawLock();
+    loadLockedUsersList();
+    showConfirmModal('Success', `Withdrawals locked for ${user.fullName}`, 'success');
+  });
+}
+
+function unlockUserWithdraw() {
+  const phone = document.getElementById('withdrawUserPhone').textContent;
+  if (!phone) return;
+  
+  const user = users[phone];
+  if (!user) return;
+  
+  showConfirmModal('Unlock Withdrawals', `Unlock withdrawals for ${user.fullName}?`, 'confirm', () => {
+    delete userWithdrawLocks[phone];
+    saveUserWithdrawLocks();
+    searchUserForWithdrawLock();
+    loadLockedUsersList();
+    showConfirmModal('Success', `Withdrawals unlocked for ${user.fullName}`, 'success');
+  });
+}
+
+function loadLockedUsersList() {
+  const container = document.getElementById('lockedUsersContainer');
+  
+  const lockedUsers = Object.entries(userWithdrawLocks)
+    .filter(([phone, data]) => data.locked)
+    .map(([phone, data]) => ({ phone, ...data }));
+  
+  if (lockedUsers.length === 0) {
+    container.innerHTML = '<div class="empty-locked">No locked users</div>';
+    return;
+  }
+  
+  let html = '';
+  lockedUsers.forEach(locked => {
+    const user = users[locked.phone];
+    if (!user) return;
+    
+    const levelText = user.memberLevel === 0 ? 'Intern' : `D${user.memberLevel}`;
+    html += `
+      <div class="locked-user-item">
+        <div class="locked-user-info">
+          <span class="locked-user-phone">${maskPhone(user.phone)}</span>
+          <span class="locked-user-level">${levelText}</span>
+        </div>
+        <button class="locked-user-unlock" onclick="unlockUserFromList('${user.phone}')" title="Unlock">
+          <i class="fas fa-unlock-alt"></i>
+        </button>
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+}
+
+function unlockUserFromList(phone) {
+  const user = users[phone];
+  if (!user) return;
+  
+  showConfirmModal('Unlock Withdrawals', `Unlock withdrawals for ${user.fullName}?`, 'confirm', () => {
+    delete userWithdrawLocks[phone];
+    saveUserWithdrawLocks();
+    loadLockedUsersList();
+    showConfirmModal('Success', `Withdrawals unlocked for ${user.fullName}`, 'success');
+  });
 }
 
 // ========== INIT ==========
