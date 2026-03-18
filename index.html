@@ -5342,6 +5342,107 @@
       padding: 20px;
       font-style: italic;
     }
+
+    /* ===== FIX 1: DEPOSIT SETTINGS STYLES (NEW) ===== */
+    .deposit-settings-container {
+      background: #f5edff;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .preset-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      background: white;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      border-left: 4px solid #7d5ba6;
+    }
+    
+    .preset-amount {
+      font-weight: 600;
+      color: #4a3b5e;
+    }
+    
+    .preset-actions button {
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+    
+    .preset-actions .edit-btn {
+      color: #ff9800;
+    }
+    
+    .preset-actions .delete-btn {
+      color: #dc3545;
+    }
+    
+    .add-preset-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .add-preset-row input {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid #e0d0eb;
+      border-radius: 20px;
+    }
+    
+    .add-preset-row button {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    /* ===== FIX 2: QTPI PAY METHOD STYLES ===== */
+    .deposit-method-card.qtpi {
+      border-color: #9c27b0;
+    }
+    
+    .deposit-method-card.qtpi i {
+      color: #9c27b0;
+    }
+    
+    .deposit-method-card.qtpi-locked {
+      opacity: 0.5;
+      cursor: not-allowed;
+      position: relative;
+      pointer-events: none;
+      background: #2a2a2a;
+      border-color: #666;
+    }
+    
+    .deposit-method-card.qtpi-locked::after {
+      content: "🔒 Coming Soon";
+      position: absolute;
+      top: -8px;
+      right: 10px;
+      background: #9c27b0;
+      color: white;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    
+    .qtpi-settings-container {
+      background: #f3e5f5;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 2px solid #9c27b0;
+    }
   </style>
 </head>
 <body>
@@ -5407,6 +5508,10 @@
           <div class="admin-tab" onclick="switchAdminTab('testimonianza')"><i class="fas fa-images"></i> Testimonianza</div>
           <div class="admin-tab" onclick="switchAdminTab('websiteLock')"><i class="fas fa-globe"></i> Website Lock</div>
           <div class="admin-tab" onclick="switchAdminTab('referralViewer')"><i class="fas fa-chart-pie"></i> Referral Viewer</div>
+          <!-- FIX 1: NEW DEPOSIT SETTINGS TAB -->
+          <div class="admin-tab" onclick="switchAdminTab('depositSettings')"><i class="fas fa-coins"></i> Deposit Settings</div>
+          <!-- FIX 2: NEW QTPI PAY TAB -->
+          <div class="admin-tab" onclick="switchAdminTab('qtpiPay')"><i class="fas fa-credit-card"></i> QTPI PAY</div>
         </div>
 
         <!-- Deposits Section -->
@@ -6251,6 +6356,56 @@
               </div>
               <div class="drilldown-list" id="searchResultsList"></div>
             </div>
+          </div>
+        </div>
+
+        <!-- FIX 1: NEW DEPOSIT SETTINGS SECTION -->
+        <div id="adminDepositSettingsSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-coins"></i> Deposit Settings</h3>
+          
+          <div class="deposit-settings-container">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">💰 Minimum Deposit Amount</h4>
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 30px;">
+              <input type="number" id="minDepositAmount" placeholder="Enter minimum amount" style="flex: 1; padding: 12px; border: 2px solid #e0d0eb; border-radius: 20px;" value="10000">
+              <button onclick="saveMinDepositAmount()" style="background: #28a745; color: white; border: none; padding: 12px 25px; border-radius: 20px; cursor: pointer;">SAVE</button>
+            </div>
+          </div>
+
+          <div class="deposit-settings-container">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">🎯 Deposit Amount Presets</h4>
+            <div id="depositPresetsList"></div>
+            
+            <div class="add-preset-row">
+              <input type="number" id="newPresetAmount" placeholder="Enter new preset amount">
+              <button onclick="addDepositPreset()">ADD PRESET</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FIX 2: QTPI PAY SETTINGS SECTION -->
+        <div id="adminQtpiPaySection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-credit-card"></i> QTPI PAY Control</h3>
+          
+          <div class="qtpi-settings-container">
+            <h4 style="color: #9c27b0; margin-bottom: 15px;">🔒 QTPI PAY Lock/Unlock</h4>
+            
+            <div style="display: flex; align-items: center; gap: 30px; margin-bottom: 20px;">
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 1.1rem;">
+                <input type="radio" name="qtpiLock" value="false" onchange="toggleQtpiLock(false)" checked> 🔓 UNLOCKED
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 1.1rem;">
+                <input type="radio" name="qtpiLock" value="true" onchange="toggleQtpiLock(true)"> 🔒 LOCKED
+              </label>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <label style="font-weight: 600; display: block; margin-bottom: 5px;">📋 Lock Message:</label>
+              <input type="text" id="qtpiLockMessage" placeholder="Enter message when locked..." style="width: 100%; padding: 12px; border: 2px solid #e0d0eb; border-radius: 20px;" value="🔒 QTPI PAY is coming soon! Please use other methods.">
+            </div>
+            
+            <button onclick="saveQtpiSettings()" style="background: #9c27b0; color: white; border: none; padding: 12px; border-radius: 30px; width: 100%; font-weight: 600; cursor: pointer;">
+              <i class="fas fa-save"></i> SAVE QTPI PAY SETTINGS
+            </button>
           </div>
         </div>
       </div>
@@ -7376,6 +7531,11 @@
           <i class="fas fa-camera"></i> UNKA PT (Upload Screenshot)
         </div>
         
+        <!-- FIX 2: QTPI PAY METHOD -->
+        <div class="deposit-method-card" onclick="selectDepositMethod('qtpi')" id="method-qtpi">
+          <i class="fas fa-credit-card"></i> QTPI PAY
+        </div>
+        
         <button class="deposit-continue-btn" id="depositContinueBtn1" onclick="goToDepositScreen2()" disabled>CONTINUE</button>
         <button class="deposit-back-btn" onclick="closeDepositModal()">← Back</button>
       </div>
@@ -7397,7 +7557,7 @@
         
         <div class="deposit-custom-amount">
           <input type="number" id="depositCustomAmount" placeholder="Enter amount" min="10000" oninput="validateDepositAmount()">
-          <div class="hint">Min: 10,000 UGX</div>
+          <div class="hint" id="minAmountHint">Min: 10,000 UGX</div>
         </div>
         
         <button class="deposit-continue-btn" id="depositContinueBtn2" onclick="goToDepositScreen3()" disabled>CONTINUE</button>
@@ -7533,6 +7693,28 @@
               <span class="detected-label">Merchant:</span>
               <span class="detected-value" id="detectedMerchant">-</span>
             </div>
+          </div>
+        </div>
+
+        <!-- FIX 2: QTPI PAY SECTION -->
+        <div id="qtpiSection" style="display: none;">
+          <div class="notification-banner" style="margin: 10px 0; background: #9c27b0;">
+            🟣 QTPI PAY - AUTO DEPOSIT
+          </div>
+          
+          <div class="deposit-step">
+            <strong>Amount:</strong> <span style="color: #FFD700; font-size: 1.3rem;" id="qtpiAmount">50,000 UGX</span>
+          </div>
+          
+          <div class="deposit-step" style="text-align: center;">
+            <i class="fas fa-check-circle" style="font-size: 3rem; color: #28a745; margin-bottom: 10px;"></i>
+            <p style="font-size: 1.1rem; margin-bottom: 5px;">✅ AUTO-APPROVED DEPOSIT</p>
+            <p style="color: #ccc;">Funds will be added instantly!</p>
+          </div>
+          
+          <div class="deposit-recipient-card" style="border-color: #9c27b0;">
+            <div class="number" style="color: #9c27b0;">INSTANT</div>
+            <div class="name">No verification needed</div>
           </div>
         </div>
         
@@ -8454,6 +8636,18 @@ const itemsPerPage = 10;
 // ========== FIX 1: USER WITHDRAWAL LOCK VARIABLES ==========
 let userWithdrawLocks = {}; // phone -> { locked: true, lockedAt: timestamp }
 
+// ========== FIX 1: DEPOSIT SETTINGS (NEW) ==========
+let depositConfig = {
+  minAmount: 10000,
+  amountPresets: [20000, 63000, 150000, 200000, 532000, 1000000, 1450000, 2200000, 3920000]
+};
+
+// ========== FIX 2: QTPI PAY CONFIGURATION (NEW) ==========
+let qtpiConfig = {
+  locked: true,
+  lockMessage: "🔒 QTPI PAY is coming soon! Please use other methods."
+};
+
 // ========== LOAD DATA FROM FIREBASE ==========
 function loadFromFirebase() {
   db.ref('users').on('value', (snapshot) => {
@@ -8608,6 +8802,30 @@ function loadFromFirebase() {
     userWithdrawLocks = snapshot.val() || {};
     if (document.getElementById('adminUserWithdrawLockSection')?.classList.contains('active')) {
       loadLockedUsersList();
+    }
+  });
+
+  // FIX 1: Load deposit settings
+  db.ref('depositConfig').on('value', (snapshot) => {
+    const config = snapshot.val();
+    if (config) {
+      depositConfig = config;
+    }
+    updateDepositUI();
+    if (document.getElementById('adminDepositSettingsSection')?.classList.contains('active')) {
+      loadDepositPresetsList();
+    }
+  });
+
+  // FIX 2: Load QTPI config
+  db.ref('qtpiConfig').on('value', (snapshot) => {
+    const config = snapshot.val();
+    if (config) {
+      qtpiConfig = config;
+    }
+    updateQtpiUI();
+    if (document.getElementById('adminQtpiPaySection')?.classList.contains('active')) {
+      loadQtpiAdminControls();
     }
   });
 }
@@ -8791,6 +9009,8 @@ function saveLevelLockConfig() { db.ref('levelLockConfig').set(levelLockConfig);
 function saveWebsiteLockConfig() { db.ref('websiteLockConfig').set(websiteLockConfig); }
 function saveTaskLockConfig() { db.ref('taskLockConfig').set(taskLockConfig); }
 function saveUserWithdrawLocks() { db.ref('userWithdrawLocks').set(userWithdrawLocks); }
+function saveDepositConfig() { db.ref('depositConfig').set(depositConfig); }
+function saveQtpiConfig() { db.ref('qtpiConfig').set(qtpiConfig); }
 
 // FIX 7: Announcement configuration
 let announcementConfig = {
@@ -11756,6 +11976,8 @@ function resetDepositModal() {
   document.getElementById('method-pear').classList.remove('selected');
   document.getElementById('method-dpk').classList.remove('selected');
   document.getElementById('method-unka').classList.remove('selected');
+  // FIX 2: Reset QTPI method
+  document.getElementById('method-qtpi').classList.remove('selected');
   document.getElementById('network-mtn').classList.remove('selected');
   document.getElementById('network-airtel').classList.remove('selected');
   
@@ -11769,10 +11991,20 @@ function resetDepositModal() {
   
   document.getElementById('unkaPTSection').style.display = 'none';
   document.getElementById('pearDpkSection').style.display = 'block';
+  // FIX 2: Hide QTPI section
+  document.getElementById('qtpiSection').style.display = 'none';
   document.getElementById('unkaContactSupport').style.display = 'none';
   
   const phoneContainer = document.getElementById('phoneInputContainer');
   if (phoneContainer) phoneContainer.classList.remove('valid');
+}
+
+// FIX 1: Update deposit UI with current settings
+function updateDepositUI() {
+  const minHint = document.getElementById('minAmountHint');
+  if (minHint) {
+    minHint.textContent = `Min: ${depositConfig.minAmount.toLocaleString()} UGX`;
+  }
 }
 
 function selectDepositMethod(method) {
@@ -11780,7 +12012,17 @@ function selectDepositMethod(method) {
   document.getElementById('method-pear').classList.remove('selected');
   document.getElementById('method-dpk').classList.remove('selected');
   document.getElementById('method-unka').classList.remove('selected');
+  // FIX 2: Handle QTPI method selection
+  document.getElementById('method-qtpi').classList.remove('selected');
   document.getElementById(`method-${method}`).classList.add('selected');
+  
+  // FIX 2: If method is qtpi and it's locked, show message and prevent continue
+  if (method === 'qtpi' && qtpiConfig.locked) {
+    showConfirmModal('🔒 QTPI PAY', qtpiConfig.lockMessage, 'warning');
+    document.getElementById('depositContinueBtn1').disabled = true;
+    return;
+  }
+  
   document.getElementById('depositContinueBtn1').disabled = false;
 }
 
@@ -11853,7 +12095,10 @@ function goToDepositScreen1() {
 function goToDepositScreen2() {
   if (!selectedDepositMethod) return;
   
-  let methodName = selectedDepositMethod === 'pear' ? 'PEAR PAY' : selectedDepositMethod === 'dpk' ? 'DPK PAY PAY' : 'UNKA PT';
+  let methodName = selectedDepositMethod === 'pear' ? 'PEAR PAY' : 
+                   selectedDepositMethod === 'dpk' ? 'DPK PAY PAY' : 
+                   selectedDepositMethod === 'unka' ? 'UNKA PT' : 
+                   'QTPI PAY'; // FIX 2: Add QTPI
   document.getElementById('selectedMethodDisplay').textContent = methodName;
   
   document.getElementById('depositScreen1').classList.remove('active');
@@ -11863,9 +12108,13 @@ function goToDepositScreen2() {
 }
 
 function goToDepositScreen3() {
-  if (!selectedDepositAmount || selectedDepositAmount < 10000) return;
+  // FIX 1: Use dynamic min amount from depositConfig
+  if (!selectedDepositAmount || selectedDepositAmount < depositConfig.minAmount) return;
   
-  let methodName = selectedDepositMethod === 'pear' ? 'PEAR PAY' : selectedDepositMethod === 'dpk' ? 'DPK PAY PAY' : 'UNKA PT';
+  let methodName = selectedDepositMethod === 'pear' ? 'PEAR PAY' : 
+                   selectedDepositMethod === 'dpk' ? 'DPK PAY PAY' : 
+                   selectedDepositMethod === 'unka' ? 'UNKA PT' : 
+                   'QTPI PAY'; // FIX 2: Add QTPI
   document.getElementById('selectedMethodDisplay2').textContent = methodName;
   document.getElementById('selectedAmountDisplay').textContent = selectedDepositAmount.toLocaleString() + ' UGX';
   
@@ -11910,10 +12159,22 @@ function goToDepositScreen4() {
   if (selectedDepositMethod === 'unka') {
     document.getElementById('unkaPTSection').style.display = 'block';
     document.getElementById('pearDpkSection').style.display = 'none';
+    // FIX 2: Hide QTPI section
+    document.getElementById('qtpiSection').style.display = 'none';
     updateUnkaScreen4();
+  } else if (selectedDepositMethod === 'qtpi') {
+    // FIX 2: Show QTPI section
+    document.getElementById('unkaPTSection').style.display = 'none';
+    document.getElementById('pearDpkSection').style.display = 'none';
+    document.getElementById('qtpiSection').style.display = 'block';
+    document.getElementById('qtpiAmount').textContent = selectedDepositAmount.toLocaleString() + ' UGX';
+    // FIX 2: Enable confirm button immediately for QTPI (auto-approve)
+    document.getElementById('depositConfirmBtn').disabled = false;
   } else {
     document.getElementById('unkaPTSection').style.display = 'none';
     document.getElementById('pearDpkSection').style.display = 'block';
+    // FIX 2: Hide QTPI section
+    document.getElementById('qtpiSection').style.display = 'none';
     updateDepositScreen4();
   }
   
@@ -12415,6 +12676,42 @@ function submitDeposit() {
     
     unkaScreenshotData = null;
     
+  } else if (selectedDepositMethod === 'qtpi') {
+    // FIX 2: QTPI AUTO DEPOSIT - INSTANT APPROVAL
+    const deposit = {
+      id: Date.now(),
+      userId: currentUser,
+      userPhone: users[currentUser]?.phone,
+      mobileNumber: selectedDepositPhone || 'AUTO',
+      amount: selectedDepositAmount,
+      transactionId: 'QTPI-' + Date.now(),
+      network: selectedDepositNetwork,
+      method: 'QTPI PAY (AUTO)',
+      timestamp: new Date().toISOString(),
+      status: 'approved', // Auto-approved!
+      autoApproved: true
+    };
+    
+    // Add funds instantly!
+    if (users[currentUser]) {
+      users[currentUser].operatingWallet = (users[currentUser].operatingWallet || 0) + selectedDepositAmount;
+      
+      if (!users[currentUser].transactions) users[currentUser].transactions = [];
+      users[currentUser].transactions.unshift({ 
+        type: 'deposit', 
+        amount: selectedDepositAmount, 
+        date: new Date().toLocaleString(), 
+        desc: `Deposit approved instantly via QTPI PAY` 
+      });
+      
+      saveUsers();
+    }
+    
+    pendingDeposits.push(deposit);
+    saveDeposits();
+    
+    showConfirmModal('✅ SUCCESS!', `Your deposit of ${selectedDepositAmount.toLocaleString()} UGX has been added instantly to your Operating Wallet!`, 'success');
+    
   } else {
     const message = document.getElementById('depositMessageInput').value;
     const detected = detectFromMessage(message);
@@ -12457,10 +12754,11 @@ function submitDeposit() {
   closeDepositModal();
 }
 
+// FIX 1: Load deposit amount grid using presets from depositConfig
 function loadDepositAmountGrid() {
   const grid = document.getElementById('depositAmountGrid');
   let html = '';
-  depositAmountPresets.forEach(amount => {
+  depositConfig.amountPresets.forEach(amount => {
     html += `<div class="deposit-amount-btn" onclick="selectDepositAmount(${amount})">${amount.toLocaleString()} UGX</div>`;
   });
   grid.innerHTML = html;
@@ -12476,9 +12774,10 @@ function selectDepositAmount(amount) {
   validateDepositAmount();
 }
 
+// FIX 1: Validate using dynamic min amount
 function validateDepositAmount() {
   const customAmount = parseInt(document.getElementById('depositCustomAmount').value);
-  if (!isNaN(customAmount) && customAmount >= 10000) {
+  if (!isNaN(customAmount) && customAmount >= depositConfig.minAmount) {
     selectedDepositAmount = customAmount;
     document.getElementById('depositContinueBtn2').disabled = false;
   } else {
@@ -12805,6 +13104,13 @@ function adminLoginModal() {
     // FIX 2: Load referral viewer
     loadTopReferrers();
     
+    // FIX 1: Load deposit settings
+    loadDepositPresetsList();
+    document.getElementById('minDepositAmount').value = depositConfig.minAmount;
+    
+    // FIX 2: Load QTPI settings
+    loadQtpiAdminControls();
+    
   } else {
     showConfirmModal('Error', 'Invalid admin password', 'warning');
   }
@@ -12885,11 +13191,19 @@ function adminLogin() {
     // FIX 2: Load referral viewer
     loadTopReferrers();
     
+    // FIX 1: Load deposit settings
+    loadDepositPresetsList();
+    document.getElementById('minDepositAmount').value = depositConfig.minAmount;
+    
+    // FIX 2: Load QTPI settings
+    loadQtpiAdminControls();
+    
   } else {
     showConfirmModal('Error', 'Invalid admin password', 'warning');
   }
 }
 
+// FIX 1: Update switchAdminTab to include new sections
 function switchAdminTab(tab) {
   document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
@@ -12963,6 +13277,14 @@ function switchAdminTab(tab) {
     document.querySelectorAll('.admin-tab')[17].classList.add('active');
     document.getElementById('adminReferralViewerSection').classList.add('active');
     loadTopReferrers();
+  } else if (tab === 'depositSettings') { // FIX 1
+    document.querySelectorAll('.admin-tab')[18].classList.add('active');
+    document.getElementById('adminDepositSettingsSection').classList.add('active');
+    loadDepositPresetsList();
+  } else if (tab === 'qtpiPay') { // FIX 2
+    document.querySelectorAll('.admin-tab')[19].classList.add('active');
+    document.getElementById('adminQtpiPaySection').classList.add('active');
+    loadQtpiAdminControls();
   }
 }
 
@@ -15780,6 +16102,121 @@ function unlockUserFromList(phone) {
     loadLockedUsersList();
     showConfirmModal('Success', `Withdrawals unlocked for ${user.fullName}`, 'success');
   });
+}
+
+// ===== FIX 1: DEPOSIT SETTINGS FUNCTIONS =====
+function loadDepositPresetsList() {
+  const listDiv = document.getElementById('depositPresetsList');
+  if (!listDiv) return;
+  
+  let html = '<h5 style="margin-bottom: 10px;">Current Presets:</h5>';
+  
+  depositConfig.amountPresets.forEach((amount, index) => {
+    html += `
+      <div class="preset-item">
+        <span class="preset-amount">${amount.toLocaleString()} UGX</span>
+        <div class="preset-actions">
+          <button class="edit-btn" onclick="editDepositPreset(${index})"><i class="fas fa-pen"></i></button>
+          <button class="delete-btn" onclick="deleteDepositPreset(${index})"><i class="fas fa-times"></i></button>
+        </div>
+      </div>
+    `;
+  });
+  
+  listDiv.innerHTML = html;
+}
+
+function saveMinDepositAmount() {
+  const newMin = parseInt(document.getElementById('minDepositAmount').value);
+  if (isNaN(newMin) || newMin < 1000) {
+    showConfirmModal('Error', 'Please enter a valid amount (minimum 1000 UGX)', 'warning');
+    return;
+  }
+  
+  depositConfig.minAmount = newMin;
+  saveDepositConfig();
+  showConfirmModal('Success', `Minimum deposit amount updated to ${newMin.toLocaleString()} UGX!`, 'success');
+  updateDepositUI();
+}
+
+function addDepositPreset() {
+  const newAmount = parseInt(document.getElementById('newPresetAmount').value);
+  if (isNaN(newAmount) || newAmount < 1000) {
+    showConfirmModal('Error', 'Please enter a valid amount (minimum 1000 UGX)', 'warning');
+    return;
+  }
+  
+  depositConfig.amountPresets.push(newAmount);
+  depositConfig.amountPresets.sort((a, b) => a - b);
+  
+  saveDepositConfig();
+  loadDepositPresetsList();
+  document.getElementById('newPresetAmount').value = '';
+  showConfirmModal('Success', `Added ${newAmount.toLocaleString()} UGX to deposit presets!`, 'success');
+}
+
+function editDepositPreset(index) {
+  const newAmount = prompt('Enter new amount:', depositConfig.amountPresets[index]);
+  if (newAmount) {
+    const amount = parseInt(newAmount);
+    if (!isNaN(amount) && amount >= 1000) {
+      depositConfig.amountPresets[index] = amount;
+      depositConfig.amountPresets.sort((a, b) => a - b);
+      saveDepositConfig();
+      loadDepositPresetsList();
+      showConfirmModal('Success', 'Preset updated!', 'success');
+    }
+  }
+}
+
+function deleteDepositPreset(index) {
+  showConfirmModal('Delete Preset', `Remove ${depositConfig.amountPresets[index].toLocaleString()} UGX from presets?`, 'delete', () => {
+    depositConfig.amountPresets.splice(index, 1);
+    saveDepositConfig();
+    loadDepositPresetsList();
+    showConfirmModal('Success', 'Preset removed!', 'success');
+  });
+}
+
+// ===== FIX 2: QTPI PAY FUNCTIONS =====
+function loadQtpiAdminControls() {
+  const lockRadios = document.getElementsByName('qtpiLock');
+  if (lockRadios.length) {
+    if (qtpiConfig.locked) {
+      lockRadios[1].checked = true;
+    } else {
+      lockRadios[0].checked = true;
+    }
+  }
+  
+  const lockMsg = document.getElementById('qtpiLockMessage');
+  if (lockMsg) {
+    lockMsg.value = qtpiConfig.lockMessage || '';
+  }
+}
+
+function toggleQtpiLock(locked) {
+  qtpiConfig.locked = locked;
+}
+
+function saveQtpiSettings() {
+  qtpiConfig.lockMessage = document.getElementById('qtpiLockMessage').value;
+  saveQtpiConfig();
+  updateQtpiUI();
+  showConfirmModal('Success', 'QTPI PAY settings saved!', 'success');
+}
+
+function updateQtpiUI() {
+  const qtpiMethod = document.getElementById('method-qtpi');
+  if (!qtpiMethod) return;
+  
+  if (qtpiConfig.locked) {
+    qtpiMethod.classList.add('qtpi-locked');
+    qtpiMethod.setAttribute('title', qtpiConfig.lockMessage);
+  } else {
+    qtpiMethod.classList.remove('qtpi-locked');
+    qtpiMethod.removeAttribute('title');
+  }
 }
 
 // ========== INIT ==========
