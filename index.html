@@ -5603,6 +5603,83 @@
       transform: scale(1.02);
       background: rgba(255,255,255,0.3);
     }
+
+    /* ===== NEW USER NOTIFICATION ICON STYLES (FLOATING BOTTOM RIGHT) ===== */
+    .user-notification-icon {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      z-index: 9999;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    
+    .user-notification-icon:hover {
+      transform: scale(1.05);
+    }
+    
+    .notification-bubble {
+      background: linear-gradient(135deg, #7d5ba6, #b8a3d9);
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(125,91,166,0.4);
+    }
+    
+    .notification-bubble i {
+      font-size: 1.8rem;
+      color: white;
+    }
+    
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #ff4444;
+      color: white;
+      border-radius: 50%;
+      min-width: 20px;
+      height: 20px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+      border: 2px solid white;
+    }
+    
+    .notification-tooltip {
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 0.7rem;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 20px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    
+    .user-notification-icon:hover .notification-tooltip {
+      opacity: 1;
+    }
+    
+    @keyframes pulse-gentle {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .user-notification-icon {
+      animation: pulse-gentle 1.5s infinite;
+    }
   </style>
 </head>
 <body>
@@ -5685,7 +5762,7 @@
           <h3 style="margin-bottom: 20px;">Pending Deposits (newest first)</h3>
           <table class="admin-table" id="depositsTable">
             <thead>
-               <tr>
+                <tr>
                 <th>Date</th>
                 <th>Login Phone</th>
                 <th>Deposit Phone</th>
@@ -5694,10 +5771,10 @@
                 <th>Network</th>
                 <th>Method</th>
                 <th>Actions</th>
-               </tr>
+                </tr>
             </thead>
             <tbody id="depositsTableBody"></tbody>
-           </table>
+          </table>
         </div>
 
         <!-- Withdrawals Section -->
@@ -5709,7 +5786,7 @@
           <h3 style="margin-bottom: 20px;">Pending Withdrawals (oldest first)</h3>
           <table class="admin-table" id="withdrawalsTable">
             <thead>
-               <tr>
+                <tr>
                 <th>Date</th>
                 <th>User</th>
                 <th>User Phone</th>
@@ -5718,7 +5795,7 @@
                 <th>Amount</th>
                 <th>Wallet</th>
                 <th>Actions</th>
-               </tr>
+                </tr>
             </thead>
             <tbody id="withdrawalsTableBody"></tbody>
            </table>
@@ -5749,7 +5826,7 @@
           </div>
           <table class="admin-table" id="usersTable">
             <thead>
-                <tr>
+                泵
                   <th>Phone</th>
                   <th>Name</th>
                   <th>Password</th>
@@ -5761,7 +5838,7 @@
                 </tr>
             </thead>
             <tbody id="usersTableBody"></tbody>
-          </table>
+           </table>
         </div>
 
         <!-- System Section -->
@@ -6722,6 +6799,19 @@
     </div>
   </div>
 
+  <!-- USER NOTIFICATION ICON (FLOATING) - Appears when admin replies to user -->
+  <div id="userNotificationIcon" style="display: none;">
+    <div class="user-notification-icon" onclick="openSupportFromNotification()">
+      <div style="position: relative;">
+        <div class="notification-bubble">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div id="notificationBadge" class="notification-badge">0</div>
+        <div class="notification-tooltip">New support replies</div>
+      </div>
+    </div>
+  </div>
+
   <!-- ORIGINAL HTML - UNCHANGED + NEW FEATURES ADDED -->
   <div class="phone">
     <!-- AUTHENTICATION SECTION -->
@@ -7099,15 +7189,15 @@
         <div class="section-title">📚 Book History</div>
         <table class="task-table" id="taskHistoryTable">
           <thead>
-             <tr>
+              <tr>
               <th>Date</th>
               <th>Book</th>
               <th>Status</th>
               <th>Reward</th>
-             </tr>
+              </tr>
           </thead>
           <tbody id="taskHistoryBody"></tbody>
-         </table>
+          </table>
       </div>
       <div class="bottom-nav">
         <div class="nav-item" onclick="showPage('home')"><i class="fas fa-home"></i><span>Home</span></div>
@@ -7303,7 +7393,7 @@
                </tr>
             </thead>
             <tbody>
-               <tr>
+                <tr>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">INTERN</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc; font-weight: 600; color: #28a745;">FREE</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">1,500</td>
@@ -7311,9 +7401,9 @@
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">1,500</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">6,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;"></td>
-               </tr>
+                </tr>
               
-               <tr>
+                <tr>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">D1</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">63,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">2,250</td>
@@ -7321,9 +7411,9 @@
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">1,125</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">67,500</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">821,250</td>
-               </tr>
+                </tr>
               
-               <tr>
+                <tr>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">D2</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">200,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">7,100</td>
@@ -7331,9 +7421,9 @@
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">1,775</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">213,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">2,591,500</td>
-               </tr>
+                </tr>
               
-               <tr>
+                <tr>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">D3</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">532,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">19,008</td>
@@ -7341,9 +7431,9 @@
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">1,584</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">570,240</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">6,938,920</td>
-               </tr>
+                </tr>
               
-               <tr>
+                <tr>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">D4</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">1,450,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">51,808</td>
@@ -7351,9 +7441,9 @@
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">3,238</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">1,554,240</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">18,909,920</td>
-               </tr>
+                </tr>
               
-               <tr>
+                <tr>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">D5</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">3,920,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">145,200</td>
@@ -7361,9 +7451,9 @@
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">6,050</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">4,356,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">52,998,000</td>
-               </tr>
+                </tr>
               
-               <tr>
+                <tr>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">D6</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">10,640,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">380,000</td>
@@ -7371,9 +7461,9 @@
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">9,500</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">11,400,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">138,700,000</td>
-               </tr>
+                </tr>
               
-               <tr>
+                <tr>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">D7</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">40,040,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">1,430,000</td>
@@ -7381,9 +7471,9 @@
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">27,500</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">42,900,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">521,950,000</td>
-               </tr>
+                </tr>
               
-               <tr>
+                <tr>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">D8</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">57,120,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">2,040,000</td>
@@ -7391,9 +7481,9 @@
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">31,875</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">61,200,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">744,600,000</td>
-               </tr>
+                </tr>
               
-               <tr>
+                <tr>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">D9</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">84,000,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">3,000,000</td>
@@ -7401,7 +7491,7 @@
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">40,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">90,000,000</td>
                 <td style="padding: 6px 4px; font-size: 10px; text-align: center; border: 1px solid #ccc;">1,095,000,000</td>
-               </tr>
+                </tr>
             </tbody>
            </table>
         </div>
@@ -8365,13 +8455,13 @@
         
         <h3>⚙️ How It Works</h3>
         <table>
-           <tr><th>Step</th><th>Description</th></tr>
-           <tr><td>①</td><td>Register using a referral link</td></tr>
-           <tr><td>②</td><td>Read coffee-related books/articles</td></tr>
-           <tr><td>③</td><td>Earn rewards in UGX</td></tr>
-           <tr><td>④</td><td>Upgrade to higher levels for more earnings</td></tr>
-           <tr><td>⑤</td><td>Withdraw earnings (D-level members only)</td></tr>
-         </table>
+            <tr><th>Step</th><th>Description</th></tr>
+            <tr><td>①</td><td>Register using a referral link</td></tr>
+            <tr><td>②</td><td>Read coffee-related books/articles</td></tr>
+            <tr><td>③</td><td>Earn rewards in UGX</td></tr>
+            <tr><td>④</td><td>Upgrade to higher levels for more earnings</td></tr>
+            <tr><td>⑤</td><td>Withdraw earnings (D-level members only)</td></tr>
+          </table>
         
         <h3>🛠️ Farmer Support Program</h3>
         <p>We help coffee farmers access essential tools and equipment through our community support program:</p>
@@ -8386,20 +8476,20 @@
         <h3>🎁 Weekly Farmer Gifts Program</h3>
         <p><strong>Every week, UIC gives out practical gifts to active D-level farmers:</strong></p>
         <table>
-           <tr><th>Week</th><th>Gift Item</th></tr>
-           <tr><td>1</td><td>Secateurs / Pruners</td></tr>
-           <tr><td>2</td><td>Watering cans</td></tr>
-           <tr><td>3</td><td>Nursery polythene pots</td></tr>
-           <tr><td>4</td><td>Hand sprayers</td></tr>
-           <tr><td>5</td><td>Tarpaulins</td></tr>
-           <tr><td>6</td><td>Pruning saws</td></tr>
-           <tr><td>7</td><td>Moisture testers</td></tr>
-           <tr><td>8</td><td>Harvesting baskets</td></tr>
-           <tr><td>9</td><td>Coffee pulpers (shared)</td></tr>
-           <tr><td>10</td><td>Spray pumps</td></tr>
-           <tr><td>11</td><td>Wheelbarrows</td></tr>
-           <tr><td>12</td><td>Shade nets</td></tr>
-         </table>
+            <tr><th>Week</th><th>Gift Item</th></tr>
+            <tr><td>1</td><td>Secateurs / Pruners</td></tr>
+            <tr><td>2</td><td>Watering cans</td></tr>
+            <tr><td>3</td><td>Nursery polythene pots</td></tr>
+            <tr><td>4</td><td>Hand sprayers</td></tr>
+            <tr><td>5</td><td>Tarpaulins</td></tr>
+            <tr><td>6</td><td>Pruning saws</td></tr>
+            <tr><td>7</td><td>Moisture testers</td></tr>
+            <tr><td>8</td><td>Harvesting baskets</td></tr>
+            <tr><td>9</td><td>Coffee pulpers (shared)</td></tr>
+            <tr><td>10</td><td>Spray pumps</td></tr>
+            <tr><td>11</td><td>Wheelbarrows</td></tr>
+            <tr><td>12</td><td>Shade nets</td></tr>
+          </table>
         
         <h4>✨ How the Weekly Gifts Work</h4>
         <ul>
@@ -8412,11 +8502,11 @@
         
         <h4>🌟 Your Chances (Entries per active day)</h4>
         <table>
-           <tr><th>Your Level</th><th>Weekly Entries</th></tr>
-           <tr><td>D1-D3</td><td>1 entry per active day</td></tr>
-           <tr><td>D4-D6</td><td>2 entries per active day</td></tr>
-           <tr><td>D7-D9</td><td>3 entries per active day</td></tr>
-         </table>
+            <tr><th>Your Level</th><th>Weekly Entries</th></tr>
+            <tr><td>D1-D3</td><td>1 entry per active day</td></tr>
+            <tr><td>D4-D6</td><td>2 entries per active day</td></tr>
+            <tr><td>D7-D9</td><td>3 entries per active day</td></tr>
+          </table>
         <p><em>More active days = more chances to win!</em></p>
         
         <h3>🌟 Special Monthly Grand Prize</h3>
@@ -8521,6 +8611,7 @@ let inactivityTimer;
 let activeReadingTimer = null;
 let activeReadingBookId = null;
 let activeReadingPage = null;
+let adminAutoRefreshInterval = null;
 
 // Deposit modal variables
 let selectedDepositMethod = null;
@@ -8556,6 +8647,8 @@ let lastPage = 'home';
 let todaysBookOrder = [];
 let totalSuccessfulWithdrawals = 0;
 let currentFilter = 'all';
+let userTicketListener = null;
+let unreadReplyCount = 0;
 
 // ========== COMPANY SETTINGS ==========
 let companySettings = {
@@ -8894,9 +8987,9 @@ let testimonianzaPhotos = [];
 let adminPassword = "admin123";
 
 // ========== FIX 4: EMAIL NOTIFICATIONS ==========
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY"; // Replace with your EmailJS public key
-const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID"; // Replace with your EmailJS service ID
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID"; // Replace with your EmailJS template ID
+const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
 
 // Initialize EmailJS
 emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -8915,7 +9008,7 @@ let taskLockConfig = {
   locked: false,
   message: "Task system is currently paused for maintenance. Please try again later. Thank you!",
   title: "📚 TASKS PAUSED",
-  allowedLevels: [] // Empty means all locked
+  allowedLevels: []
 };
 
 // ========== FIX 2: REFERRAL VIEWER VARIABLES (NEW) ==========
@@ -8925,7 +9018,7 @@ let drilldownPage = 1;
 const itemsPerPage = 10;
 
 // ========== FIX 1: USER WITHDRAWAL LOCK VARIABLES ==========
-let userWithdrawLocks = {}; // phone -> { locked: true, lockedAt: timestamp }
+let userWithdrawLocks = {};
 
 // ========== FIX 1: DEPOSIT SETTINGS (NEW) ==========
 let depositConfig = {
@@ -8951,6 +9044,313 @@ let currentAnnouncementIndex = 0;
 // ========== FIX 2: ADMIN TICKET FILTER VARIABLES ==========
 let currentTicketFilter = 'all';
 let currentTicketSearch = '';
+
+// ========== USER NOTIFICATION FUNCTIONS ==========
+function updateNotificationIcon() {
+  const icon = document.getElementById('userNotificationIcon');
+  const badge = document.getElementById('notificationBadge');
+  
+  if (!icon || !badge) return;
+  
+  if (unreadReplyCount > 0 && currentUser) {
+    icon.style.display = 'block';
+    badge.textContent = unreadReplyCount > 9 ? '9+' : unreadReplyCount;
+  } else {
+    icon.style.display = 'none';
+  }
+}
+
+function checkUnreadAdminReplies() {
+  if (!currentUser) {
+    unreadReplyCount = 0;
+    updateNotificationIcon();
+    return;
+  }
+  
+  const user = users[currentUser];
+  if (!user) {
+    unreadReplyCount = 0;
+    updateNotificationIcon();
+    return;
+  }
+  
+  const userTickets = supportTickets.filter(t => t.userPhone === user.phone);
+  let count = 0;
+  
+  userTickets.forEach(ticket => {
+    if (ticket.messages) {
+      ticket.messages.forEach(msg => {
+        if (msg.from === 'support' && msg.readByUser === false) {
+          count++;
+        }
+      });
+    }
+  });
+  
+  unreadReplyCount = count;
+  updateNotificationIcon();
+}
+
+function startUserTicketListener() {
+  if (userTicketListener) {
+    db.ref('supportTickets').off('value', userTicketListener);
+  }
+  
+  userTicketListener = db.ref('supportTickets').on('value', (snapshot) => {
+    supportTickets = snapshot.val() || [];
+    checkUnreadAdminReplies();
+    
+    if (document.getElementById('supportPage').style.display === 'flex') {
+      loadSupportTickets();
+    }
+  });
+}
+
+function openSupportFromNotification() {
+  showPage('support');
+  markAllUnreadMessagesAsRead();
+}
+
+function markAllUnreadMessagesAsRead() {
+  if (!currentUser) return;
+  
+  const user = users[currentUser];
+  if (!user) return;
+  
+  let updated = false;
+  supportTickets.forEach(ticket => {
+    if (ticket.userPhone === user.phone && ticket.messages) {
+      let ticketUpdated = false;
+      ticket.messages.forEach(msg => {
+        if (msg.from === 'support' && msg.readByUser === false) {
+          msg.readByUser = true;
+          ticketUpdated = true;
+        }
+      });
+      if (ticketUpdated) updated = true;
+    }
+  });
+  
+  if (updated) {
+    saveSupportTickets();
+    checkUnreadAdminReplies();
+    
+    if (document.getElementById('supportPage').style.display === 'flex') {
+      loadSupportTickets();
+    }
+  }
+}
+
+// ========== MODIFIED openTicketDetailModal TO MARK MESSAGES AS READ ==========
+const originalOpenTicketDetailModal = window.openTicketDetailModal;
+window.openTicketDetailModal = function(ticketId) {
+  const ticket = supportTickets.find(t => t.id === ticketId);
+  if (!ticket) return;
+  
+  let updated = false;
+  if (ticket.messages) {
+    ticket.messages.forEach(msg => {
+      if (msg.from === 'support' && msg.readByUser === false) {
+        msg.readByUser = true;
+        updated = true;
+      }
+    });
+  }
+  
+  if (updated) {
+    saveSupportTickets();
+    checkUnreadAdminReplies();
+  }
+  
+  if (originalOpenTicketDetailModal) {
+    originalOpenTicketDetailModal(ticketId);
+  } else {
+    document.getElementById('ticketDetailId').textContent = ticket.id;
+    document.getElementById('ticketDetailSubject').textContent = ticket.subject;
+    document.getElementById('ticketDetailDate').textContent = new Date(ticket.createdAt).toLocaleString();
+    
+    const statusSpan = document.getElementById('ticketDetailStatus');
+    statusSpan.innerHTML = ticket.status === 'closed' ? '<span class="status-badge status-answered">CLOSED</span>' :
+                          ticket.status === 'replied' ? '<span class="status-badge status-answered">REPLIED</span>' :
+                          '<span class="status-badge status-pending">OPEN</span>';
+    
+    let messagesHtml = '';
+    ticket.messages.forEach(msg => {
+      const isUser = msg.from === 'user';
+      messagesHtml += `
+        <div style="margin-bottom: 15px; ${isUser ? '' : 'text-align:right;'}">
+          <div style="font-size:0.8rem; color:#666; margin-bottom:3px;">
+            ${isUser ? 'You' : msg.fromName} · ${new Date(msg.timestamp).toLocaleTimeString()}
+          </div>
+          <div style="background:${isUser ? '#f0f0f0' : '#7d5ba6'}; color:${isUser ? '#333' : 'white'}; padding:10px; border-radius:15px; display:inline-block; max-width:80%;">
+            ${msg.message}
+          </div>
+        </div>
+      `;
+    });
+    
+    document.getElementById('ticketDetailMessages').innerHTML = messagesHtml;
+    
+    if (ticket.status === 'closed') {
+      document.getElementById('ticketReplySection').style.display = 'none';
+    } else {
+      document.getElementById('ticketReplySection').style.display = 'block';
+    }
+    
+    document.getElementById('ticketDetailModal').dataset.ticketId = ticketId;
+    document.getElementById('ticketDetailModal').style.display = 'flex';
+  }
+};
+
+// ========== MODIFIED submitAdminReply TO ADD readByUser: false ==========
+const originalSubmitAdminReply = window.submitAdminReply;
+window.submitAdminReply = function() {
+  const ticketId = document.getElementById('adminTicketReplyModal').dataset.ticketId;
+  const ticket = supportTickets.find(t => t.id === ticketId);
+  if (!ticket) return;
+  
+  const replyAs = document.getElementById('adminReplyAs').value;
+  const message = document.getElementById('adminReplyMessage').value.trim();
+  
+  if (!message) {
+    showConfirmModal('Error', 'Please enter a reply message', 'warning');
+    return;
+  }
+  
+  ticket.messages.push({
+    from: 'support',
+    fromName: replyAs,
+    message: message,
+    timestamp: new Date().toISOString(),
+    readByAdmin: true,
+    readByUser: false
+  });
+  
+  ticket.status = 'replied';
+  ticket.updatedAt = new Date().toISOString();
+  
+  saveSupportTickets();
+  
+  closeAdminTicketReplyModal();
+  loadAdminTickets();
+  checkUnreadAdminReplies();
+  
+  showConfirmModal('Success', 'Reply sent to user!', 'success');
+};
+
+// ========== MODIFIED submitSupportTicket TO ADD readByUser: true FOR USER MESSAGES ==========
+const originalSubmitSupportTicket = window.submitSupportTicket;
+window.submitSupportTicket = function() {
+  const user = users[currentUser];
+  if (!user) {
+    showConfirmModal('Error', 'Please login first', 'warning');
+    return;
+  }
+  
+  const type = document.getElementById('ticketType').value;
+  const subject = document.getElementById('ticketSubject').value;
+  const message = document.getElementById('ticketMessage').value;
+  
+  if (!subject || !message) {
+    showConfirmModal('Error', 'Please fill all fields', 'warning');
+    return;
+  }
+  
+  const ticket = {
+    id: 'TKT' + Math.floor(Math.random() * 1000000),
+    userId: currentUser,
+    userPhone: user.phone,
+    userName: user.fullName,
+    type: type,
+    subject: subject,
+    status: 'open',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    messages: [{
+      from: 'user',
+      fromName: user.fullName,
+      message: message,
+      timestamp: new Date().toISOString(),
+      readByUser: true
+    }]
+  };
+  
+  supportTickets.push(ticket);
+  saveSupportTickets();
+  
+  sendEmailNotification('new_ticket', {
+    userName: user.fullName,
+    userPhone: user.phone,
+    subject: subject,
+    message: message
+  });
+  
+  document.getElementById('ticketSubject').value = '';
+  document.getElementById('ticketMessage').value = '';
+  
+  showConfirmModal('Success', 'Support ticket submitted! We\'ll respond within 24 hours.', 'success');
+  loadSupportTickets();
+};
+
+// ========== ADMIN AUTO-REFRESH FUNCTIONS ==========
+function startAdminAutoRefresh() {
+  if (adminAutoRefreshInterval) {
+    clearInterval(adminAutoRefreshInterval);
+  }
+  adminAutoRefreshInterval = setInterval(() => {
+    if (isAdminLoggedIn && document.getElementById('adminPanel').style.display === 'block') {
+      loadAdminData();
+      if (document.getElementById('adminTicketsSection').classList.contains('active')) {
+        loadAdminTickets();
+      }
+    }
+  }, 60000);
+}
+
+function stopAdminAutoRefresh() {
+  if (adminAutoRefreshInterval) {
+    clearInterval(adminAutoRefreshInterval);
+    adminAutoRefreshInterval = null;
+  }
+}
+
+// ========== MODIFIED adminLogin AND adminLoginModal TO START AUTO-REFRESH ==========
+const originalAdminLogin = window.adminLogin;
+window.adminLogin = function() {
+  originalAdminLogin();
+  startAdminAutoRefresh();
+};
+
+const originalAdminLoginModal = window.adminLoginModal;
+window.adminLoginModal = function() {
+  originalAdminLoginModal();
+  startAdminAutoRefresh();
+};
+
+// ========== MODIFIED toggleAdminPanel TO STOP AUTO-REFRESH ON CLOSE ==========
+const originalToggleAdminPanel = window.toggleAdminPanel;
+window.toggleAdminPanel = function() {
+  const panel = document.getElementById('adminPanel');
+  if (panel.style.display === 'none' || panel.style.display === '') {
+    if (!isAdminLoggedIn) {
+      document.getElementById('adminLoginModal').style.display = 'flex';
+    } else {
+      panel.style.display = 'block';
+      loadAdminData();
+      startAdminAutoRefresh();
+    }
+  } else {
+    panel.style.display = 'none';
+    stopAdminAutoRefresh();
+  }
+};
+
+// ========== MODIFIED loadUserData TO START TICKET LISTENER ==========
+const originalLoadUserData = window.loadUserData;
+window.loadUserData = function() {
+  if (originalLoadUserData) originalLoadUserData();
+  startUserTicketListener();
+};
 
 // ========== LOAD DATA FROM FIREBASE ==========
 function loadFromFirebase() {
@@ -9022,6 +9422,7 @@ function loadFromFirebase() {
     if (document.getElementById('adminTicketsSection')?.classList.contains('active')) {
       loadAdminTickets();
     }
+    checkUnreadAdminReplies();
   });
   
   db.ref('girareConfig').on('value', (snapshot) => {
@@ -9065,7 +9466,6 @@ function loadFromFirebase() {
     if (config) {
       announcements = config;
     }
-    // Update admin panel inputs if open
     if (document.getElementById('adminAnnouncementSection')?.classList.contains('active')) {
       updateAnnouncementInputs();
     }
@@ -9081,7 +9481,6 @@ function loadFromFirebase() {
     }
   });
   
-  // FIX 6: Load testimonianza photos
   db.ref('testimonianza').on('value', (snapshot) => {
     testimonianzaPhotos = snapshot.val() || [];
     displayTestimonianzaGallery();
@@ -9090,7 +9489,6 @@ function loadFromFirebase() {
     }
   });
 
-  // FIX 1: Load website lock config
   db.ref('websiteLockConfig').on('value', (snapshot) => {
     const config = snapshot.val();
     if (config) {
@@ -9100,7 +9498,6 @@ function loadFromFirebase() {
     updateWebsiteLockPreview();
   });
 
-  // FIX 1: Load task lock config
   db.ref('taskLockConfig').on('value', (snapshot) => {
     const config = snapshot.val();
     if (config) {
@@ -9108,7 +9505,6 @@ function loadFromFirebase() {
     }
   });
 
-  // FIX 1: Load user withdrawal locks
   db.ref('userWithdrawLocks').on('value', (snapshot) => {
     userWithdrawLocks = snapshot.val() || {};
     if (document.getElementById('adminUserWithdrawLockSection')?.classList.contains('active')) {
@@ -9116,7 +9512,6 @@ function loadFromFirebase() {
     }
   });
 
-  // FIX 1: Load deposit settings
   db.ref('depositConfig').on('value', (snapshot) => {
     const config = snapshot.val();
     if (config) {
@@ -9128,7 +9523,6 @@ function loadFromFirebase() {
     }
   });
 
-  // FIX 2: Load QTPI config
   db.ref('qtpiConfig').on('value', (snapshot) => {
     const config = snapshot.val();
     if (config) {
@@ -9374,7 +9768,6 @@ function saveAllAnnouncements() {
 
 // ===== CHECK AND SHOW ANNOUNCEMENTS ON HOME PAGE =====
 function checkAndShowAnnouncements() {
-  // Only show on home page
   if (document.getElementById('mainDashboard').style.display !== 'flex') return;
   if (!currentUser) return;
   
@@ -9398,7 +9791,6 @@ function showAnnouncement(index) {
   const announcement = activeAnnouncements[index];
   const slide = document.getElementById('announcementSlide');
   
-  // Remove all color classes and add the selected one
   slide.classList.remove('purple', 'green', 'blue', 'orange', 'red', 'yellow');
   slide.classList.add(announcement.color || 'purple');
   
@@ -9406,7 +9798,6 @@ function showAnnouncement(index) {
   document.getElementById('announcementMessage').textContent = announcement.message;
   document.getElementById('announcementCounter').textContent = `${index + 1}/${activeAnnouncements.length}`;
   
-  // Update dots
   let dotsHtml = '';
   for (let i = 0; i < activeAnnouncements.length; i++) {
     dotsHtml += `<div class="announcement-dot ${i === index ? 'active' : ''}" onclick="goToAnnouncement(${i})"></div>`;
@@ -9446,7 +9837,6 @@ function closeAnnouncementModal() {
 // ===== DISMISS ANNOUNCEMENT (temporary) =====
 function dismissAnnouncement() {
   closeAnnouncementModal();
-  // No permanent storage - will show again on next home visit
 }
 
 // ===== FIX 3: Messaggiare access (D-level only) =====
@@ -9479,23 +9869,18 @@ function isWeekend() {
 function isReadingAllowed(user) {
   if (!user) return false;
   
-  // FIX 1: Check if tasks are locked
   if (taskLockConfig.locked) {
     if (taskLockConfig.allowedLevels && taskLockConfig.allowedLevels.length > 0) {
-      // If allowed levels specified, check if user's level is allowed
       return taskLockConfig.allowedLevels.includes(user.memberLevel);
     }
-    // If no allowed levels, all users are locked
     return false;
   }
   
-  // Original Sunday restriction
-  if (user.memberLevel === 0) return true; // Interns can read any day
-  return !isSunday(); // D-level cannot read on Sunday
+  if (user.memberLevel === 0) return true;
+  return !isSunday();
 }
 
 function getReadingRestrictionMessage() {
-  // FIX 1: Task lock message
   if (taskLockConfig.locked) {
     return taskLockConfig.message || "Task system is currently paused for maintenance. Please try again later. Thank you!";
   }
@@ -9514,7 +9899,6 @@ function loadTaskBooks() {
   const level = user.memberLevel || 0;
   const levelData = levels[level];
   
-  // FIX 1 & 2: Check if reading is allowed
   if (!isReadingAllowed(user)) {
     const restrictionMsg = getReadingRestrictionMessage();
     document.getElementById('taskBookGrid').innerHTML = `
@@ -9586,7 +9970,6 @@ function openWithdrawModal() {
   const user = users[currentUser];
   if (!user) return;
   
-  // FIX 1: Check if user is individually locked
   if (userWithdrawLocks[user.phone] && userWithdrawLocks[user.phone].locked) {
     document.getElementById('withdrawalLockMessageContainer').style.display = 'block';
     document.getElementById('withdrawalNormalContent').style.display = 'none';
@@ -9600,7 +9983,6 @@ function openWithdrawModal() {
     return;
   }
   
-  // FIX 2: Weekend restriction
   if (isWeekend()) {
     const weekendMsg = "⛔ Withdrawals are closed on weekends. Please come back Monday-Friday 8am-5pm.";
     
@@ -9617,7 +9999,6 @@ function openWithdrawModal() {
     return;
   }
   
-  // Check if withdrawals are locked
   const lockCheck = isWithdrawalAllowed();
   
   if (!lockCheck.allowed) {
@@ -9782,7 +10163,6 @@ function shareReferralLink() {
   }
 }
 
-// FIX 2: Updated togglePasswordVisibility function for new eye location
 function togglePasswordVisibility(inputId, icon) {
   const input = document.getElementById(inputId);
   input.type = input.type === 'password' ? 'text' : 'password';
@@ -10514,7 +10894,8 @@ function submitTicketReply() {
     from: 'user',
     fromName: 'You',
     message: message,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    readByUser: true
   });
   
   ticket.status = 'open';
@@ -10524,6 +10905,7 @@ function submitTicketReply() {
   
   closeTicketDetailModal();
   loadSupportTickets();
+  checkUnreadAdminReplies();
   showConfirmModal('Success', 'Reply sent!', 'success');
 }
 
@@ -10600,12 +10982,20 @@ function submitSupportTicket() {
       from: 'user',
       fromName: user.fullName,
       message: message,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      readByUser: true
     }]
   };
   
   supportTickets.push(ticket);
   saveSupportTickets();
+  
+  sendEmailNotification('new_ticket', {
+    userName: user.fullName,
+    userPhone: user.phone,
+    subject: subject,
+    message: message
+  });
   
   document.getElementById('ticketSubject').value = '';
   document.getElementById('ticketMessage').value = '';
@@ -11554,7 +11944,6 @@ function purchaseLevel(level, cost) {
   const currentLevel = user.memberLevel;
   const currentLevelCost = currentLevel > 0 ? levels[currentLevel].deposit : 0;
   
-  // ===== FIX: CHECK ONLY OPERATING WALLET FOR FULL AMOUNT =====
   const operatingBalance = user.operatingWallet || 0;
   
   if (operatingBalance < cost) {
@@ -11567,7 +11956,6 @@ function purchaseLevel(level, cost) {
     return;
   }
 
-  // ===== CALCULATE NET COST FOR DISPLAY (User sees this as "Upgrade Bonus") =====
   const netCost = currentLevelCost > 0 ? cost - currentLevelCost : cost;
   
   showConfirmModal('Confirm Upgrade', 
@@ -11581,16 +11969,12 @@ function purchaseLevel(level, cost) {
     `⚡ Your upgrade bonus will be applied automatically!`, 
     'confirm', 
     () => {
-      // ===== PROCESS TRANSACTION (INTERNAL - USER NEVER SEES REFUND) =====
-      // Step 1: Deduct FULL cost from Operating Wallet
       user.operatingWallet -= cost;
       
-      // Step 2: Add refund from previous level to Operating Wallet (INSTANT)
       if (currentLevel > 0 && currentLevelCost > 0) {
         user.operatingWallet += currentLevelCost;
       }
       
-      // Update user level
       const oldLevel = user.memberLevel;
       user.memberLevel = level;
       
@@ -11598,11 +11982,9 @@ function purchaseLevel(level, cost) {
       expiry.setDate(expiry.getDate() + 365);
       user.memberExpiry = expiry.toISOString();
       
-      // Record level purchase
       if (!user.levelPurchases) user.levelPurchases = [];
       user.levelPurchases.push({ level: level, amount: cost, date: new Date().toISOString(), refunded: false });
       
-      // ===== RECORD ONLY ONE TRANSACTION WITH NET AMOUNT (USER SEES THIS) =====
       if (!user.transactions) user.transactions = [];
       user.transactions.unshift({ 
         type: 'level_upgrade', 
@@ -11612,10 +11994,8 @@ function purchaseLevel(level, cost) {
         desc: `Upgrade to ${levels[level].name} (upgrade bonus applied)` 
       });
       
-      // ===== REFERRAL COMMISSIONS (Go to Operating Wallet) =====
       payReferralCommissions(user.phone);
       
-      // ===== LOST COMMISSIONS RECOVERY (Go to Operating Wallet) =====
       let totalRecovered = 0;
       if (user.lostCommissions && user.lostCommissions.length > 0) {
         const targetLevel = `D${level}`;
@@ -11639,7 +12019,6 @@ function purchaseLevel(level, cost) {
       loadUserData();
       updateLevelWalletDisplay();
       
-      // ===== SUCCESS MESSAGE (USER SEES NET COST, NOT REFUND) =====
       let message = `✅ CONGRATULATIONS!\n\nYou are now a ${levels[level].name} member!`;
       message += `\n\n💰 Amount paid: ${netCost.toLocaleString()} UGX`;
       if (totalRecovered > 0) {
@@ -11653,15 +12032,12 @@ function purchaseLevel(level, cost) {
   );
 }
 
-// ===== PROCESS PENDING REFUNDS (REMOVED - NO LONGER NEEDED) =====
 function processPendingRefunds() {
-  // This function is kept but does nothing now
-  // Refunds are handled instantly in purchaseLevel
   return;
 }
 
 function getRemainingRefundTime() {
-  return null; // No pending refunds anymore
+  return null;
 }
 
 function loadLostCommissionTotal() {
@@ -11782,7 +12158,6 @@ function loadUserData() {
   
   loadLostCommissionTotal();
   
-  // processPendingRefunds is now a no-op, but keep for compatibility
   processPendingRefunds();
   
   applyTheme(user.theme || 'purple');
@@ -12055,7 +12430,6 @@ function loadTeamReport() {
   const user = users[currentUser];
   if (!user) return;
 
-  // Get all members at each level
   const aMembers = Object.values(users).filter(u => u.referredBy === user.referralCode);
   
   const bMembers = [];
@@ -12070,7 +12444,6 @@ function loadTeamReport() {
     cMembers.push(...bReferrals);
   });
 
-  // Update counts
   document.getElementById('aCount').textContent = aMembers.length;
   document.getElementById('bCount').textContent = bMembers.length;
   document.getElementById('cCount').textContent = cMembers.length;
@@ -12082,7 +12455,6 @@ function loadTeamReport() {
   const activeCount = [aMembers, bMembers, cMembers].flat().filter(m => m.lastReadDate === today).length;
   document.getElementById('activeTeamMembers').textContent = activeCount;
 
-  // Load current tab
   switchTeamTab(currentTeamTab);
 }
 
@@ -12090,7 +12462,6 @@ function switchTeamTab(tab) {
   currentTeamTab = tab;
   teamPage = 1;
   
-  // Update tab UI
   document.getElementById('tabA').classList.toggle('active', tab === 'a');
   document.getElementById('tabB').classList.toggle('active', tab === 'b');
   document.getElementById('tabC').classList.toggle('active', tab === 'c');
@@ -12137,17 +12508,14 @@ function loadTeamTabData() {
   
   document.getElementById('teamLevelTitle').innerHTML = `<i class="fas fa-users"></i> ${title}`;
   
-  // Calculate total deposit for this level
   const totalDeposit = members.reduce((sum, m) => sum + (m.operatingWallet || 0), 0);
   document.getElementById('teamLevelTotal').textContent = totalDeposit.toLocaleString() + ' UGX';
   
-  // Pagination
   const totalPages = Math.ceil(members.length / teamItemsPerPage);
   const start = (teamPage - 1) * teamItemsPerPage;
   const end = start + teamItemsPerPage;
   const pageMembers = members.slice(start, end);
   
-  // Render members list
   let html = '';
   if (pageMembers.length === 0) {
     html = '<div style="text-align:center; color:#999; padding:20px;">No members found</div>';
@@ -12170,7 +12538,6 @@ function loadTeamTabData() {
   }
   document.getElementById('teamMembersList').innerHTML = html;
   
-  // Render pagination
   let paginationHtml = '';
   for (let i = 1; i <= totalPages; i++) {
     paginationHtml += `<button class="${i === teamPage ? 'active' : ''}" onclick="goToTeamPage(${i})">${i}</button>`;
@@ -12184,7 +12551,6 @@ function goToTeamPage(page) {
 }
 
 function viewMemberDetails(phone) {
-  // Optional: Show member details modal
   console.log('View member:', phone);
 }
 
@@ -12403,7 +12769,6 @@ function resetDepositModal() {
   document.getElementById('method-pear').classList.remove('selected');
   document.getElementById('method-dpk').classList.remove('selected');
   document.getElementById('method-unka').classList.remove('selected');
-  // FIX 2: Reset QTPI method
   document.getElementById('method-qtpi').classList.remove('selected');
   document.getElementById('network-mtn').classList.remove('selected');
   document.getElementById('network-airtel').classList.remove('selected');
@@ -12418,7 +12783,6 @@ function resetDepositModal() {
   
   document.getElementById('unkaPTSection').style.display = 'none';
   document.getElementById('pearDpkSection').style.display = 'block';
-  // FIX 2: Hide QTPI section
   document.getElementById('qtpiSection').style.display = 'none';
   document.getElementById('unkaContactSupport').style.display = 'none';
   
@@ -12426,7 +12790,6 @@ function resetDepositModal() {
   if (phoneContainer) phoneContainer.classList.remove('valid');
 }
 
-// FIX 1: Update deposit UI with current settings
 function updateDepositUI() {
   const minHint = document.getElementById('minAmountHint');
   if (minHint) {
@@ -12439,11 +12802,9 @@ function selectDepositMethod(method) {
   document.getElementById('method-pear').classList.remove('selected');
   document.getElementById('method-dpk').classList.remove('selected');
   document.getElementById('method-unka').classList.remove('selected');
-  // FIX 2: Handle QTPI method selection
   document.getElementById('method-qtpi').classList.remove('selected');
   document.getElementById(`method-${method}`).classList.add('selected');
   
-  // FIX 2: If method is qtpi and it's locked, show message and prevent continue
   if (method === 'qtpi' && qtpiConfig.locked) {
     showConfirmModal('🔒 QTPI PAY', qtpiConfig.lockMessage, 'warning');
     document.getElementById('depositContinueBtn1').disabled = true;
@@ -12525,7 +12886,7 @@ function goToDepositScreen2() {
   let methodName = selectedDepositMethod === 'pear' ? 'PEAR PAY' : 
                    selectedDepositMethod === 'dpk' ? 'DPK PAY PAY' : 
                    selectedDepositMethod === 'unka' ? 'UNKA PT' : 
-                   'QTPI PAY'; // FIX 2: Add QTPI
+                   'QTPI PAY';
   document.getElementById('selectedMethodDisplay').textContent = methodName;
   
   document.getElementById('depositScreen1').classList.remove('active');
@@ -12535,13 +12896,12 @@ function goToDepositScreen2() {
 }
 
 function goToDepositScreen3() {
-  // FIX 1: Use dynamic min amount from depositConfig
   if (!selectedDepositAmount || selectedDepositAmount < depositConfig.minAmount) return;
   
   let methodName = selectedDepositMethod === 'pear' ? 'PEAR PAY' : 
                    selectedDepositMethod === 'dpk' ? 'DPK PAY PAY' : 
                    selectedDepositMethod === 'unka' ? 'UNKA PT' : 
-                   'QTPI PAY'; // FIX 2: Add QTPI
+                   'QTPI PAY';
   document.getElementById('selectedMethodDisplay2').textContent = methodName;
   document.getElementById('selectedAmountDisplay').textContent = selectedDepositAmount.toLocaleString() + ' UGX';
   
@@ -12586,21 +12946,17 @@ function goToDepositScreen4() {
   if (selectedDepositMethod === 'unka') {
     document.getElementById('unkaPTSection').style.display = 'block';
     document.getElementById('pearDpkSection').style.display = 'none';
-    // FIX 2: Hide QTPI section
     document.getElementById('qtpiSection').style.display = 'none';
     updateUnkaScreen4();
   } else if (selectedDepositMethod === 'qtpi') {
-    // FIX 2: Show QTPI section
     document.getElementById('unkaPTSection').style.display = 'none';
     document.getElementById('pearDpkSection').style.display = 'none';
     document.getElementById('qtpiSection').style.display = 'block';
     document.getElementById('qtpiAmount').textContent = selectedDepositAmount.toLocaleString() + ' UGX';
-    // FIX 2: Enable confirm button immediately for QTPI (auto-approve)
     document.getElementById('depositConfirmBtn').disabled = false;
   } else {
     document.getElementById('unkaPTSection').style.display = 'none';
     document.getElementById('pearDpkSection').style.display = 'block';
-    // FIX 2: Hide QTPI section
     document.getElementById('qtpiSection').style.display = 'none';
     updateDepositScreen4();
   }
@@ -13030,7 +13386,6 @@ function validateDepositMessage() {
   statusDiv.style.display = 'block';
 }
 
-// ===== FIX 4: Send email notification =====
 function sendEmailNotification(type, data) {
   let templateParams = {
     to_email: 'uicsupport1@gmail.com',
@@ -13051,6 +13406,12 @@ function sendEmailNotification(type, data) {
     templateParams.ip = data.ip || 'Unknown';
     templateParams.device = data.device || 'Unknown';
     templateParams.browser = data.browser || 'Unknown';
+  } else if (type === 'new_ticket') {
+    templateParams.subject = '🎫 NEW SUPPORT TICKET - UIC Platform';
+    templateParams.user_name = data.userName || 'Unknown';
+    templateParams.user_phone = data.userPhone || 'Unknown';
+    templateParams.subject = data.subject || 'Unknown';
+    templateParams.message = data.message || 'Unknown';
   }
   
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
@@ -13089,7 +13450,6 @@ function submitDeposit() {
     pendingDeposits.push(deposit);
     saveDeposits();
     
-    // FIX 4: Send email
     sendEmailNotification('deposit', {
       userName: users[currentUser]?.fullName,
       userPhone: users[currentUser]?.phone,
@@ -13104,7 +13464,6 @@ function submitDeposit() {
     unkaScreenshotData = null;
     
   } else if (selectedDepositMethod === 'qtpi') {
-    // FIX 2: QTPI AUTO DEPOSIT - INSTANT APPROVAL
     const deposit = {
       id: Date.now(),
       userId: currentUser,
@@ -13115,11 +13474,10 @@ function submitDeposit() {
       network: selectedDepositNetwork,
       method: 'QTPI PAY (AUTO)',
       timestamp: new Date().toISOString(),
-      status: 'approved', // Auto-approved!
+      status: 'approved',
       autoApproved: true
     };
     
-    // Add funds instantly to OPERATING WALLET (since all deposits go to Operating)
     if (users[currentUser]) {
       users[currentUser].operatingWallet = (users[currentUser].operatingWallet || 0) + selectedDepositAmount;
       
@@ -13164,7 +13522,6 @@ function submitDeposit() {
     pendingDeposits.push(deposit);
     saveDeposits();
     
-    // FIX 4: Send email
     sendEmailNotification('deposit', {
       userName: users[currentUser]?.fullName,
       userPhone: users[currentUser]?.phone,
@@ -13181,7 +13538,6 @@ function submitDeposit() {
   closeDepositModal();
 }
 
-// FIX 1: Load deposit amount grid using presets from depositConfig
 function loadDepositAmountGrid() {
   const grid = document.getElementById('depositAmountGrid');
   let html = '';
@@ -13201,7 +13557,6 @@ function selectDepositAmount(amount) {
   validateDepositAmount();
 }
 
-// FIX 1: Validate using dynamic min amount
 function validateDepositAmount() {
   const customAmount = parseInt(document.getElementById('depositCustomAmount').value);
   if (!isNaN(customAmount) && customAmount >= depositConfig.minAmount) {
@@ -13465,10 +13820,10 @@ function handleAdminCrownClick() {
     crownClickTimer = setTimeout(() => { 
       crownClickCount = 0; 
       crownClickTimer = null; 
-    }, 10000); // 10 seconds
+    }, 10000);
   }
   
-  if (crownClickCount === 15) { // 15 clicks
+  if (crownClickCount === 15) {
     clearTimeout(crownClickTimer);
     crownClickCount = 0;
     crownClickTimer = null;
@@ -13496,7 +13851,6 @@ function adminLoginModal() {
     loadWithdrawalAdminControls();
     updateAnnouncementInputs();
     
-    // FIX 4: Send admin login email
     sendEmailNotification('admin_login', {
       ip: 'Unknown',
       device: navigator.userAgent,
@@ -13504,11 +13858,8 @@ function adminLoginModal() {
     });
     
     loadLevelLockControls();
-    
-    // FIX 6: Load testimonianza admin
     loadTestimonianzaAdmin();
 
-    // FIX 1: Load website lock settings
     document.querySelector('input[name="websiteLockStatus"][value="' + (websiteLockConfig.locked ? 'active' : 'inactive') + '"]').checked = true;
     document.getElementById('websiteLockTitle').value = websiteLockConfig.title;
     document.getElementById('websiteLockMessage').value = websiteLockConfig.message;
@@ -13516,18 +13867,12 @@ function adminLoginModal() {
     document.getElementById('websiteLockAllowLogout').checked = websiteLockConfig.allowLogout;
     updateWebsiteLockPreview();
 
-    // FIX 2: Load referral viewer
     loadTopReferrers();
-    
-    // FIX 1: Load deposit settings
     loadDepositPresetsList();
     document.getElementById('minDepositAmount').value = depositConfig.minAmount;
-    
-    // FIX 2: Load QTPI settings
     loadQtpiAdminControls();
-    
-    // FIX 2: Load admin tickets
     loadAdminTickets();
+    startAdminAutoRefresh();
     
   } else {
     showConfirmModal('Error', 'Invalid admin password', 'warning');
@@ -13568,9 +13913,11 @@ function toggleAdminPanel() {
     } else {
       panel.style.display = 'block';
       loadAdminData();
+      startAdminAutoRefresh();
     }
   } else {
     panel.style.display = 'none';
+    stopAdminAutoRefresh();
   }
 }
 
@@ -13587,7 +13934,6 @@ function adminLogin() {
     loadWithdrawalAdminControls();
     updateAnnouncementInputs();
     
-    // FIX 4: Send admin login email
     sendEmailNotification('admin_login', {
       ip: 'Unknown',
       device: navigator.userAgent,
@@ -13595,11 +13941,8 @@ function adminLogin() {
     });
     
     loadLevelLockControls();
-    
-    // FIX 6: Load testimonianza admin
     loadTestimonianzaAdmin();
 
-    // FIX 1: Load website lock settings
     document.querySelector('input[name="websiteLockStatus"][value="' + (websiteLockConfig.locked ? 'active' : 'inactive') + '"]').checked = true;
     document.getElementById('websiteLockTitle').value = websiteLockConfig.title;
     document.getElementById('websiteLockMessage').value = websiteLockConfig.message;
@@ -13607,18 +13950,12 @@ function adminLogin() {
     document.getElementById('websiteLockAllowLogout').checked = websiteLockConfig.allowLogout;
     updateWebsiteLockPreview();
 
-    // FIX 2: Load referral viewer
     loadTopReferrers();
-    
-    // FIX 1: Load deposit settings
     loadDepositPresetsList();
     document.getElementById('minDepositAmount').value = depositConfig.minAmount;
-    
-    // FIX 2: Load QTPI settings
     loadQtpiAdminControls();
-    
-    // FIX 2: Load admin tickets
     loadAdminTickets();
+    startAdminAutoRefresh();
     
   } else {
     showConfirmModal('Error', 'Invalid admin password', 'warning');
@@ -13673,7 +14010,7 @@ function switchAdminTab(tab) {
     document.querySelectorAll('.admin-tab')[10].classList.add('active');
     document.getElementById('adminWithdrawalControlSection').classList.add('active');
     loadWithdrawalAdminControls();
-  } else if (tab === 'userWithdrawLock') { // FIX 1
+  } else if (tab === 'userWithdrawLock') {
     document.querySelectorAll('.admin-tab')[11].classList.add('active');
     document.getElementById('adminUserWithdrawLockSection').classList.add('active');
     loadLockedUsersList();
@@ -13685,30 +14022,30 @@ function switchAdminTab(tab) {
     document.querySelectorAll('.admin-tab')[13].classList.add('active');
     document.getElementById('adminLevelLockSection').classList.add('active');
     loadLevelLockControls();
-  } else if (tab === 'mxl') { // FIX 3
+  } else if (tab === 'mxl') {
     document.querySelectorAll('.admin-tab')[14].classList.add('active');
     document.getElementById('adminMxlSection').classList.add('active');
     document.getElementById('currentMxlDisplay').textContent = '••••••••';
-  } else if (tab === 'testimonianza') { // FIX 6
+  } else if (tab === 'testimonianza') {
     document.querySelectorAll('.admin-tab')[15].classList.add('active');
     document.getElementById('adminTestimonianzaSection').classList.add('active');
     loadTestimonianzaAdmin();
-  } else if (tab === 'websiteLock') { // FIX 1
+  } else if (tab === 'websiteLock') {
     document.querySelectorAll('.admin-tab')[16].classList.add('active');
     document.getElementById('adminWebsiteLockSection').classList.add('active');
-  } else if (tab === 'referralViewer') { // FIX 2
+  } else if (tab === 'referralViewer') {
     document.querySelectorAll('.admin-tab')[17].classList.add('active');
     document.getElementById('adminReferralViewerSection').classList.add('active');
     loadTopReferrers();
-  } else if (tab === 'depositSettings') { // FIX 1
+  } else if (tab === 'depositSettings') {
     document.querySelectorAll('.admin-tab')[18].classList.add('active');
     document.getElementById('adminDepositSettingsSection').classList.add('active');
     loadDepositPresetsList();
-  } else if (tab === 'qtpiPay') { // FIX 2
+  } else if (tab === 'qtpiPay') {
     document.querySelectorAll('.admin-tab')[19].classList.add('active');
     document.getElementById('adminQtpiPaySection').classList.add('active');
     loadQtpiAdminControls();
-  } else if (tab === 'tickets') { // FIX 2
+  } else if (tab === 'tickets') {
     document.querySelectorAll('.admin-tab')[20].classList.add('active');
     document.getElementById('adminTicketsSection').classList.add('active');
     loadAdminTickets();
@@ -13747,7 +14084,7 @@ function loadDepositsTable() {
   let html = '';
   sorted.forEach(deposit => {
     const date = new Date(deposit.timestamp).toLocaleString();
-    html += `<tr>
+    html += `技术上
       <td>${date}</td>
       <td>${deposit.userPhone || 'N/A'}</td>
       <td>${deposit.mobileNumber || 'N/A'}</td>
@@ -13777,14 +14114,14 @@ function searchDeposits() {
   
   const tbody = document.getElementById('depositsTableBody');
   if (filtered.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No matching deposits</td></tr>';
+    tbody.innerHTML = '械<td colspan="8" style="text-align:center;">No matching deposits</td> </tr>';
     return;
   }
   
   let html = '';
   filtered.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(deposit => {
     const date = new Date(deposit.timestamp).toLocaleString();
-    html += `<tr>
+    html += `技术上
       <td>${date}</td>
       <td>${deposit.userPhone || 'N/A'}</td>
       <td>${deposit.mobileNumber || 'N/A'}</td>
@@ -13841,7 +14178,7 @@ function rejectDeposit(id) {
 function loadWithdrawalsTable() {
   const tbody = document.getElementById('withdrawalsTableBody');
   if (pendingWithdrawals.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No pending withdrawals</td></tr>';
+    tbody.innerHTML = '械<td colspan="8" style="text-align:center;">No pending withdrawals</td> </tr>';
     return;
   }
 
@@ -13866,7 +14203,7 @@ function searchWithdrawals() {
   
   const tbody = document.getElementById('withdrawalsTableBody');
   if (filtered.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No matching withdrawals</td></tr>';
+    tbody.innerHTML = '械<td colspan="8" style="text-align:center;">No matching withdrawals</td> </tr>';
     return;
   }
   
@@ -13977,7 +14314,7 @@ function filterUsersTable() {
   );
   
   if (filtered.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No matching users</td></tr>';
+    tbody.innerHTML = '械<td colspan="8" style="text-align:center;">No matching users</td> </tr>';
     return;
   }
   
@@ -14099,7 +14436,7 @@ function loadPositionMembers() {
     if (members.length === 0) {
       html += '<p style="color:#999;">No members</p>';
     } else {
-      html += '<table class="admin-table"><thead><tr><th>Phone</th><th>Name</th><th>Level</th><th>Since</th></tr></thead><tbody>';
+      html += '<table class="admin-table"><thead> <tr><th>Phone</th><th>Name</th><th>Level</th><th>Since</th></tr> </thead><tbody>';
       members.forEach(m => {
         html += `<tr><td>${m.phone}</td><td>${m.fullName}</td><td>${m.memberLevel === 0 ? 'Intern' : 'D'+m.memberLevel}</td><td>${m.registeredDate ? new Date(m.registeredDate).toLocaleDateString() : 'N/A'}</td></tr>`;
       });
@@ -14127,7 +14464,7 @@ function searchPositionMembers() {
     return;
   }
   
-  let html = '<table class="admin-table"><thead><tr><th>Phone</th><th>Name</th><th>Position</th><th>Level</th><th>Since</th></tr></thead><tbody>';
+  let html = '<table class="admin-table"><thead> <tr><th>Phone</th><th>Name</th><th>Position</th><th>Level</th><th>Since</th></tr> </thead><tbody>';
   filtered.forEach(m => {
     const posName = m.farmerPosition !== undefined ? ['village','parish','sub-county','county','regional','national'][m.farmerPosition] + ' farmer' : 'None';
     html += `<tr><td>${m.phone}</td><td>${m.fullName}</td><td>${posName}</td><td>${m.memberLevel === 0 ? 'Intern' : 'D'+m.memberLevel}</td><td>${m.registeredDate ? new Date(m.registeredDate).toLocaleDateString() : 'N/A'}</td></tr>`;
@@ -14577,7 +14914,6 @@ function loadGirarePage() {
   const contentDiv = document.getElementById('girareContent');
   
   if (girareConfig.wheelLocked) {
-    // FIX 3: Use configured lock message instead of hardcoded
     contentDiv.innerHTML = `
       <div class="girare-access-denied">
         <i class="fas fa-clock"></i>
@@ -14835,7 +15171,6 @@ function loadGirareAdminControls() {
     lockMsg.value = girareConfig.lockMessage || '';
   }
   
-  // FIX 3: Set the dropdown to match current message
   const messageSelect = document.getElementById('girareLockMessageSelect');
   if (messageSelect) {
     const currentMsg = girareConfig.lockMessage || '';
@@ -14882,7 +15217,6 @@ function loadGirareAdminControls() {
   container.innerHTML = html;
 }
 
-// FIX 3: New function to handle message dropdown changes
 function updateGirareLockMessageFromSelect() {
   const select = document.getElementById('girareLockMessageSelect');
   const customContainer = document.getElementById('girareCustomMessageContainer');
@@ -15511,30 +15845,25 @@ function deleteTestimonianza(index) {
 }
 
 // ========== FIX: Modal Close Functions ==========
-// ===== FIX: Close Withdraw Modal - ALL buttons =====
 function closeWithdrawModal() {
   console.log('🔒 Closing withdraw modal');
   const modal = document.getElementById('withdrawModal');
   if (modal) {
     modal.style.display = 'none';
     
-    // Reset form fields
     document.getElementById('withdrawPassword').value = '';
     document.getElementById('selectedWithdrawAmount').value = '';
     
-    // Remove selected states
     document.querySelectorAll('.withdrawal-amount-btn').forEach(btn => {
       btn.classList.remove('selected');
     });
     
-    // Reset wallet selections
     document.getElementById('walletOperatingOption').classList.add('selected');
     document.getElementById('walletIncentiveOption').classList.remove('selected');
     selectedWallet = 'operating';
   }
 }
 
-// ===== FIX: Close Deposit Modal =====
 function closeDepositModal() {
   console.log('💰 Closing deposit modal');
   const modal = document.getElementById('depositModal');
@@ -15546,11 +15875,9 @@ function closeDepositModal() {
   }
 }
 
-// ===== FIX: Initialize all modal close buttons =====
 function initModalCloseButtons() {
   console.log('Initializing modal close buttons');
   
-  // 1. Fix for Withdraw Modal "X" button
   const withdrawCloseBtn = document.querySelector('#withdrawModal .close-btn');
   if (withdrawCloseBtn) {
     withdrawCloseBtn.onclick = function(e) {
@@ -15561,7 +15888,6 @@ function initModalCloseButtons() {
     };
   }
   
-  // 2. Fix for all "I UNDERSTAND" buttons (lock messages)
   const understandBtns = document.querySelectorAll('.lock-dismiss-btn');
   understandBtns.forEach(btn => {
     btn.onclick = function(e) {
@@ -15572,7 +15898,6 @@ function initModalCloseButtons() {
     };
   });
   
-  // 3. Fix for Deposit Modal "X" button
   const depositCloseBtn = document.querySelector('#depositModal .close-btn');
   if (depositCloseBtn) {
     depositCloseBtn.onclick = function(e) {
@@ -15583,7 +15908,6 @@ function initModalCloseButtons() {
     };
   }
   
-  // 4. Fix for modal overlays (click outside to close)
   const withdrawModal = document.getElementById('withdrawModal');
   if (withdrawModal) {
     withdrawModal.onclick = function(e) {
@@ -15603,17 +15927,14 @@ function initModalCloseButtons() {
   }
 }
 
-// ===== FIX: Override openWithdrawModal to ensure buttons work =====
 const originalOpenWithdrawModal = window.openWithdrawModal;
 window.openWithdrawModal = function() {
   if (originalOpenWithdrawModal) {
     originalOpenWithdrawModal();
   }
-  // Re-initialize buttons after modal opens
   setTimeout(initModalCloseButtons, 100);
 };
 
-// ===== FIX: Override openDepositModal =====
 const originalOpenDepositModal = window.openDepositModal;
 window.openDepositModal = function() {
   if (originalOpenDepositModal) {
@@ -15624,7 +15945,6 @@ window.openDepositModal = function() {
 
 // ===== FIX 1: WEBSITE LOCK FUNCTIONS =====
 function checkWebsiteLock() {
-  // Don't check if user is on login/register page or if admin is logged in
   if (document.getElementById('authContainer').style.display === 'block' || isAdminLoggedIn) {
     return;
   }
@@ -15724,7 +16044,6 @@ function getReferralCounts() {
   Object.values(users).forEach(user => {
     if (user.memberLevel === 0) return;
     
-    // Count A-level (direct referrals that are D-level)
     if (user.referrals) {
       const aCount = user.referrals.filter(refPhone => {
         const refUser = users[refPhone];
@@ -15741,7 +16060,6 @@ function getReferralCounts() {
       }
     }
     
-    // Count B-level (referrals of referrals that are D-level)
     let bCount = 0;
     if (user.referrals) {
       user.referrals.forEach(aPhone => {
@@ -15763,7 +16081,6 @@ function getReferralCounts() {
       };
     }
     
-    // Count C-level (third level)
     let cCount = 0;
     if (user.referrals) {
       user.referrals.forEach(aPhone => {
@@ -15797,12 +16114,10 @@ function getReferralCounts() {
 function loadTopReferrers() {
   const counts = getReferralCounts();
   
-  // Sort and get top 5 for each level
   const aTop = Object.values(counts.a).sort((x, y) => y.count - x.count).slice(0, 5);
   const bTop = Object.values(counts.b).sort((x, y) => y.count - x.count).slice(0, 5);
   const cTop = Object.values(counts.c).sort((x, y) => y.count - x.count).slice(0, 5);
   
-  // Render A leaderboard
   let aHtml = '';
   aTop.forEach((item, idx) => {
     aHtml += `
@@ -15815,7 +16130,6 @@ function loadTopReferrers() {
   if (aTop.length === 0) aHtml = '<div style="color:#999; text-align:center;">No A-level referrals</div>';
   document.getElementById('aLeaderboard').innerHTML = aHtml;
   
-  // Render B leaderboard
   let bHtml = '';
   bTop.forEach((item, idx) => {
     bHtml += `
@@ -15828,7 +16142,6 @@ function loadTopReferrers() {
   if (bTop.length === 0) bHtml = '<div style="color:#999; text-align:center;">No B-level referrals</div>';
   document.getElementById('bLeaderboard').innerHTML = bHtml;
   
-  // Render C leaderboard
   let cHtml = '';
   cTop.forEach((item, idx) => {
     cHtml += `
@@ -15854,7 +16167,6 @@ function searchReferralViewer() {
     if (user.memberLevel === 0) return;
     
     if (user.phone.includes(searchTerm) || user.fullName.toLowerCase().includes(searchTerm)) {
-      // Count A, B, C
       let aCount = 0, bCount = 0, cCount = 0;
       
       if (user.referrals) {
@@ -15953,14 +16265,12 @@ function loadDrilldownPage() {
   let members = [];
   
   if (currentDrilldownLevel === 'a') {
-    // Direct referrals
     if (user.referrals) {
       members = user.referrals
         .map(refPhone => users[refPhone])
         .filter(refUser => refUser && refUser.memberLevel > 0);
     }
   } else if (currentDrilldownLevel === 'b') {
-    // Second level
     if (user.referrals) {
       user.referrals.forEach(aPhone => {
         const aUser = users[aPhone];
@@ -15974,7 +16284,6 @@ function loadDrilldownPage() {
       });
     }
   } else if (currentDrilldownLevel === 'c') {
-    // Third level
     if (user.referrals) {
       user.referrals.forEach(aPhone => {
         const aUser = users[aPhone];
@@ -15994,7 +16303,6 @@ function loadDrilldownPage() {
     }
   }
   
-  // Pagination
   const totalPages = Math.ceil(members.length / itemsPerPage);
   const start = (drilldownPage - 1) * itemsPerPage;
   const end = start + itemsPerPage;
@@ -16023,7 +16331,6 @@ function loadDrilldownPage() {
   
   document.getElementById('drilldownList').innerHTML = html;
   
-  // Pagination controls
   let paginationHtml = '';
   for (let i = 1; i <= totalPages; i++) {
     paginationHtml += `<button class="${i === drilldownPage ? 'active' : ''}" onclick="goToDrilldownPage(${i})">${i}</button>`;
@@ -16042,7 +16349,6 @@ function closeDrillDown() {
 }
 
 function exportDrilldownList() {
-  // This would generate a CSV or text file of the current drilldown list
   showConfirmModal('Coming Soon', 'Export feature will be available in the next update.', 'success');
 }
 
@@ -16060,10 +16366,8 @@ function loadDepositRecords() {
   const user = users[currentUser];
   if (!user) return;
   
-  // Get all deposits for this user
   const userDeposits = pendingDeposits.filter(d => d.userId === currentUser) || [];
   
-  // Calculate summary
   let total = 0, confirmed = 0, verifying = 0, failed = 0;
   let confirmedAmount = 0, verifyingAmount = 0, failedAmount = 0;
   
@@ -16086,7 +16390,6 @@ function loadDepositRecords() {
   document.getElementById('depositVerifying').textContent = verifyingAmount.toLocaleString();
   document.getElementById('depositFailed').textContent = failedAmount.toLocaleString();
   
-  // Render records
   renderDepositRecords(userDeposits);
 }
 
@@ -16156,14 +16459,11 @@ function filterDeposits(filter) {
 }
 
 function retryDeposit(depositId) {
-  // Find the failed deposit
   const deposit = pendingDeposits.find(d => d.id === depositId);
   if (!deposit) return;
   
-  // Remove the old deposit
   pendingDeposits = pendingDeposits.filter(d => d.id !== depositId);
   
-  // Create new deposit with same details but new ID and pending status
   const newDeposit = {
     ...deposit,
     id: Date.now(),
@@ -16175,10 +16475,8 @@ function retryDeposit(depositId) {
   pendingDeposits.push(newDeposit);
   saveDeposits();
   
-  // Close and reopen deposit modal with same method pre-selected
   closeDepositRecords();
   
-  // Show success message
   showConfirmModal('✅ Deposit Retry', 'Your deposit has been resubmitted. We\'ll verify it soon.', 'success');
 }
 
@@ -16202,7 +16500,6 @@ function searchDepositRecords() {
 function exportDepositHistory() {
   const userDeposits = pendingDeposits.filter(d => d.userId === currentUser) || [];
   
-  // Create CSV content
   let csv = 'Date,Amount,Network,Phone,TID,Status\n';
   userDeposits.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(d => {
     const date = new Date(d.timestamp).toLocaleString();
@@ -16210,7 +16507,6 @@ function exportDepositHistory() {
     csv += `"${date}",${d.amount},${d.network || 'N/A'},"${d.mobileNumber || 'N/A'}","${d.transactionId || 'N/A'}",${status}\n`;
   });
   
-  // Download CSV
   const blob = new Blob([csv], { type: 'text/csv' });
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -16236,10 +16532,8 @@ function loadWithdrawalRecords() {
   const user = users[currentUser];
   if (!user) return;
   
-  // Get all withdrawals for this user
   const userWithdrawals = pendingWithdrawals.filter(w => w.userId === currentUser) || [];
   
-  // Also include completed withdrawals from user.transactions
   const completedWithdrawals = (user.transactions || [])
     .filter(t => t.type === 'withdrawal' || t.type === 'withdraw')
     .map(t => ({
@@ -16256,7 +16550,6 @@ function loadWithdrawalRecords() {
   
   const allWithdrawals = [...userWithdrawals, ...completedWithdrawals];
   
-  // Calculate summary
   let total = 0, completed = 0, processing = 0, failed = 0;
   let completedAmount = 0, processingAmount = 0, failedAmount = 0;
   
@@ -16279,7 +16572,6 @@ function loadWithdrawalRecords() {
   document.getElementById('withdrawalProcessing').textContent = processingAmount.toLocaleString();
   document.getElementById('withdrawalFailed').textContent = failedAmount.toLocaleString();
   
-  // Render records
   renderWithdrawalRecords(allWithdrawals);
 }
 
@@ -16348,20 +16640,16 @@ function filterWithdrawals(filter) {
   document.getElementById(`filter-withdrawal-${filter}`).classList.add('active');
   
   loadWithdrawalRecords();
-  // Re-render with filter will happen inside loadWithdrawalRecords
 }
 
 function searchWithdrawalRecords() {
   const searchTerm = document.getElementById('withdrawalSearchInput').value.toLowerCase();
-  // This would need to be implemented similarly to deposit search
 }
 
 function retryWithdrawal(withdrawalId) {
-  // Find the failed withdrawal
   const withdrawal = pendingWithdrawals.find(w => w.id === withdrawalId);
   if (!withdrawal) return;
   
-  // Return funds to user
   const user = users[currentUser];
   if (user) {
     if (withdrawal.wallet === 'operating') {
@@ -16371,16 +16659,13 @@ function retryWithdrawal(withdrawalId) {
     }
   }
   
-  // Remove the old withdrawal
   pendingWithdrawals = pendingWithdrawals.filter(w => w.id !== withdrawalId);
   
   saveUsers();
   saveWithdrawals();
   
-  // Close and reopen withdrawal modal
   closeWithdrawalRecords();
   
-  // Show message
   showConfirmModal('🔄 Try Again', 'Funds returned to your wallet. You can submit a new withdrawal request.', 'success');
 }
 
@@ -16402,7 +16687,6 @@ function exportWithdrawalHistory() {
   
   const allWithdrawals = [...userWithdrawals, ...completedWithdrawals];
   
-  // Create CSV content
   let csv = 'Date,Amount,Wallet,Harvest Phone,Request ID,Status\n';
   allWithdrawals.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).forEach(w => {
     const date = new Date(w.timestamp).toLocaleString();
@@ -16411,7 +16695,6 @@ function exportWithdrawalHistory() {
     csv += `"${date}",${w.amount},${w.wallet || 'N/A'},"${w.harvestPhone || 'N/A'}","${requestId}",${status}\n`;
   });
   
-  // Download CSV
   const blob = new Blob([csv], { type: 'text/csv' });
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -16653,12 +16936,10 @@ function loadAdminTickets() {
   
   let filteredTickets = [...supportTickets];
   
-  // Apply filter
   if (currentTicketFilter !== 'all') {
     filteredTickets = filteredTickets.filter(t => t.status === currentTicketFilter);
   }
   
-  // Apply search
   if (currentTicketSearch) {
     const search = currentTicketSearch.toLowerCase();
     filteredTickets = filteredTickets.filter(t => 
@@ -16669,7 +16950,6 @@ function loadAdminTickets() {
     );
   }
   
-  // Sort by newest first
   filteredTickets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   
   if (filteredTickets.length === 0) {
@@ -16759,7 +17039,8 @@ function submitAdminReply() {
     fromName: replyAs,
     message: message,
     timestamp: new Date().toISOString(),
-    readByAdmin: true
+    readByAdmin: true,
+    readByUser: false
   });
   
   ticket.status = 'replied';
@@ -16769,6 +17050,7 @@ function submitAdminReply() {
   
   closeAdminTicketReplyModal();
   loadAdminTickets();
+  checkUnreadAdminReplies();
   showConfirmModal('Success', 'Reply sent to user!', 'success');
 }
 
@@ -17063,7 +17345,6 @@ window.onload = function() {
   
   setInterval(() => {
     if (currentUser && users[currentUser]) {
-      // processPendingRefunds is now a no-op, but keep for compatibility
       processPendingRefunds();
     }
   }, 1000);
@@ -17072,10 +17353,8 @@ window.onload = function() {
   
   startActivityTicker();
 
-  // Initialize modal close buttons
   initModalCloseButtons();
 
-  // FIX 1: Check website lock
   setInterval(checkWebsiteLock, 1000);
 };
 
