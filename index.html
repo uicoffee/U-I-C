@@ -5672,6 +5672,8 @@
           <div class="admin-tab" onclick="switchAdminTab('depositSettings')"><i class="fas fa-coins"></i> Deposit Settings</div>
           <!-- FIX 2: NEW QTPI PAY TAB -->
           <div class="admin-tab" onclick="switchAdminTab('qtpiPay')"><i class="fas fa-credit-card"></i> QTPI PAY</div>
+          <!-- FIX 2: NEW SUPPORT TICKETS TAB -->
+          <div class="admin-tab" onclick="switchAdminTab('tickets')"><i class="fas fa-ticket-alt"></i> Support Tickets</div>
         </div>
 
         <!-- Deposits Section -->
@@ -6610,6 +6612,26 @@
             </button>
           </div>
         </div>
+
+        <!-- FIX 2: SUPPORT TICKETS ADMIN SECTION -->
+        <div id="adminTicketsSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-ticket-alt"></i> Support Tickets Management</h3>
+          
+          <div style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <div style="display: flex; gap: 5px; background: #f0f0f0; padding: 5px; border-radius: 30px;">
+              <button class="filter-tab active" onclick="filterAdminTickets('all')" id="filter-ticket-all">ALL</button>
+              <button class="filter-tab" onclick="filterAdminTickets('open')" id="filter-ticket-open">🟢 OPEN</button>
+              <button class="filter-tab" onclick="filterAdminTickets('replied')" id="filter-ticket-replied">💬 REPLIED</button>
+              <button class="filter-tab" onclick="filterAdminTickets('closed')" id="filter-ticket-closed">🔒 CLOSED</button>
+            </div>
+            <input type="text" id="ticketSearchInput" placeholder="Search by user or subject..." style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 30px;">
+            <button onclick="searchTickets()" style="background: #7d5ba6; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer;">Search</button>
+          </div>
+          
+          <div id="adminTicketsList" style="display: flex; flex-direction: column; gap: 15px;">
+            <!-- Tickets will be loaded here -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -6637,6 +6659,66 @@
       <div class="website-lock-title" id="websiteLockModalTitle">🔒 SYSTEM UPDATE</div>
       <div class="website-lock-message" id="websiteLockModalMessage">Today is Financial Day! System maintenance in progress. Please check back tomorrow. Thank you for your patience! 💚</div>
       <button class="website-lock-logout" id="websiteLockModalLogout" onclick="logoutFromLock()">LOGOUT</button>
+    </div>
+  </div>
+
+  <!-- FIX 2: TICKET DETAIL MODAL (for user to view conversation) -->
+  <div class="modal-overlay" id="ticketDetailModal">
+    <div class="modal-content" style="max-width: 380px;">
+      <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h2 style="color:#4a3b5e;">Ticket #<span id="ticketDetailId">TKT12345</span></h2>
+        <button class="close-btn" onclick="closeTicketDetailModal()" style="font-size:1.8rem; background:none; border:none;">&times;</button>
+      </div>
+      <div id="ticketDetailStatus" style="margin-bottom:10px;">
+        <span class="status-badge status-pending">OPEN</span>
+      </div>
+      <div style="background:#f5edff; border-radius:15px; padding:15px; margin-bottom:20px;">
+        <div style="font-weight:600; margin-bottom:5px;" id="ticketDetailSubject">Withdrawal Issue</div>
+        <div style="color:#666; font-size:0.9rem;" id="ticketDetailDate">Mar 20, 2026</div>
+      </div>
+      
+      <div style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;" id="ticketDetailMessages">
+        <!-- Messages will be loaded here -->
+      </div>
+      
+      <div id="ticketReplySection">
+        <textarea id="ticketReplyMessage" rows="3" placeholder="Type your reply..." style="width:100%; padding:12px; border:2px solid #e0d0eb; border-radius:15px; margin-bottom:10px;"></textarea>
+        <button onclick="submitTicketReply()" style="background:#7d5ba6; color:white; border:none; padding:12px; border-radius:30px; width:100%; font-weight:600;">SEND REPLY</button>
+        <button onclick="closeTicketFromDetail()" style="background:#f0f0f0; border:none; padding:12px; border-radius:30px; width:100%; margin-top:10px;">CLOSE TICKET</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIX 2: ADMIN TICKET REPLY MODAL -->
+  <div class="modal-overlay" id="adminTicketReplyModal">
+    <div class="modal-content" style="max-width: 400px;">
+      <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h2 style="color:#4a3b5e;">Reply to Ticket</h2>
+        <button class="close-btn" onclick="closeAdminTicketReplyModal()" style="font-size:1.8rem; background:none; border:none;">&times;</button>
+      </div>
+      
+      <div style="background:#f5edff; border-radius:15px; padding:15px; margin-bottom:20px;">
+        <div><strong>User:</strong> <span id="adminTicketUserName">John Doe</span></div>
+        <div><strong>Phone:</strong> <span id="adminTicketUserPhone">0756673144</span></div>
+        <div><strong>Subject:</strong> <span id="adminTicketSubject">Withdrawal Issue</span></div>
+      </div>
+      
+      <div style="margin-bottom: 20px;">
+        <label style="font-weight:600; display:block; margin-bottom:5px;">Reply as:</label>
+        <select id="adminReplyAs" style="width:100%; padding:12px; border:2px solid #e0d0eb; border-radius:30px;">
+          <option value="Support Team">👨‍💼 Support Team</option>
+          <option value="Customer Care">👩‍💼 Customer Care</option>
+          <option value="UIC Support">💬 UIC Support</option>
+          <option value="Help Desk">🛠️ Help Desk</option>
+        </select>
+      </div>
+      
+      <textarea id="adminReplyMessage" rows="4" placeholder="Type your reply..." style="width:100%; padding:12px; border:2px solid #e0d0eb; border-radius:15px; margin-bottom:15px;"></textarea>
+      
+      <div style="display:flex; gap:10px;">
+        <button onclick="submitAdminReply()" style="flex:2; background:#28a745; color:white; border:none; padding:12px; border-radius:30px; font-weight:600;">SEND REPLY</button>
+        <button onclick="closeAdminTicketReplyModal()" style="flex:1; background:#f0f0f0; border:none; padding:12px; border-radius:30px;">CANCEL</button>
+      </div>
     </div>
   </div>
 
@@ -8866,6 +8948,10 @@ let announcements = [
 
 let currentAnnouncementIndex = 0;
 
+// ========== FIX 2: ADMIN TICKET FILTER VARIABLES ==========
+let currentTicketFilter = 'all';
+let currentTicketSearch = '';
+
 // ========== LOAD DATA FROM FIREBASE ==========
 function loadFromFirebase() {
   db.ref('users').on('value', (snapshot) => {
@@ -8932,6 +9018,9 @@ function loadFromFirebase() {
     supportTickets = snapshot.val() || [];
     if (document.getElementById('supportPage').style.display === 'flex') {
       loadSupportTickets();
+    }
+    if (document.getElementById('adminTicketsSection')?.classList.contains('active')) {
+      loadAdminTickets();
     }
   });
   
@@ -10334,7 +10423,7 @@ function loadSupportTickets() {
   const user = users[currentUser];
   if (!user) return;
   
-  const userTickets = supportTickets.filter(t => t.userPhone === user.phone).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  const userTickets = supportTickets.filter(t => t.userPhone === user.phone).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   const container = document.getElementById('recentTicketsList');
   
   if (userTickets.length === 0) {
@@ -10344,13 +10433,17 @@ function loadSupportTickets() {
   
   let html = '';
   userTickets.slice(0, 3).forEach(ticket => {
-    const date = new Date(ticket.timestamp).toLocaleDateString();
-    const statusClass = ticket.status === 'answered' ? 'status-answered' : 'status-pending';
+    const date = new Date(ticket.createdAt).toLocaleDateString();
+    const statusClass = ticket.status === 'closed' ? 'status-answered' : 
+                        ticket.status === 'replied' ? 'status-answered' : 'status-pending';
+    const statusText = ticket.status === 'closed' ? 'Closed' : 
+                       ticket.status === 'replied' ? 'Replied' : 'Open';
+    
     html += `
-      <div class="ticket-history-item">
+      <div class="ticket-history-item" onclick="openTicketDetailModal('${ticket.id}')" style="cursor:pointer;">
         <div class="ticket-history-header">
           <span class="ticket-id">#${ticket.id}</span>
-          <span class="ticket-status ${statusClass}">${ticket.status}</span>
+          <span class="ticket-status ${statusClass}">${statusText}</span>
         </div>
         <div class="ticket-subject">${ticket.subject}</div>
         <div class="ticket-date">${date}</div>
@@ -10359,6 +10452,94 @@ function loadSupportTickets() {
   });
   
   container.innerHTML = html;
+}
+
+function openTicketDetailModal(ticketId) {
+  const ticket = supportTickets.find(t => t.id === ticketId);
+  if (!ticket) return;
+  
+  document.getElementById('ticketDetailId').textContent = ticket.id;
+  document.getElementById('ticketDetailSubject').textContent = ticket.subject;
+  document.getElementById('ticketDetailDate').textContent = new Date(ticket.createdAt).toLocaleString();
+  
+  const statusSpan = document.getElementById('ticketDetailStatus');
+  statusSpan.innerHTML = ticket.status === 'closed' ? '<span class="status-badge status-answered">CLOSED</span>' :
+                        ticket.status === 'replied' ? '<span class="status-badge status-answered">REPLIED</span>' :
+                        '<span class="status-badge status-pending">OPEN</span>';
+  
+  let messagesHtml = '';
+  ticket.messages.forEach(msg => {
+    const isUser = msg.from === 'user';
+    messagesHtml += `
+      <div style="margin-bottom: 15px; ${isUser ? '' : 'text-align:right;'}">
+        <div style="font-size:0.8rem; color:#666; margin-bottom:3px;">
+          ${isUser ? 'You' : msg.fromName} · ${new Date(msg.timestamp).toLocaleTimeString()}
+        </div>
+        <div style="background:${isUser ? '#f0f0f0' : '#7d5ba6'}; color:${isUser ? '#333' : 'white'}; padding:10px; border-radius:15px; display:inline-block; max-width:80%;">
+          ${msg.message}
+        </div>
+      </div>
+    `;
+  });
+  
+  document.getElementById('ticketDetailMessages').innerHTML = messagesHtml;
+  
+  if (ticket.status === 'closed') {
+    document.getElementById('ticketReplySection').style.display = 'none';
+  } else {
+    document.getElementById('ticketReplySection').style.display = 'block';
+  }
+  
+  document.getElementById('ticketDetailModal').dataset.ticketId = ticketId;
+  document.getElementById('ticketDetailModal').style.display = 'flex';
+}
+
+function closeTicketDetailModal() {
+  document.getElementById('ticketDetailModal').style.display = 'none';
+  document.getElementById('ticketReplyMessage').value = '';
+}
+
+function submitTicketReply() {
+  const ticketId = document.getElementById('ticketDetailModal').dataset.ticketId;
+  const ticket = supportTickets.find(t => t.id === ticketId);
+  if (!ticket) return;
+  
+  const message = document.getElementById('ticketReplyMessage').value.trim();
+  if (!message) {
+    showConfirmModal('Error', 'Please enter a message', 'warning');
+    return;
+  }
+  
+  ticket.messages.push({
+    from: 'user',
+    fromName: 'You',
+    message: message,
+    timestamp: new Date().toISOString()
+  });
+  
+  ticket.status = 'open';
+  ticket.updatedAt = new Date().toISOString();
+  
+  saveSupportTickets();
+  
+  closeTicketDetailModal();
+  loadSupportTickets();
+  showConfirmModal('Success', 'Reply sent!', 'success');
+}
+
+function closeTicketFromDetail() {
+  const ticketId = document.getElementById('ticketDetailModal').dataset.ticketId;
+  const ticket = supportTickets.find(t => t.id === ticketId);
+  if (!ticket) return;
+  
+  showConfirmModal('Close Ticket', 'Are you sure you want to close this ticket?', 'confirm', () => {
+    ticket.status = 'closed';
+    ticket.updatedAt = new Date().toISOString();
+    saveSupportTickets();
+    closeTicketDetailModal();
+    loadSupportTickets();
+    showConfirmModal('Success', 'Ticket closed!', 'success');
+  });
 }
 
 function openWhatsAppSupport() {
@@ -10407,14 +10588,20 @@ function submitSupportTicket() {
   
   const ticket = {
     id: 'TKT' + Math.floor(Math.random() * 1000000),
+    userId: currentUser,
     userPhone: user.phone,
     userName: user.fullName,
     type: type,
     subject: subject,
-    message: message,
-    timestamp: new Date().toISOString(),
-    status: 'pending',
-    replies: []
+    status: 'open',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    messages: [{
+      from: 'user',
+      fromName: user.fullName,
+      message: message,
+      timestamp: new Date().toISOString()
+    }]
   };
   
   supportTickets.push(ticket);
@@ -11349,7 +11536,7 @@ function loadGoldenHandshake() {
   }
 }
 
-// ===== PURCHASE LEVEL FUNCTION =====
+// ===== FIX 1: INSTANT REFUND ON UPGRADE =====
 function purchaseLevel(level, cost) {
   const user = users[currentUser];
   if (!user) { showConfirmModal('Error', 'Please login first', 'warning'); return; }
@@ -11375,6 +11562,7 @@ function purchaseLevel(level, cost) {
   }
 
   showConfirmModal('Confirm Upgrade', `Upgrade to ${levels[level].name} for ${cost.toLocaleString()} UGX?`, 'confirm', () => {
+    // Take payment
     let remaining = cost;
     if (user.operatingWallet > 0) {
       const fromOperating = Math.min(user.operatingWallet, remaining);
@@ -11402,6 +11590,22 @@ function purchaseLevel(level, cost) {
     
     payReferralCommissions(user.phone);
     
+    // FIX 1: INSTANT REFUND - add previous level cost to Operating Wallet
+    if (oldLevel > 0 && currentLevelCost > 0) {
+      user.operatingWallet = (user.operatingWallet || 0) + currentLevelCost;
+      
+      if (!user.transactions) user.transactions = [];
+      user.transactions.unshift({ 
+        type: 'refund', 
+        amount: currentLevelCost, 
+        date: new Date().toLocaleString(), 
+        desc: `Instant refund from D${oldLevel} upgrade` 
+      });
+      
+      console.log(`✅ Instant refund: ${currentLevelCost.toLocaleString()} UGX added to Operating Wallet`);
+    }
+    
+    // Recover lost commissions if any
     let totalRecovered = 0;
     if (user.lostCommissions && user.lostCommissions.length > 0) {
       const targetLevel = `D${level}`;
@@ -11419,31 +11623,20 @@ function purchaseLevel(level, cost) {
           desc: `🎉 Recovered lost commission from ${loss.fromUserName} (${loss.fromUserLevel})` 
         });
       });
-      
-      if (totalRecovered > 0) {
-        showConfirmModal('Commission Recovered!', `You recovered ${totalRecovered.toLocaleString()} UGX in lost commissions!`, 'success');
-      }
     }
     
-    if (oldLevel > 0 && currentLevelCost > 0) {
-      const now = Date.now();
-      const releaseTime = now + (2 * 60 * 1000);
-      
-      user.pendingRefund = {
-        amount: currentLevelCost,
-        level: oldLevel,
-        timestamp: now,
-        releaseTime: releaseTime
-      };
-      
-      showConfirmModal('Refund Pending', `Your refund of ${currentLevelCost.toLocaleString()} UGX will be available in 2 minutes.`, 'success');
-    }
-    
+    // SAVE TO FIREBASE - CRITICAL!
     saveUsers();
+    
     loadUserData();
     updateLevelWalletDisplay();
     
+    // Show success message with net cost
     let message = `Congratulations! You are now ${levels[level].name}!`;
+    if (oldLevel > 0 && currentLevelCost > 0) {
+      const netCost = cost - currentLevelCost;
+      message += `\n\n💰 Net cost: ${netCost.toLocaleString()} UGX (${cost.toLocaleString()} - ${currentLevelCost.toLocaleString()} instant refund)`;
+    }
     if (totalRecovered > 0) {
       message += `\n\n🎁 You also recovered ${totalRecovered.toLocaleString()} UGX in lost commissions!`;
     }
@@ -11451,58 +11644,15 @@ function purchaseLevel(level, cost) {
   });
 }
 
-// ===== PROCESS PENDING REFUNDS =====
+// ===== PROCESS PENDING REFUNDS (REMOVED - NO LONGER NEEDED) =====
 function processPendingRefunds() {
-  if (!currentUser || !users[currentUser]) return;
-  
-  const user = users[currentUser];
-  if (!user.pendingRefund) return;
-  
-  const now = Date.now();
-  if (now >= user.pendingRefund.releaseTime) {
-    user.operatingWallet = (user.operatingWallet || 0) + user.pendingRefund.amount;
-    
-    if (!user.transactions) user.transactions = [];
-    user.transactions.unshift({ 
-      type: 'refund', 
-      amount: user.pendingRefund.amount, 
-      date: new Date().toLocaleString(), 
-      desc: `Refund from D${user.pendingRefund.level} upgrade` 
-    });
-    
-    user.pendingRefund = null;
-    
-    saveUsers();
-    loadUserData();
-    
-    showConfirmModal('Refund Received!', `Your refund has been added to your operating wallet!`, 'success');
-  }
+  // This function is kept but does nothing now
+  // Refunds are handled instantly in purchaseLevel
+  return;
 }
 
 function getRemainingRefundTime() {
-  if (!currentUser || !users[currentUser]) return null;
-  
-  const user = users[currentUser];
-  if (!user.pendingRefund) return null;
-  
-  const now = Date.now();
-  const remaining = user.pendingRefund.releaseTime - now;
-  
-  if (remaining <= 0) {
-    processPendingRefunds();
-    return null;
-  }
-  
-  const seconds = Math.floor(remaining / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  
-  return {
-    minutes,
-    seconds: remainingSeconds,
-    totalSeconds: seconds,
-    amount: user.pendingRefund.amount
-  };
+  return null; // No pending refunds anymore
 }
 
 function loadLostCommissionTotal() {
@@ -11623,6 +11773,7 @@ function loadUserData() {
   
   loadLostCommissionTotal();
   
+  // processPendingRefunds is now a no-op, but keep for compatibility
   processPendingRefunds();
   
   applyTheme(user.theme || 'purple');
@@ -13366,6 +13517,9 @@ function adminLoginModal() {
     // FIX 2: Load QTPI settings
     loadQtpiAdminControls();
     
+    // FIX 2: Load admin tickets
+    loadAdminTickets();
+    
   } else {
     showConfirmModal('Error', 'Invalid admin password', 'warning');
   }
@@ -13453,6 +13607,9 @@ function adminLogin() {
     
     // FIX 2: Load QTPI settings
     loadQtpiAdminControls();
+    
+    // FIX 2: Load admin tickets
+    loadAdminTickets();
     
   } else {
     showConfirmModal('Error', 'Invalid admin password', 'warning');
@@ -13542,6 +13699,10 @@ function switchAdminTab(tab) {
     document.querySelectorAll('.admin-tab')[19].classList.add('active');
     document.getElementById('adminQtpiPaySection').classList.add('active');
     loadQtpiAdminControls();
+  } else if (tab === 'tickets') { // FIX 2
+    document.querySelectorAll('.admin-tab')[20].classList.add('active');
+    document.getElementById('adminTicketsSection').classList.add('active');
+    loadAdminTickets();
   }
 }
 
@@ -16476,6 +16637,132 @@ function updateQtpiUI() {
   }
 }
 
+// ===== FIX 2: ADMIN TICKET FUNCTIONS =====
+function loadAdminTickets() {
+  const container = document.getElementById('adminTicketsList');
+  if (!container) return;
+  
+  let filteredTickets = [...supportTickets];
+  
+  // Apply filter
+  if (currentTicketFilter !== 'all') {
+    filteredTickets = filteredTickets.filter(t => t.status === currentTicketFilter);
+  }
+  
+  // Apply search
+  if (currentTicketSearch) {
+    const search = currentTicketSearch.toLowerCase();
+    filteredTickets = filteredTickets.filter(t => 
+      t.userName.toLowerCase().includes(search) ||
+      t.userPhone.includes(search) ||
+      t.subject.toLowerCase().includes(search) ||
+      t.id.toLowerCase().includes(search)
+    );
+  }
+  
+  // Sort by newest first
+  filteredTickets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  
+  if (filteredTickets.length === 0) {
+    container.innerHTML = '<p style="text-align:center; color:#999; padding:40px;">No tickets found</p>';
+    return;
+  }
+  
+  let html = '';
+  filteredTickets.forEach(ticket => {
+    const lastMessage = ticket.messages[ticket.messages.length - 1];
+    const lastTime = lastMessage ? new Date(lastMessage.timestamp).toLocaleString() : new Date(ticket.createdAt).toLocaleString();
+    const unreadAdmin = ticket.messages.some(m => m.from === 'user' && !m.readByAdmin);
+    
+    let statusColor = '';
+    let statusText = '';
+    
+    if (ticket.status === 'open') {
+      statusColor = '#ff9800';
+      statusText = 'OPEN';
+    } else if (ticket.status === 'replied') {
+      statusColor = '#2196F3';
+      statusText = 'REPLIED';
+    } else {
+      statusColor = '#4CAF50';
+      statusText = 'CLOSED';
+    }
+    
+    html += `
+      <div class="ticket-history-item" onclick="openAdminTicketReplyModal('${ticket.id}')" style="cursor:pointer; ${unreadAdmin ? 'border-left:4px solid #ff9800;' : ''}">
+        <div class="ticket-history-header">
+          <span class="ticket-id">#${ticket.id}</span>
+          <span class="ticket-status" style="background:${statusColor}; color:white;">${statusText}</span>
+        </div>
+        <div class="ticket-subject"><strong>${ticket.userName}</strong> (${maskPhone(ticket.userPhone)})</div>
+        <div class="ticket-subject">${ticket.subject}</div>
+        <div class="ticket-date">Last: ${lastTime}</div>
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+}
+
+function filterAdminTickets(filter) {
+  currentTicketFilter = filter;
+  document.querySelectorAll('#adminTicketsSection .filter-tab').forEach(tab => tab.classList.remove('active'));
+  document.getElementById(`filter-ticket-${filter}`).classList.add('active');
+  loadAdminTickets();
+}
+
+function searchTickets() {
+  currentTicketSearch = document.getElementById('ticketSearchInput').value;
+  loadAdminTickets();
+}
+
+function openAdminTicketReplyModal(ticketId) {
+  const ticket = supportTickets.find(t => t.id === ticketId);
+  if (!ticket) return;
+  
+  document.getElementById('adminTicketUserName').textContent = ticket.userName;
+  document.getElementById('adminTicketUserPhone').textContent = ticket.userPhone;
+  document.getElementById('adminTicketSubject').textContent = ticket.subject;
+  document.getElementById('adminTicketReplyModal').dataset.ticketId = ticketId;
+  document.getElementById('adminTicketReplyModal').style.display = 'flex';
+}
+
+function closeAdminTicketReplyModal() {
+  document.getElementById('adminTicketReplyModal').style.display = 'none';
+  document.getElementById('adminReplyMessage').value = '';
+}
+
+function submitAdminReply() {
+  const ticketId = document.getElementById('adminTicketReplyModal').dataset.ticketId;
+  const ticket = supportTickets.find(t => t.id === ticketId);
+  if (!ticket) return;
+  
+  const replyAs = document.getElementById('adminReplyAs').value;
+  const message = document.getElementById('adminReplyMessage').value.trim();
+  
+  if (!message) {
+    showConfirmModal('Error', 'Please enter a reply message', 'warning');
+    return;
+  }
+  
+  ticket.messages.push({
+    from: 'support',
+    fromName: replyAs,
+    message: message,
+    timestamp: new Date().toISOString(),
+    readByAdmin: true
+  });
+  
+  ticket.status = 'replied';
+  ticket.updatedAt = new Date().toISOString();
+  
+  saveSupportTickets();
+  
+  closeAdminTicketReplyModal();
+  loadAdminTickets();
+  showConfirmModal('Success', 'Reply sent to user!', 'success');
+}
+
 // ========== INIT ==========
 window.onload = function() {
   loadFromFirebase();
@@ -16767,6 +17054,7 @@ window.onload = function() {
   
   setInterval(() => {
     if (currentUser && users[currentUser]) {
+      // processPendingRefunds is now a no-op, but keep for compatibility
       processPendingRefunds();
     }
   }, 1000);
