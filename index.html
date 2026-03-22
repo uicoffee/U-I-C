@@ -359,7 +359,7 @@
     }
 
     /* Main Dashboard Pages */
-    #mainDashboard, #profilePage, #levelPage, #taskPage, #incomePage, #taskRecordPage, #teamReportPage, #goldenHandshakePage, #transactionHistoryPage, #growthJourneyPage, #stakesPage, #girarePage, #supportPage {
+    #mainDashboard, #profilePage, #levelPage, #taskPage, #incomePage, #taskRecordPage, #teamReportPage, #goldenHandshakePage, #transactionHistoryPage, #growthJourneyPage, #stakesPage, #girarePage, #supportPage, #supportChatPage {
       display: none;
       flex-direction: column;
       height: 100%;
@@ -737,6 +737,210 @@
     
     .logout-btn:hover i {
       color: white;
+    }
+
+    /* ===== SUPPORT CHAT PAGE ===== */
+    .support-chat-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0 12px;
+      border-bottom: 2px solid #e0d0eb;
+      margin-bottom: 12px;
+    }
+    .support-chat-avatar {
+      width: 46px; height: 46px;
+      background: linear-gradient(135deg, #7d5ba6, #b8a3d9);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 1.4rem; flex-shrink: 0;
+    }
+    .support-chat-header-info h3 { font-size: 1rem; color: #4a3b5e; margin-bottom: 3px; font-weight: 700; }
+    .support-chat-header-info span { font-size: 0.75rem; color: #28a745; display: flex; align-items: center; gap: 4px; }
+    .support-online-dot {
+      width: 8px; height: 8px;
+      background: #28a745; border-radius: 50%;
+      display: inline-block;
+      animation: pulse 2s infinite;
+    }
+    .support-chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 10px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: linear-gradient(160deg, #fff3e0, #ffe0b2);
+      border-radius: 12px;
+      margin: 0 -4px;
+    }
+    .support-chat-empty {
+      text-align: center; padding: 40px 20px; color: #8a7a9c;
+    }
+    .support-chat-empty i { font-size: 3rem; color: #d0b8f0; display: block; margin-bottom: 10px; }
+    .chat-msg-row { display: flex; gap: 8px; align-items: flex-end; }
+    .chat-msg-row.from-user { justify-content: flex-end; }
+    .chat-msg-row.from-support { justify-content: flex-start; }
+    .chat-msg-avatar {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: linear-gradient(135deg, #7d5ba6, #b8a3d9);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 0.8rem; flex-shrink: 0;
+    }
+    .chat-msg-body { display: flex; flex-direction: column; max-width: 75%; }
+    .chat-msg-row.from-user .chat-msg-body { align-items: flex-end; }
+    .chat-msg-row.from-support .chat-msg-body { align-items: flex-start; }
+    .chat-msg-sender { font-size: 0.68rem; color: #7d5ba6; font-weight: 700; margin-bottom: 3px; }
+    .chat-msg-bubble {
+      padding: 10px 14px; border-radius: 18px;
+      font-size: 0.88rem; line-height: 1.45; word-break: break-word;
+    }
+    .chat-msg-row.from-user .chat-msg-bubble {
+      background: linear-gradient(135deg, #7d5ba6, #b8a3d9);
+      color: white; border-bottom-right-radius: 4px;
+    }
+    .chat-msg-row.from-support .chat-msg-bubble {
+      background: #f5edff; color: #4a3b5e; border-bottom-left-radius: 4px;
+      border: 1px solid #e0d0eb;
+    }
+    .chat-msg-time { font-size: 0.63rem; color: #bbb; margin-top: 4px; }
+    .support-chat-input-row {
+      display: flex; gap: 8px; align-items: center;
+      padding: 10px 0 4px; border-top: 2px solid #e0d0eb;
+      flex-shrink: 0;
+    }
+    .support-chat-input-row input {
+      flex: 1; padding: 12px 16px;
+      border: 2px solid #e0d0eb; border-radius: 30px;
+      font-size: 0.9rem; outline: none; background: #faf5ff;
+    }
+    .support-chat-input-row input:focus { border-color: #7d5ba6; }
+    .support-chat-send-btn {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: linear-gradient(135deg, #7d5ba6, #b8a3d9);
+      border: none; border-radius: 50%; color: white;
+      font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.15s;
+    }
+    .support-chat-send-btn:hover { transform: scale(1.08); }
+
+    /* ===== ADMIN SUPPORT CHAT SECTION ===== */
+    /* ===== ADMIN CHAT - SINGLE COLUMN MOBILE LAYOUT ===== */
+    .admin-chat-wrap {
+      display: block; position: relative; height: 480px; overflow: hidden;
+    }
+    /* LIST PANEL */
+    #adminChatListPanel {
+      display: flex; flex-direction: column;
+      height: 100%; width: 100%;
+      border: 2px solid #e0d0eb; border-radius: 15px;
+      background: #faf5ff; overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    #adminChatListPanel.slide-out {
+      transform: translateX(-110%);
+      position: absolute; top: 0; left: 0;
+    }
+    .admin-chat-userlist-title {
+      padding: 12px 15px; font-weight: 700; font-size: 0.88rem;
+      color: #7d5ba6; border-bottom: 1px solid #e0d0eb;
+      background: #f0e8ff; flex-shrink: 0;
+    }
+    #adminChatUserList {
+      flex: 1; overflow-y: auto;
+    }
+    .admin-chat-user-row {
+      padding: 13px 15px; border-bottom: 1px solid #f0e8ff;
+      cursor: pointer; transition: background 0.15s;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .admin-chat-user-row:active { background: #ede0ff; }
+    .acur-info { flex: 1; min-width: 0; }
+    .acur-name { font-weight: 700; font-size: 0.88rem; color: #4a3b5e; }
+    .acur-phone { font-size: 0.75rem; color: #8a7a9c; margin-top: 1px; }
+    .acur-preview { font-size: 0.73rem; color: #aaa; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+    .acur-unread-badge {
+      background: #7d5ba6; color: white; border-radius: 12px;
+      font-size: 0.65rem; padding: 2px 8px; font-weight: 700;
+      margin-left: 8px; white-space: nowrap; flex-shrink: 0;
+    }
+    .acur-arrow { color: #b8a3d9; font-size: 1.2rem; margin-left: 6px; flex-shrink: 0; }
+    .admin-chat-user-row.has-unread { background: #f5eeff; }
+
+    /* CHAT PANEL */
+    #adminChatWindowPanel {
+      display: none; flex-direction: column;
+      height: 100%; width: 100%;
+      border: 2px solid #e0d0eb; border-radius: 15px;
+      overflow: hidden; background: white;
+      position: absolute; top: 0; left: 0;
+    }
+    #adminChatWindowPanel.slide-in {
+      display: flex;
+    }
+    .admin-chat-win-header {
+      background: linear-gradient(135deg, #7d5ba6, #b8a3d9);
+      color: white; padding: 12px 16px;
+      font-weight: 700; font-size: 0.95rem; flex-shrink: 0;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .admin-chat-back-btn {
+      background: rgba(255,255,255,0.25); border: none; color: white;
+      border-radius: 50%; width: 30px; height: 30px; cursor: pointer;
+      font-size: 1rem; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .admin-chat-win-messages {
+      flex: 1; overflow-y: auto; padding: 14px;
+      background: #faf5ff; display: flex; flex-direction: column; gap: 10px;
+    }
+    .admin-chat-win-input {
+      display: flex; flex-direction: column; gap: 8px; padding: 10px;
+      background: white; border-top: 1px solid #e0d0eb; flex-shrink: 0;
+    }
+    .admin-chat-win-input select {
+      width: 100%; padding: 9px 14px; border: 2px solid #e0d0eb;
+      border-radius: 30px; font-size: 0.82rem; outline: none;
+      color: #4a3b5e; background: #faf5ff; cursor: pointer;
+    }
+    .admin-chat-win-input select:focus { border-color: #7d5ba6; }
+    .admin-chat-input-row {
+      display: flex; gap: 8px; align-items: center;
+    }
+    .admin-chat-win-input input {
+      flex: 1; padding: 11px 14px;
+      border: 2px solid #e0d0eb; border-radius: 30px;
+      font-size: 0.88rem; outline: none;
+    }
+    .admin-chat-win-input input:focus { border-color: #7d5ba6; }
+    .admin-chat-win-send {
+      background: #7d5ba6; color: white; border: none;
+      padding: 11px 18px; border-radius: 30px;
+      cursor: pointer; font-weight: 600; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .admin-chat-win-send:active { background: #5e4080; }
+    /* Message bubbles inside admin chat */
+    .admin-msg-bubble-user {
+      align-self: flex-end; background: #7d5ba6; color: white;
+      padding: 9px 14px; border-radius: 18px 18px 4px 18px;
+      font-size: 0.85rem; max-width: 80%;
+    }
+    .admin-msg-bubble-support {
+      align-self: flex-start; background: white; color: #4a3b5e;
+      padding: 9px 14px; border-radius: 18px 18px 18px 4px;
+      font-size: 0.85rem; max-width: 80%;
+      border: 1px solid #e0d0eb;
+    }
+    .admin-msg-sender-label {
+      font-size: 0.7rem; color: #8a7a9c; margin-bottom: 3px;
+    }
+    .admin-msg-time {
+      font-size: 0.65rem; opacity: 0.65; margin-top: 3px; text-align: right;
+    }
+    .admin-msg-unread-dot {
+      display: inline-block; width: 7px; height: 7px;
+      background: #ff6b6b; border-radius: 50%; margin-left: 5px; vertical-align: middle;
     }
 
     /* Level Page */
@@ -5747,10 +5951,9 @@
           <div class="admin-tab" onclick="switchAdminTab('referralViewer')"><i class="fas fa-chart-pie"></i> Referral Viewer</div>
           <!-- FIX 1: NEW DEPOSIT SETTINGS TAB -->
           <div class="admin-tab" onclick="switchAdminTab('depositSettings')"><i class="fas fa-coins"></i> Deposit Settings</div>
-          <!-- FIX 2: NEW QTPI PAY TAB -->
-          <div class="admin-tab" onclick="switchAdminTab('qtpiPay')"><i class="fas fa-credit-card"></i> QTPI PAY</div>
           <!-- FIX 2: NEW SUPPORT TICKETS TAB -->
           <div class="admin-tab" onclick="switchAdminTab('tickets')"><i class="fas fa-ticket-alt"></i> Support Tickets</div>
+          <div class="admin-tab" onclick="switchAdminTab('supportChat')"><i class="fas fa-comments"></i> Support Chat</div>
         </div>
 
         <!-- Deposits Section -->
@@ -6660,32 +6863,6 @@
           </div>
         </div>
 
-        <!-- FIX 2: QTPI PAY SETTINGS SECTION -->
-        <div id="adminQtpiPaySection" class="admin-section">
-          <h3 style="margin-bottom: 20px;"><i class="fas fa-credit-card"></i> QTPI PAY Control</h3>
-          
-          <div class="qtpi-settings-container">
-            <h4 style="color: #9c27b0; margin-bottom: 15px;">🔒 QTPI PAY Lock/Unlock</h4>
-            
-            <div style="display: flex; align-items: center; gap: 30px; margin-bottom: 20px;">
-              <label style="display: flex; align-items: center; gap: 10px; font-size: 1.1rem;">
-                <input type="radio" name="qtpiLock" value="false" onchange="toggleQtpiLock(false)" checked> 🔓 UNLOCKED
-              </label>
-              <label style="display: flex; align-items: center; gap: 10px; font-size: 1.1rem;">
-                <input type="radio" name="qtpiLock" value="true" onchange="toggleQtpiLock(true)"> 🔒 LOCKED
-              </label>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-              <label style="font-weight: 600; display: block; margin-bottom: 5px;">📋 Lock Message:</label>
-              <input type="text" id="qtpiLockMessage" placeholder="Enter message when locked..." style="width: 100%; padding: 12px; border: 2px solid #e0d0eb; border-radius: 20px;" value="🔒 QTPI PAY is coming soon! Please use other methods.">
-            </div>
-            
-            <button onclick="saveQtpiSettings()" style="background: #9c27b0; color: white; border: none; padding: 12px; border-radius: 30px; width: 100%; font-weight: 600; cursor: pointer;">
-              <i class="fas fa-save"></i> SAVE QTPI PAY SETTINGS
-            </button>
-          </div>
-        </div>
 
         <!-- FIX 2: SUPPORT TICKETS ADMIN SECTION -->
         <div id="adminTicketsSection" class="admin-section">
@@ -6704,6 +6881,48 @@
           
           <div id="adminTicketsList" style="display: flex; flex-direction: column; gap: 15px;">
             <!-- Tickets will be loaded here -->
+          </div>
+        </div>
+
+        <!-- SUPPORT CHAT ADMIN SECTION -->
+        <div id="adminSupportChatSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-comments"></i> Support Chat</h3>
+          <div class="admin-chat-wrap">
+
+            <!-- PANEL 1: Conversations List -->
+            <div id="adminChatListPanel">
+              <div class="admin-chat-userlist-title">💬 Conversations</div>
+              <div id="adminChatUserList">
+                <p style="padding:15px; color:#aaa; font-size:0.82rem; text-align:center;">No conversations yet</p>
+              </div>
+            </div>
+
+            <!-- PANEL 2: Chat Window -->
+            <div id="adminChatWindowPanel">
+              <div class="admin-chat-win-header">
+                <button class="admin-chat-back-btn" onclick="adminChatGoBack()">&#8592;</button>
+                <span id="adminChatWinHeader">Chat</span>
+              </div>
+              <div class="admin-chat-win-messages" id="adminChatWinMessages"></div>
+              <div class="admin-chat-win-input">
+                <select id="adminChatReplyAs">
+                  <option value="Customer Service">🤝 Customer Service</option>
+                  <option value="Representative">👔 Representative</option>
+                  <option value="Care Team">💬 Care Team</option>
+                  <option value="Support Agent">🛠️ Support Agent</option>
+                  <option value="Technical Support">🔧 Technical Support</option>
+                  <option value="Financial Advisor">💰 Financial Advisor</option>
+                  <option value="Coffee Advisor">☕ Coffee Advisor</option>
+                  <option value="UIC Team">🌿 UIC Team</option>
+                </select>
+                <div class="admin-chat-input-row">
+                  <input type="text" id="adminChatReplyInput" placeholder="Type your reply…" maxlength="500"
+                    onkeypress="if(event.key==='Enter') sendAdminChatReply()">
+                  <button class="admin-chat-win-send" onclick="sendAdminChatReply()">Send</button>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -7136,6 +7355,8 @@
           <div class="menu-item" onclick="showTransactionHistory()"><i class="fas fa-history"></i> transaction history</div>
           <!-- NEW SUPPORT MENU ITEM -->
           <div class="menu-item" onclick="showSupportPage()"><i class="fas fa-headset"></i> customer support</div>
+          <!-- SUPPORT CHAT MENU ITEM -->
+          <div class="menu-item" onclick="showPage('supportChat')"><i class="fas fa-comments"></i> support chat</div>
         </div>
       </div>
 
@@ -7743,37 +7964,6 @@
           </div>
         </div>
 
-        <!-- Support Ticket Section -->
-        <div class="ticket-section">
-          <h3><i class="fas fa-ticket-alt"></i> Open Support Ticket</h3>
-          
-          <div class="ticket-field">
-            <label>Issue Type</label>
-            <select id="ticketType">
-              <option value="withdrawal">Withdrawal Issue</option>
-              <option value="deposit">Deposit Problem</option>
-              <option value="reading">Reading/Book Issue</option>
-              <option value="referral">Referral Commission</option>
-              <option value="account">Account Access</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          
-          <div class="ticket-field">
-            <label>Subject</label>
-            <input type="text" id="ticketSubject" placeholder="Brief description">
-          </div>
-          
-          <div class="ticket-field">
-            <label>Message</label>
-            <textarea id="ticketMessage" rows="4" placeholder="Describe your issue in detail..."></textarea>
-          </div>
-          
-          <button class="ticket-submit-btn" onclick="submitSupportTicket()">
-            <i class="fas fa-paper-plane"></i> SUBMIT TICKET
-          </button>
-        </div>
-
         <!-- FAQ Accordion -->
         <div class="faq-section">
           <h3><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
@@ -7847,6 +8037,41 @@
       </div>
     </div>
 
+    <!-- SUPPORT CHAT PAGE -->
+    <div id="supportChatPage">
+      <div class="scroll-content" style="display:flex;flex-direction:column;padding-bottom:0;">
+        <button class="back-btn" onclick="showPage('profile')"><i class="fas fa-arrow-left"></i> Back to Profile</button>
+
+        <div class="support-chat-header">
+          <div class="support-chat-avatar"><i class="fas fa-headset"></i></div>
+          <div class="support-chat-header-info">
+            <h3>UIC Support</h3>
+            <span><span class="support-online-dot"></span> Online · here to help you</span>
+          </div>
+        </div>
+
+        <div class="support-chat-messages" id="supportChatMessages">
+          <div class="support-chat-empty" id="supportChatEmpty">
+            <i class="fas fa-comments"></i>
+            <p>No messages yet.<br>Say hello and we'll be right with you!</p>
+          </div>
+        </div>
+
+        <div class="support-chat-input-row">
+          <input type="text" id="supportChatInput" placeholder="Type your message…" maxlength="500"
+            onkeypress="if(event.key==='Enter') sendSupportChat()">
+          <button class="support-chat-send-btn" onclick="sendSupportChat()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showPage('home')"><i class="fas fa-home"></i><span>Home</span></div>
+        <div class="nav-item" onclick="showPage('task')"><i class="fas fa-book"></i><span>Books</span></div>
+        <div class="nav-item" onclick="showPage('level')"><i class="fas fa-chart-simple"></i><span>Level</span></div>
+        <div class="nav-item" onclick="showPage('income')"><i class="fas fa-coins"></i><span>Reddito</span></div>
+        <div class="nav-item active" onclick="showPage('profile')"><i class="fas fa-user"></i><span>Emphatic</span></div>
+      </div>
+    </div>
+
     <!-- TRANSACTION HISTORY PAGE -->
     <div id="transactionHistoryPage">
       <div class="scroll-content">
@@ -7907,10 +8132,6 @@
           <i class="fas fa-camera"></i> UNKA PT (Upload Screenshot)
         </div>
         
-        <!-- FIX 2: QTPI PAY METHOD -->
-        <div class="deposit-method-card" onclick="selectDepositMethod('qtpi')" id="method-qtpi">
-          <i class="fas fa-credit-card"></i> QTPI PAY
-        </div>
         
         <button class="deposit-continue-btn" id="depositContinueBtn1" onclick="goToDepositScreen2()" disabled>CONTINUE</button>
         <button class="deposit-back-btn" onclick="closeDepositModal()">← Back</button>
@@ -8073,26 +8294,6 @@
         </div>
 
         <!-- FIX 2: QTPI PAY SECTION -->
-        <div id="qtpiSection" style="display: none;">
-          <div class="notification-banner" style="margin: 10px 0; background: #9c27b0;">
-            🟣 QTPI PAY - AUTO DEPOSIT
-          </div>
-          
-          <div class="deposit-step">
-            <strong>Amount:</strong> <span style="color: #FFD700; font-size: 1.3rem;" id="qtpiAmount">50,000 UGX</span>
-          </div>
-          
-          <div class="deposit-step" style="text-align: center;">
-            <i class="fas fa-check-circle" style="font-size: 3rem; color: #28a745; margin-bottom: 10px;"></i>
-            <p style="font-size: 1.1rem; margin-bottom: 5px;">✅ AUTO-APPROVED DEPOSIT</p>
-            <p style="color: #ccc;">Funds will be added instantly!</p>
-          </div>
-          
-          <div class="deposit-recipient-card" style="border-color: #9c27b0;">
-            <div class="number" style="color: #9c27b0;">INSTANT</div>
-            <div class="name">No verification needed</div>
-          </div>
-        </div>
         
         <button class="deposit-continue-btn" id="depositConfirmBtn" onclick="submitDeposit()" disabled>CONFIRM DEPOSIT</button>
         <div id="unkaContactSupport" style="display: none;">
@@ -9125,8 +9326,8 @@ function startUserTicketListener() {
 }
 
 function openSupportFromNotification() {
-  showPage('support');
-  markAllUnreadMessagesAsRead();
+  showPage('supportChat');
+  markSupportChatAsReadByUser();
 }
 
 function markAllUnreadMessagesAsRead() {
@@ -10825,6 +11026,7 @@ function showPage(page) {
   document.getElementById('stakesPage').style.display = page === 'stakes' ? 'flex' : 'none';
   document.getElementById('girarePage').style.display = page === 'girare' ? 'flex' : 'none';
   document.getElementById('supportPage').style.display = page === 'support' ? 'flex' : 'none';
+  document.getElementById('supportChatPage').style.display = page === 'supportChat' ? 'flex' : 'none';
 
   document.querySelectorAll('.bottom-nav').forEach(nav => {
     const items = nav.querySelectorAll('.nav-item');
@@ -10851,6 +11053,7 @@ function showPage(page) {
   if (page === 'stakes') loadStakesPage();
   if (page === 'girare') loadGirarePage();
   if (page === 'support') loadSupportPage();
+  if (page === 'supportChat') loadSupportChatMessages();
   
   resetInactivityTimer();
 }
@@ -12838,7 +13041,6 @@ function resetDepositModal() {
   document.getElementById('method-pear').classList.remove('selected');
   document.getElementById('method-dpk').classList.remove('selected');
   document.getElementById('method-unka').classList.remove('selected');
-  document.getElementById('method-qtpi').classList.remove('selected');
   document.getElementById('network-mtn').classList.remove('selected');
   document.getElementById('network-airtel').classList.remove('selected');
   
@@ -12852,7 +13054,6 @@ function resetDepositModal() {
   
   document.getElementById('unkaPTSection').style.display = 'none';
   document.getElementById('pearDpkSection').style.display = 'block';
-  document.getElementById('qtpiSection').style.display = 'none';
   document.getElementById('unkaContactSupport').style.display = 'none';
   
   const phoneContainer = document.getElementById('phoneInputContainer');
@@ -12871,15 +13072,7 @@ function selectDepositMethod(method) {
   document.getElementById('method-pear').classList.remove('selected');
   document.getElementById('method-dpk').classList.remove('selected');
   document.getElementById('method-unka').classList.remove('selected');
-  document.getElementById('method-qtpi').classList.remove('selected');
   document.getElementById(`method-${method}`).classList.add('selected');
-  
-  if (method === 'qtpi' && qtpiConfig.locked) {
-    showConfirmModal('🔒 QTPI PAY', qtpiConfig.lockMessage, 'warning');
-    document.getElementById('depositContinueBtn1').disabled = true;
-    return;
-  }
-  
   document.getElementById('depositContinueBtn1').disabled = false;
 }
 
@@ -12954,8 +13147,7 @@ function goToDepositScreen2() {
   
   let methodName = selectedDepositMethod === 'pear' ? 'PEAR PAY' : 
                    selectedDepositMethod === 'dpk' ? 'DPK PAY PAY' : 
-                   selectedDepositMethod === 'unka' ? 'UNKA PT' : 
-                   'QTPI PAY';
+                   'UNKA PT';
   document.getElementById('selectedMethodDisplay').textContent = methodName;
   
   document.getElementById('depositScreen1').classList.remove('active');
@@ -12969,8 +13161,7 @@ function goToDepositScreen3() {
   
   let methodName = selectedDepositMethod === 'pear' ? 'PEAR PAY' : 
                    selectedDepositMethod === 'dpk' ? 'DPK PAY PAY' : 
-                   selectedDepositMethod === 'unka' ? 'UNKA PT' : 
-                   'QTPI PAY';
+                   'UNKA PT';
   document.getElementById('selectedMethodDisplay2').textContent = methodName;
   document.getElementById('selectedAmountDisplay').textContent = selectedDepositAmount.toLocaleString() + ' UGX';
   
@@ -13015,18 +13206,10 @@ function goToDepositScreen4() {
   if (selectedDepositMethod === 'unka') {
     document.getElementById('unkaPTSection').style.display = 'block';
     document.getElementById('pearDpkSection').style.display = 'none';
-    document.getElementById('qtpiSection').style.display = 'none';
     updateUnkaScreen4();
-  } else if (selectedDepositMethod === 'qtpi') {
-    document.getElementById('unkaPTSection').style.display = 'none';
-    document.getElementById('pearDpkSection').style.display = 'none';
-    document.getElementById('qtpiSection').style.display = 'block';
-    document.getElementById('qtpiAmount').textContent = selectedDepositAmount.toLocaleString() + ' UGX';
-    document.getElementById('depositConfirmBtn').disabled = false;
   } else {
     document.getElementById('unkaPTSection').style.display = 'none';
     document.getElementById('pearDpkSection').style.display = 'block';
-    document.getElementById('qtpiSection').style.display = 'none';
     updateDepositScreen4();
   }
   
@@ -13531,40 +13714,6 @@ function submitDeposit() {
     showConfirmModal('Success', 'UNKA PT deposit request sent! We\'ll verify within 24 hours.', 'success');
     
     unkaScreenshotData = null;
-    
-  } else if (selectedDepositMethod === 'qtpi') {
-    const deposit = {
-      id: Date.now(),
-      userId: currentUser,
-      userPhone: users[currentUser]?.phone,
-      mobileNumber: selectedDepositPhone || 'AUTO',
-      amount: selectedDepositAmount,
-      transactionId: 'QTPI-' + Date.now(),
-      network: selectedDepositNetwork,
-      method: 'QTPI PAY (AUTO)',
-      timestamp: new Date().toISOString(),
-      status: 'approved',
-      autoApproved: true
-    };
-    
-    if (users[currentUser]) {
-      users[currentUser].operatingWallet = (users[currentUser].operatingWallet || 0) + selectedDepositAmount;
-      
-      if (!users[currentUser].transactions) users[currentUser].transactions = [];
-      users[currentUser].transactions.unshift({ 
-        type: 'deposit', 
-        amount: selectedDepositAmount, 
-        date: new Date().toLocaleString(), 
-        desc: `Deposit approved instantly via QTPI PAY` 
-      });
-      
-      saveUsers();
-    }
-    
-    pendingDeposits.push(deposit);
-    saveDeposits();
-    
-    showConfirmModal('✅ SUCCESS!', `Your deposit of ${selectedDepositAmount.toLocaleString()} UGX has been added instantly to your Operating Wallet!`, 'success');
     
   } else {
     const message = document.getElementById('depositMessageInput').value;
@@ -17427,6 +17576,300 @@ window.onload = function() {
   setInterval(checkWebsiteLock, 1000);
 };
 
+// ========== SUPPORT CHAT ==========
+let supportChats = {};
+let adminChatOpenUser = null;
+
+// ===== AUTO-DELETE messages older than 16 hours =====
+function purgeOldSupportMessages() {
+  const cutoff = Date.now() - (16 * 60 * 60 * 1000); // 16 hours ago
+  const keys = Object.keys(supportChats);
+  keys.forEach(key => {
+    const chat = supportChats[key];
+    if (!chat || !chat.messages) return;
+    const filtered = chat.messages.filter(m => {
+      const ts = new Date(m.timestamp).getTime();
+      return ts >= cutoff;
+    });
+    if (filtered.length !== chat.messages.length) {
+      const lastMsg = filtered.length > 0 ? filtered[filtered.length - 1].message : '';
+      const lastTime = filtered.length > 0 ? filtered[filtered.length - 1].timestamp : null;
+      db.ref('supportChats/' + key).update({
+        messages: filtered,
+        lastMessage: lastMsg,
+        lastTime: lastTime
+      });
+    }
+  });
+}
+
+// Firebase listener for supportChats
+db.ref('supportChats').on('value', (snapshot) => {
+  supportChats = snapshot.val() || {};
+  purgeOldSupportMessages();
+  if (document.getElementById('supportChatPage') && document.getElementById('supportChatPage').style.display === 'flex') {
+    renderSupportChatMessages();
+    markSupportChatAsReadByUser();
+  }
+  if (document.getElementById('adminSupportChatSection') && document.getElementById('adminSupportChatSection').classList.contains('active')) {
+    loadAdminChatUsers();
+    if (adminChatOpenUser) renderAdminChatMessages(adminChatOpenUser);
+  }
+  updateSupportChatPopup();
+});
+
+// Run purge every hour
+setInterval(purgeOldSupportMessages, 60 * 60 * 1000);
+
+// ===== USER FLOATING POPUP =====
+function updateSupportChatPopup() {
+  if (!currentUser) return;
+  const user = users[currentUser];
+  if (!user) return;
+  const key = user.phone.replace(/\D/g, '');
+  const chat = supportChats[key];
+  const icon = document.getElementById('userNotificationIcon');
+  const badge = document.getElementById('notificationBadge');
+  if (!icon) return;
+  if (!chat || !chat.messages) { icon.style.display = 'none'; return; }
+  const unread = chat.messages.filter(m => m.from === 'support' && !m.readByUser).length;
+  if (unread > 0) {
+    icon.style.display = 'block';
+    if (badge) badge.textContent = unread > 9 ? '9+' : unread;
+  } else {
+    icon.style.display = 'none';
+  }
+}
+
+function markSupportChatAsReadByUser() {
+  if (!currentUser) return;
+  const user = users[currentUser];
+  if (!user) return;
+  const key = user.phone.replace(/\D/g, '');
+  const chat = supportChats[key];
+  if (!chat || !chat.messages) return;
+  const hasUnread = chat.messages.some(m => m.from === 'support' && !m.readByUser);
+  if (!hasUnread) return;
+  const updated = chat.messages.map(m => m.from === 'support' ? { ...m, readByUser: true } : m);
+  db.ref('supportChats/' + key).update({ messages: updated }).then(() => {
+    const icon = document.getElementById('userNotificationIcon');
+    if (icon) icon.style.display = 'none';
+  });
+}
+
+function adminChatGoBack() {
+  adminChatOpenUser = null;
+  const listPanel = document.getElementById('adminChatListPanel');
+  const chatWin = document.getElementById('adminChatWindowPanel');
+  if (listPanel) listPanel.classList.remove('slide-out');
+  if (chatWin) chatWin.classList.remove('slide-in');
+  loadAdminChatUsers();
+}
+
+function markAdminChatAsRead(key) {
+  const chat = supportChats[key];
+  if (!chat || !chat.messages) return;
+  const hasUnread = chat.messages.some(m => m.from === 'user' && !m.readByAdmin);
+  if (!hasUnread) return;
+  const updated = chat.messages.map(m => m.from === 'user' ? { ...m, readByAdmin: true } : m);
+  db.ref('supportChats/' + key).update({ messages: updated });
+}
+
+function sendSupportChat() {
+  const input = document.getElementById('supportChatInput');
+  const text = input ? input.value.trim() : '';
+  if (!text) return;
+  const user = users[currentUser];
+  if (!user) return;
+  const key = user.phone.replace(/\D/g, '');
+  const msg = {
+    from: 'user',
+    senderName: user.fullName,
+    senderPhone: user.phone,
+    message: text,
+    timestamp: new Date().toISOString(),
+    readByAdmin: false
+  };
+  const existing = (supportChats[key] && supportChats[key].messages) ? supportChats[key].messages : [];
+  const updated = [...existing, msg];
+  db.ref('supportChats/' + key).set({
+    userPhone: user.phone,
+    userName: user.fullName,
+    messages: updated,
+    lastMessage: text,
+    lastTime: msg.timestamp
+  }).then(() => { input.value = ''; });
+}
+
+function loadSupportChatMessages() {
+  const user = users[currentUser];
+  if (!user) return;
+  renderSupportChatMessages();
+  markSupportChatAsReadByUser();
+}
+
+function renderSupportChatMessages() {
+  const user = users[currentUser];
+  if (!user) return;
+  const key = user.phone.replace(/\D/g, '');
+  const chat = supportChats[key];
+  const container = document.getElementById('supportChatMessages');
+  const empty = document.getElementById('supportChatEmpty');
+  if (!container) return;
+  const messages = (chat && chat.messages) ? chat.messages : [];
+  if (messages.length === 0) {
+    if (empty) empty.style.display = 'block';
+    Array.from(container.children).forEach(c => { if (c !== empty) c.remove(); });
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  let html = '';
+  messages.forEach(msg => {
+    const isUser = msg.from === 'user';
+    const time = new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    if (isUser) {
+      html += `<div class="chat-msg-row from-user"><div class="chat-msg-body"><div class="chat-msg-bubble">${msg.message}</div><div class="chat-msg-time">${time}</div></div></div>`;
+    } else {
+      const senderName = msg.senderName || 'Customer Care';
+      const icon = getSupportIcon(senderName);
+      html += `<div class="chat-msg-row from-support"><div class="chat-msg-avatar">${icon}</div><div class="chat-msg-body"><div class="chat-msg-sender">${senderName}</div><div class="chat-msg-bubble">${msg.message}</div><div class="chat-msg-time">${time}</div></div></div>`;
+    }
+  });
+  container.innerHTML = html;
+  if (!document.getElementById('supportChatEmpty')) {
+    const e = document.createElement('div');
+    e.id = 'supportChatEmpty'; e.className = 'support-chat-empty'; e.style.display = 'none';
+    container.appendChild(e);
+  }
+  container.scrollTop = container.scrollHeight;
+}
+
+function getSupportIcon(name) {
+  if (name === 'Financial Advisor') return '💰';
+  if (name === 'Coffee Advisor') return '☕';
+  if (name === 'UIC Team') return '🌿';
+  if (name === 'Support Agent') return '🛠️';
+  return '👤';
+}
+
+// ===== ADMIN CHAT FUNCTIONS =====
+function loadAdminChatUsers() {
+  const container = document.getElementById('adminChatUserList');
+  if (!container) return;
+  const keys = Object.keys(supportChats);
+  if (keys.length === 0) {
+    container.innerHTML = '<p style="padding:15px; color:#aaa; font-size:0.82rem; text-align:center;">No conversations yet</p>';
+    return;
+  }
+  let html = '';
+  keys.forEach(key => {
+    const chat = supportChats[key];
+    const preview = chat.lastMessage ? chat.lastMessage.substring(0, 32) + (chat.lastMessage.length > 32 ? '…' : '') : '';
+    const unreadCount = chat.messages ? chat.messages.filter(m => m.from === 'user' && !m.readByAdmin).length : 0;
+    const unreadClass = unreadCount > 0 ? ' has-unread' : '';
+    const unreadBadge = unreadCount > 0 ? `<span class="acur-unread-badge">${unreadCount} new</span>` : '';
+    html += `
+      <div class="admin-chat-user-row${unreadClass}" onclick="openAdminChatWithUser('${key}')">
+        <div class="acur-info">
+          <div class="acur-name">${chat.userName || chat.userPhone}</div>
+          <div class="acur-phone">${chat.userPhone || ''}</div>
+          <div class="acur-preview">${preview}</div>
+        </div>
+        ${unreadBadge}
+        <span class="acur-arrow">&#8250;</span>
+      </div>`;
+  });
+  container.innerHTML = html;
+}
+
+function openAdminChatWithUser(key) {
+  adminChatOpenUser = key;
+  const chat = supportChats[key];
+  if (!chat) return;
+  const listPanel = document.getElementById('adminChatListPanel');
+  const chatWin = document.getElementById('adminChatWindowPanel');
+  if (listPanel) listPanel.classList.add('slide-out');
+  if (chatWin) chatWin.classList.add('slide-in');
+  document.getElementById('adminChatWinHeader').textContent = (chat.userName || chat.userPhone);
+  renderAdminChatMessages(key);
+  markAdminChatAsRead(key);
+}
+
+function renderAdminChatMessages(key) {
+  const container = document.getElementById('adminChatWinMessages');
+  if (!container) return;
+  const chat = supportChats[key];
+  const messages = (chat && chat.messages) ? chat.messages : [];
+  if (messages.length === 0) {
+    container.innerHTML = '<p style="color:#aaa; text-align:center; padding:20px; font-size:0.85rem;">No messages yet</p>';
+    return;
+  }
+  let html = '';
+  messages.forEach(msg => {
+    const isUser = msg.from === 'user';
+    const time = new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    if (isUser) {
+      const unreadDot = (!msg.readByAdmin) ? '<span class="admin-msg-unread-dot"></span>' : '';
+      html += `
+        <div style="display:flex; flex-direction:column; align-items:flex-end;">
+          <div class="admin-msg-sender-label" style="text-align:right;">${msg.senderName || 'User'}</div>
+          <div class="admin-msg-bubble-user">${msg.message}</div>
+          <div class="admin-msg-time">${time}${unreadDot}</div>
+        </div>`;
+    } else {
+      const senderName = msg.senderName || 'Customer Service';
+      const icon = getSupportIcon(senderName);
+      html += `
+        <div style="display:flex; flex-direction:column; align-items:flex-start;">
+          <div class="admin-msg-sender-label">${icon} ${senderName}</div>
+          <div class="admin-msg-bubble-support">${msg.message}</div>
+          <div class="admin-msg-time">${time}</div>
+        </div>`;
+    }
+  });
+  container.innerHTML = html;
+  container.scrollTop = container.scrollHeight;
+}
+
+function sendAdminChatReply() {
+  if (!adminChatOpenUser) return;
+  const input = document.getElementById('adminChatReplyInput');
+  const selectEl = document.getElementById('adminChatReplyAs');
+  const text = input ? input.value.trim() : '';
+  const senderName = selectEl ? selectEl.value : 'Customer Care';
+  if (!text) return;
+  const chat = supportChats[adminChatOpenUser] || {};
+  const existing = chat.messages || [];
+  const msg = {
+    from: 'support',
+    senderName: senderName,
+    message: text,
+    timestamp: new Date().toISOString(),
+    readByUser: false
+  };
+  const updated = [...existing, msg];
+  db.ref('supportChats/' + adminChatOpenUser).update({
+    messages: updated,
+    lastMessage: text,
+    lastTime: msg.timestamp
+  }).then(() => { if (input) input.value = ''; });
+}
+
+// Wire supportChat into switchAdminTab
+const _origSwitchAdminTab = window.switchAdminTab;
+window.switchAdminTab = function(tab) {
+  _origSwitchAdminTab(tab);
+  const chatSection = document.getElementById('adminSupportChatSection');
+  if (!chatSection) return;
+  if (tab === 'supportChat') {
+    document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+    chatSection.classList.add('active');
+    loadAdminChatUsers();
+  } else {
+    chatSection.classList.remove('active');
+  }
+};
+
 function showAuthPage() {
   document.getElementById('authContainer').style.display = 'block';
   document.getElementById('mainDashboard').style.display = 'none';
@@ -17442,6 +17885,7 @@ function showAuthPage() {
   document.getElementById('stakesPage').style.display = 'none';
   document.getElementById('girarePage').style.display = 'none';
   document.getElementById('supportPage').style.display = 'none';
+  document.getElementById('supportChatPage').style.display = 'none';
 }
   </script>
 </body>
