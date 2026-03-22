@@ -5689,9 +5689,1026 @@
   </div>
 
   <!-- Admin Login Modal -->
-  <!-- Admin moved to admin.html -->
+  <div class="modal-overlay" id="adminLoginModal">
+    <div class="modal-content" style="max-width: 350px;">
+      <div class="modal-header" style="justify-content: center;">
+        <h2 style="color: #4a3b5e;"><i class="fas fa-crown"></i> Admin Login</h2>
+      </div>
+      <div style="padding: 10px 0;">
+        <input type="password" id="adminPasswordModal" placeholder="Enter admin password" style="width: 100%; padding: 15px; border: 2px solid #e0d0eb; border-radius: 30px; margin-bottom: 15px; outline: none;" onkeypress="if(event.key==='Enter') adminLoginModal()">
+        <div style="display: flex; gap: 10px;">
+          <button onclick="adminLoginModal()" style="flex: 1; background: #7d5ba6; color: white; border: none; padding: 12px; border-radius: 30px; font-weight: 600; cursor: pointer;">Login</button>
+          <button onclick="closeAdminLoginModal()" style="flex: 1; background: #f0f0f0; border: none; padding: 12px; border-radius: 30px; font-weight: 600; cursor: pointer;">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Admin Panel -->
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-container">
+      <div class="admin-header">
+        <h2><i class="fas fa-globe-africa"></i> UIC Admin Dashboard</h2>
+        <button class="close-admin" onclick="toggleAdminPanel()"><i class="fas fa-times"></i></button>
+      </div>
+
+      <!-- Admin Login Section -->
+      <div id="adminLoginSection" class="admin-login" style="display: none;">
+        <h3>Admin Login</h3>
+        <input type="password" id="adminPassword" placeholder="Enter admin password" onkeypress="if(event.key==='Enter') adminLogin()">
+        <button onclick="adminLogin()">Login</button>
+      </div>
+
+      <!-- Admin Main Content -->
+      <div id="adminContent" style="display: none;">
+        <!-- Stats Cards -->
+        <div class="admin-stats" id="adminStats"></div>
+
+        <!-- Tabs -->
+        <div class="admin-tabs">
+          <div class="admin-tab active" onclick="switchAdminTab('deposits')"><i class="fas fa-arrow-down"></i> Deposits</div>
+          <div class="admin-tab" onclick="switchAdminTab('withdrawals')"><i class="fas fa-arrow-up"></i> Withdrawals</div>
+          <div class="admin-tab" onclick="switchAdminTab('users')"><i class="fas fa-users"></i> Users</div>
+          <div class="admin-tab" onclick="switchAdminTab('system')"><i class="fas fa-chart-bar"></i> System</div>
+          <div class="admin-tab" onclick="switchAdminTab('positionMembers')"><i class="fas fa-trophy"></i> Position Members</div>
+          <div class="admin-tab" onclick="switchAdminTab('referralNetwork')"><i class="fas fa-network-wired"></i> Referral Network</div>
+          <div class="admin-tab" onclick="switchAdminTab('companySettings')"><i class="fas fa-building"></i> Company Settings</div>
+          <div class="admin-tab" onclick="switchAdminTab('girare')"><i class="fas fa-dice"></i> Girare Wheel</div>
+          <div class="admin-tab" onclick="switchAdminTab('stakes')"><i class="fas fa-trophy"></i> Stakes</div>
+          <div class="admin-tab" onclick="switchAdminTab('support')"><i class="fas fa-headset"></i> Support</div>
+          <div class="admin-tab" onclick="switchAdminTab('withdrawalControl')"><i class="fas fa-lock"></i> Withdrawal Control</div>
+          <!-- FIX 1: New User Withdraw Lock Tab -->
+          <div class="admin-tab" onclick="switchAdminTab('userWithdrawLock')"><i class="fas fa-user-lock"></i> User Withdraw Lock</div>
+          <div class="admin-tab" onclick="switchAdminTab('announcement')"><i class="fas fa-bullhorn"></i> Announcement</div>
+          <div class="admin-tab" onclick="switchAdminTab('levelLock')"><i class="fas fa-ban"></i> Level Lock</div>
+          <div class="admin-tab" onclick="switchAdminTab('mxl')"><i class="fas fa-key"></i> MXL Password</div>
+          <div class="admin-tab" onclick="switchAdminTab('testimonianza')"><i class="fas fa-images"></i> Testimonianza</div>
+          <div class="admin-tab" onclick="switchAdminTab('websiteLock')"><i class="fas fa-globe"></i> Website Lock</div>
+          <div class="admin-tab" onclick="switchAdminTab('referralViewer')"><i class="fas fa-chart-pie"></i> Referral Viewer</div>
+          <!-- FIX 1: NEW DEPOSIT SETTINGS TAB -->
+          <div class="admin-tab" onclick="switchAdminTab('depositSettings')"><i class="fas fa-coins"></i> Deposit Settings</div>
+          <!-- FIX 2: NEW QTPI PAY TAB -->
+          <div class="admin-tab" onclick="switchAdminTab('qtpiPay')"><i class="fas fa-credit-card"></i> QTPI PAY</div>
+          <!-- FIX 2: NEW SUPPORT TICKETS TAB -->
+          <div class="admin-tab" onclick="switchAdminTab('tickets')"><i class="fas fa-ticket-alt"></i> Support Tickets</div>
+        </div>
+
+        <!-- Deposits Section -->
+        <div id="adminDepositsSection" class="admin-section active">
+          <div style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
+            <input type="text" id="searchDepositInput" placeholder="Search by user phone or name..." style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 30px;">
+            <button onclick="searchDeposits()" style="background: #7d5ba6; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer;">Search</button>
+          </div>
+          <h3 style="margin-bottom: 20px;">Pending Deposits (newest first)</h3>
+          <table class="admin-table" id="depositsTable">
+            <thead>
+                泵
+                <th>Date</th>
+                <th>Login Phone</th>
+                <th>Deposit Phone</th>
+                <th>Amount</th>
+                <th>TID</th>
+                <th>Network</th>
+                <th>Method</th>
+                <th>Actions</th>
+                 </thead>
+            <tbody id="depositsTableBody"></tbody>
+           </table>
+        </div>
+
+        <!-- Withdrawals Section -->
+        <div id="adminWithdrawalsSection" class="admin-section">
+          <div style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
+            <input type="text" id="searchWithdrawalInput" placeholder="Search by user phone or name..." style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 30px;">
+            <button onclick="searchWithdrawals()" style="background: #7d5ba6; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer;">Search</button>
+          </div>
+          <h3 style="margin-bottom: 20px;">Pending Withdrawals (oldest first)</h3>
+          <table class="admin-table" id="withdrawalsTable">
+            <thead>
+                泵
+                <th>Date</th>
+                <th>User</th>
+                <th>User Phone</th>
+                <th>Harvest Phone</th>
+                <th>Account Names</th>
+                <th>Amount</th>
+                <th>Wallet</th>
+                <th>Actions</th>
+                 </thead>
+            <tbody id="withdrawalsTableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- Users Section -->
+        <div id="adminUsersSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;">User Management</h3>
+          <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+            <div style="flex: 1;">
+              <div style="font-weight: 600; margin-bottom: 10px; color: #dc3545;"><i class="fas fa-trash"></i> Delete Harvest Account</div>
+              <div style="display: flex; gap: 5px;">
+                <input type="text" id="deleteHarvestInput" placeholder="Enter phone number..." style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 30px;">
+                <button onclick="searchUserForDelete()" style="background: #dc3545; color: white; border: none; padding: 10px 15px; border-radius: 30px; cursor: pointer;">Search</button>
+              </div>
+              <div id="deleteHarvestResult" style="margin-top: 10px; display: none; background: #f8d7da; border-radius: 15px; padding: 15px;">
+                <p id="deleteHarvestUserName"></p>
+                <button onclick="confirmDeleteHarvest()" style="background: #dc3545; color: white; border: none; padding: 10px; border-radius: 30px; width: 100%;">Delete Harvest Account</button>
+              </div>
+            </div>
+            <div style="flex: 1;">
+              <div style="font-weight: 600; margin-bottom: 10px; color: #7d5ba6;"><i class="fas fa-search"></i> Search Users</div>
+              <div style="display: flex; gap: 5px;">
+                <input type="text" id="searchUsersInput" placeholder="Phone or name..." style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 30px;" oninput="filterUsersTable()">
+                <button onclick="filterUsersTable()" style="background: #7d5ba6; color: white; border: none; padding: 10px 15px; border-radius: 30px; cursor: pointer;">Search</button>
+              </div>
+            </div>
+          </div>
+          <table class="admin-table" id="usersTable">
+            <thead>
+                泵
+                  <th>Phone</th>
+                  <th>Name</th>
+                  <th>Password</th>
+                  <th>Level</th>
+                  <th>Operating</th>
+                  <th>Incentive</th>
+                  <th>Harvest</th>
+                  <th>Actions</th>
+                 </thead>
+            <tbody id="usersTableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- System Section -->
+        <div id="adminSystemSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;">System Settings</h3>
+          <div style="background: #f5edff; padding: 20px; border-radius: 20px;">
+            <p><strong>Total Users:</strong> <span id="systemTotalUsers">0</span></p>
+            <p><strong>Total Deposits Pending:</strong> <span id="systemTotalDeposits">0</span> UGX</p>
+            <p><strong>Total Withdrawals Pending:</strong> <span id="systemTotalWithdrawals">0</span> UGX</p>
+            <p><strong>Total in Operating Wallets:</strong> <span id="systemTotalOperating">0</span> UGX</p>
+            <p><strong>Total in Incentive Wallets:</strong> <span id="systemTotalIncentive">0</span> UGX</p>
+            <p><strong>Total Successful Withdrawals:</strong> <span id="systemTotalWithdrawalsCount">0</span></p>
+            <button onclick="showClearAllDataConfirm()" style="background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 30px; margin-top: 20px; cursor: pointer;">Reset All Data (Admin Only)</button>
+          </div>
+        </div>
+
+        <!-- Position Members Section -->
+        <div id="adminPositionMembersSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;">Position Members</h3>
+          <div style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
+            <input type="text" id="searchPositionInput" placeholder="Search by name/phone/position..." style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 30px;">
+            <button onclick="searchPositionMembers()" style="background: #7d5ba6; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer;">Search</button>
+          </div>
+          <div id="positionMembersList"></div>
+        </div>
+
+        <!-- Referral Network Section -->
+        <div id="adminReferralNetworkSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-network-wired"></i> Referral Network Management</h3>
+          
+          <div class="referral-management-container">
+            <div style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
+              <input type="text" id="referralSearchInput" placeholder="Enter user phone to manage..." style="flex: 1; padding: 12px; border: 2px solid #e0d0eb; border-radius: 30px;">
+              <button onclick="searchReferralUser()" style="background: #7d5ba6; color: white; border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer;">Search</button>
+            </div>
+            
+            <div id="referralManagementResult"></div>
+          </div>
+        </div>
+
+        <!-- Company Settings Section -->
+        <div id="adminCompanySettingsSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-building"></i> Company Settings</h3>
+          <div class="admin-company-settings">
+            <!-- UNKA PT SETTINGS -->
+            <div style="margin-bottom: 20px; border: 2px solid #FFD700; padding: 15px; border-radius: 20px;">
+              <h4 style="color: #FFD700; margin-bottom: 15px;">📷 UNKA PT SETTINGS</h4>
+              <div style="margin-bottom: 20px;">
+                <h5 style="color: #7d5ba6;">📱 MTN</h5>
+                <div class="company-setting-row">
+                  <label>Phone:</label>
+                  <input type="text" id="mtnPhoneInput" placeholder="0766913235" value="0766913235">
+                  <button onclick="saveCompanySetting('mtn', 'phone')">Save</button>
+                </div>
+                <div class="company-setting-row">
+                  <label>Name:</label>
+                  <input type="text" id="mtnNameInput" placeholder="VERONIC NAIBOLYA NAMUHANGA" value="VERONIC NAIBOLYA NAMUHANGA">
+                  <button onclick="saveCompanySetting('mtn', 'name')">Save</button>
+                </div>
+              </div>
+              
+              <div style="margin-bottom: 20px;">
+                <h5 style="color: #7d5ba6;">📞 AIRTEL</h5>
+                <div class="company-setting-row">
+                  <label>Phone:</label>
+                  <input type="text" id="airtelPhoneInput" placeholder="0756673144" value="0756673144">
+                  <button onclick="saveCompanySetting('airtel', 'phone')">Save</button>
+                </div>
+                <div class="company-setting-row">
+                  <label>Name:</label>
+                  <input type="text" id="airtelNameInput" placeholder="BUSINESS" value="BUSINESS">
+                  <button onclick="saveCompanySetting('airtel', 'name')">Save</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- DPK PAY PAY SETTINGS -->
+            <div style="margin-bottom: 20px; margin-top: 30px; border-top: 2px solid #7d5ba6; padding-top: 20px;">
+              <h4 style="color: #7d5ba6; margin-bottom: 15px;">💳 DPK PAY PAY</h4>
+              <div class="company-setting-row">
+                <label>MTN Merchant:</label>
+                <input type="text" id="dpkMtnMerchantInput" placeholder="995053" value="995053">
+                <button onclick="saveCompanySetting('dpkMtn', 'merchant')">Save</button>
+              </div>
+              <div class="company-setting-row">
+                <label>MTN Name:</label>
+                <input type="text" id="dpkMtnNameInput" placeholder="NAMUHANGA VERONIC" value="NAMUHANGA VERONIC">
+                <button onclick="saveCompanySetting('dpkMtn', 'name')">Save</button>
+              </div>
+              <div class="company-setting-row">
+                <label>AIRTEL Merchant:</label>
+                <input type="text" id="dpkAirtelMerchantInput" placeholder="6874567" value="6874567">
+                <button onclick="saveCompanySetting('dpkAirtel', 'merchant')">Save</button>
+              </div>
+              <div class="company-setting-row">
+                <label>AIRTEL Name:</label>
+                <input type="text" id="dpkAirtelNameInput" placeholder="PAY TO PAY UGANDA LTD" value="PAY TO PAY UGANDA LTD">
+                <button onclick="saveCompanySetting('dpkAirtel', 'name')">Save</button>
+              </div>
+            </div>
+            
+            <div style="background: #e8f0e8; padding: 15px; border-radius: 15px; margin-top: 20px;">
+              <p style="color: #28a745; font-weight: 600;"><i class="fas fa-info-circle"></i> Changes take effect immediately</p>
+              <p style="color: #666; font-size: 0.9rem;">Screen 4 will display updated numbers and names. Detection will verify against these numbers.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- GIRARE ADMIN SECTION -->
+        <div id="adminGirareSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-dice"></i> Girare Wheel Control</h3>
+          
+          <!-- Access Settings -->
+          <div class="girare-admin-section">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">⚙️ Access Settings</h4>
+            <div class="segment-control">
+              <label style="width: 120px;">Minimum Level:</label>
+              <select id="girareMinLevel" style="flex: 1; padding: 8px; border: 2px solid #e0d0eb; border-radius: 20px;">
+                <option value="1">D1</option>
+                <option value="2" selected>D2</option>
+                <option value="3">D3</option>
+                <option value="4">D4</option>
+                <option value="5">D5</option>
+                <option value="6">D6</option>
+                <option value="7">D7</option>
+                <option value="8">D8</option>
+                <option value="9">D9</option>
+              </select>
+              <button onclick="saveGirareMinLevel()">Save</button>
+            </div>
+          </div>
+
+          <!-- Master Lock -->
+          <div class="master-lock-control">
+            <h4 style="color: #f44336; margin-bottom: 10px;">🔒 Master Wheel Lock</h4>
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+              <label style="display: flex; align-items: center; gap: 5px;">
+                <input type="radio" name="wheelLock" value="false" onclick="toggleMasterWheelLock(false)"> 🔓 Unlocked
+              </label>
+              <label style="display: flex; align-items: center; gap: 5px;">
+                <input type="radio" name="wheelLock" value="true" onclick="toggleMasterWheelLock(true)"> 🔒 Locked
+              </label>
+            </div>
+            
+            <!-- FIX 3: Message dropdown -->
+            <div style="margin-bottom: 15px;">
+              <label style="font-weight: 600; display: block; margin-bottom: 5px;">📋 Lock Message:</label>
+              <select id="girareLockMessageSelect" style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px; margin-bottom: 10px;" onchange="updateGirareLockMessageFromSelect()">
+                <option value="🎡 Coming Soon! Get ready to spin and win!">🎡 Coming Soon! Get ready to spin and win!</option>
+                <option value="🚀 Launching Soon! The wheel is being prepared.">🚀 Launching Soon! The wheel is being prepared.</option>
+                <option value="⚙️ Under Maintenance - Back in a few hours.">⚙️ Under Maintenance - Back in a few hours.</option>
+                <option value="🔧 System Upgrade - Better rewards coming!">🔧 System Upgrade - Better rewards coming!</option>
+                <option value="🎉 New Version Coming! Stay tuned.">🎉 New Version Coming! Stay tuned.</option>
+                <option value="custom">✏️ Custom Message...</option>
+              </select>
+              
+              <div id="girareCustomMessageContainer" style="display: none;">
+                <input type="text" id="girareCustomLockMessage" placeholder="Enter custom message..." style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px; margin-top: 5px;">
+              </div>
+            </div>
+            
+            <div style="margin-top: 10px;">
+              <label>Current Message:</label>
+              <input type="text" id="wheelLockMessage" value="Wheel under maintenance..." style="width: 100%; padding: 8px; margin-top: 5px; border: 2px solid #e0d0eb; border-radius: 20px;">
+              <button onclick="saveWheelLockMessage()" style="margin-top: 10px; background: #7d5ba6; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">Save Message</button>
+            </div>
+          </div>
+
+          <!-- Segment Controls -->
+          <div class="girare-admin-section">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">🎡 Wheel Segments (8)</h4>
+            <div id="girareSegmentsAdmin"></div>
+            <button onclick="saveAllGirareSegments()" style="background: #28a745; color: white; border: none; padding: 12px 25px; border-radius: 30px; margin-top: 15px; width: 100%; font-weight: 600;">SAVE ALL SEGMENTS</button>
+          </div>
+
+          <!-- Weekly Schedule -->
+          <div class="girare-admin-section">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">📅 Weekly Lock Schedule</h4>
+            <div style="margin-bottom: 10px;">
+              <label>Week 1 Locked Segments:</label>
+              <input type="text" id="week1Locks" placeholder="e.g., 1,3,5" style="width: 100%; padding: 8px; border: 2px solid #e0d0eb; border-radius: 20px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+              <label>Week 2 Locked Segments:</label>
+              <input type="text" id="week2Locks" placeholder="e.g., 2,4,6" style="width: 100%; padding: 8px; border: 2px solid #e0d0eb; border-radius: 20px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+              <label>Week 3 Locked Segments:</label>
+              <input type="text" id="week3Locks" placeholder="e.g., 7,8" style="width: 100%; padding: 8px; border: 2px solid #e0d0eb; border-radius: 20px; margin-top: 5px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+              <label>Week 4 Locked Segments:</label>
+              <input type="text" id="week4Locks" placeholder="e.g., 1,3,5,8" style="width: 100%; padding: 8px; border: 2px solid #e0d0eb; border-radius: 20px; margin-top: 5px;">
+            </div>
+            <button onclick="applyWeeklySchedule()" style="background: #ff9800; color: white; border: none; padding: 10px; border-radius: 20px; width: 100%; font-weight: 600;">APPLY WEEKLY SCHEDULE</button>
+          </div>
+          
+          <!-- Manual Spin Control -->
+          <div class="girare-admin-section">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">🎮 Manual Spin Adjustment</h4>
+            <div style="margin-bottom: 15px;">
+              <label>Search User by Phone:</label>
+              <div style="display: flex; gap: 5px; margin-top: 5px;">
+                <input type="text" id="spinUserSearch" placeholder="Enter phone number..." style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 30px;">
+                <button onclick="searchUserForSpinEdit()" style="background: #7d5ba6; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer;">Search</button>
+              </div>
+            </div>
+            <div id="spinUserResult" style="display: none; background: #f5edff; border-radius: 15px; padding: 15px; margin-bottom: 15px;">
+              <p><strong id="spinUserName">John Doe</strong> (<span id="spinUserPhone">0788123456</span>)</p>
+              <p>Current Spins: <strong id="spinUserCurrent">0</strong> | Expires: <span id="spinUserExpiry">Tonight</span></p>
+              <div style="display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap;">
+                <button onclick="adjustUserSpins(1)" style="background: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 20px; cursor: pointer;">+1</button>
+                <button onclick="adjustUserSpins(2)" style="background: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 20px; cursor: pointer;">+2</button>
+                <button onclick="adjustUserSpins(5)" style="background: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 20px; cursor: pointer;">+5</button>
+                <button onclick="adjustUserSpins(-1)" style="background: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 20px; cursor: pointer;">-1</button>
+                <button onclick="adjustUserSpins(-2)" style="background: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 20px; cursor: pointer;">-2</button>
+                <button onclick="resetUserSpins()" style="background: #ff9800; color: white; border: none; padding: 8px 12px; border-radius: 20px; cursor: pointer;">Reset to 0</button>
+              </div>
+              <div style="margin-top: 10px;">
+                <label>Custom Amount:</label>
+                <div style="display: flex; gap: 5px; margin-top: 5px;">
+                  <input type="number" id="customSpinAmount" placeholder="Enter number" style="flex: 1; padding: 8px; border: 2px solid #e0d0eb; border-radius: 20px;">
+                  <button onclick="setCustomUserSpins()" style="background: #7d5ba6; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">Set</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- STAKES ADMIN SECTION -->
+        <div id="adminStakesSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-trophy"></i> Stakes Control</h3>
+          
+          <!-- Master Lock -->
+          <div class="master-lock-control">
+            <h4 style="color: #f44336; margin-bottom: 10px;">🔒 Master Stakes Lock</h4>
+            <div style="display: flex; align-items: center; gap: 15px;">
+              <label style="display: flex; align-items: center; gap: 5px;">
+                <input type="radio" name="stakesLock" value="false" onclick="toggleMasterStakesLock(false)"> 🔓 Unlocked
+              </label>
+              <label style="display: flex; align-items: center; gap: 5px;">
+                <input type="radio" name="stakesLock" value="true" onclick="toggleMasterStakesLock(true)"> 🔒 Locked
+              </label>
+            </div>
+            <div style="margin-top: 10px;">
+              <label>Lock Message:</label>
+              <input type="text" id="stakesLockMessage" placeholder="Stakes launching June 1, 2026!" style="width: 100%; padding: 8px; margin-top: 5px; border: 2px solid #e0d0eb; border-radius: 20px;">
+              <button onclick="saveStakesLockMessage()" style="margin-top: 10px; background: #7d5ba6; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">Save Message</button>
+            </div>
+            <div style="margin-top: 15px;">
+              <label>Expected Launch Date:</label>
+              <input type="date" id="stakesLaunchDate" style="width: 100%; padding: 8px; border: 2px solid #e0d0eb; border-radius: 20px; margin-top: 5px;">
+            </div>
+          </div>
+          
+          <!-- Create New Investment Pool -->
+          <div class="girare-admin-section">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">➕ Create New Investment Pool</h4>
+            <div style="display: grid; gap: 10px;">
+              <input type="text" id="newPoolName" placeholder="Pool Name (e.g., Coffee Growth Fund)" style="padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px;">
+              <input type="text" id="newPoolDesc" placeholder="Description" style="padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px;">
+              <div style="display: flex; gap: 10px;">
+                <input type="number" id="newPoolMin" placeholder="Min Amount" style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px;">
+                <input type="number" id="newPoolMax" placeholder="Max Amount" style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px;">
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <input type="number" id="newPoolDuration" placeholder="Duration (days)" style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px;">
+                <input type="number" id="newPoolProfit" placeholder="Profit %" style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px;">
+              </div>
+              <input type="number" id="newPoolCapacity" placeholder="Total Capacity (UGX)" style="padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px;">
+              <button onclick="createInvestmentPool()" style="background: #28a745; color: white; border: none; padding: 12px; border-radius: 30px; font-weight: 600; cursor: pointer;">CREATE POOL</button>
+            </div>
+          </div>
+          
+          <!-- Existing Pools List -->
+          <div class="girare-admin-section">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">📊 Investment Pools</h4>
+            <div id="investmentPoolsList"></div>
+          </div>
+        </div>
+
+        <!-- SUPPORT SETTINGS SECTION -->
+        <div id="adminSupportSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-headset"></i> Support Settings</h3>
+          
+          <div class="admin-company-settings">
+            <div style="margin-bottom: 20px;">
+              <h4 style="color: #7d5ba6; margin-bottom: 15px;">📱 WhatsApp</h4>
+              <div class="company-setting-row">
+                <label>Link:</label>
+                <input type="text" id="whatsappLinkInput" placeholder="https://wa.me/256756673144" value="https://wa.me/256756673144">
+                <button onclick="saveSupportSetting('whatsapp', 'link')">Save</button>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <h4 style="color: #7d5ba6; margin-bottom: 15px;">📧 Email</h4>
+              <div class="company-setting-row">
+                <label>Address:</label>
+                <input type="email" id="emailAddressInput" placeholder="support@uic.ug" value="support@uic.ug">
+                <button onclick="saveSupportSetting('email', 'address')">Save</button>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <h4 style="color: #7d5ba6; margin-bottom: 15px;">📞 Phone</h4>
+              <div class="company-setting-row">
+                <label>Number:</label>
+                <input type="text" id="phoneNumberInput" placeholder="0756673144" value="0756673144">
+                <button onclick="saveSupportSetting('phone', 'number')">Save</button>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <h4 style="color: #7d5ba6; margin-bottom: 15px;">💬 Live Chat URL</h4>
+              <div class="company-setting-row">
+                <label>URL:</label>
+                <input type="text" id="livechatUrlInput" placeholder="https://t.me/uic_support" value="https://t.me/uic_support">
+                <button onclick="saveSupportSetting('livechat', 'url')">Save</button>
+              </div>
+            </div>
+            
+            <div style="background: #e8f0e8; padding: 15px; border-radius: 15px; margin-top: 20px;">
+              <p style="color: #28a745; font-weight: 600;"><i class="fas fa-info-circle"></i> Support contact settings are updated in real-time</p>
+              <p style="color: #666; font-size: 0.9rem;">Changes will immediately affect the WhatsApp, Email, Phone and Live Chat buttons on the Support page.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- WITHDRAWAL CONTROL SECTION -->
+        <div id="adminWithdrawalControlSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-lock"></i> Withdrawal Control Center</h3>
+          
+          <!-- Master Lock -->
+          <div class="master-lock-control">
+            <h4 style="color: #f44336; margin-bottom: 10px;">🔒 Master Withdrawal Lock</h4>
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+              <label style="display: flex; align-items: center; gap: 5px;">
+                <input type="radio" name="withdrawalLock" value="false" onclick="toggleMasterWithdrawalLock(false)"> 🔓 Unlocked
+              </label>
+              <label style="display: flex; align-items: center; gap: 5px;">
+                <input type="radio" name="withdrawalLock" value="true" onclick="toggleMasterWithdrawalLock(true)"> 🔒 Locked
+              </label>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+              <label>Lock Type:</label>
+              <select id="withdrawalLockType" style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px; margin-top: 5px;" onchange="updateWithdrawalLockType()">
+                <option value="manual">🔧 Manual Lock</option>
+                <option value="maintenance">⚙️ System Maintenance</option>
+                <option value="upgrade">🚀 Scheduled Upgrade</option>
+                <option value="emergency">⚠️ Emergency</option>
+                <option value="event">🎉 Special Event</option>
+              </select>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+              <label>Custom Message:</label>
+              <textarea id="withdrawalLockMessage" rows="4" style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 15px; margin-top: 5px;" placeholder="Enter reason for withdrawal lock...">We're upgrading our withdrawal system to serve you better! Expected completion: 2-3 hours. Thank you for your patience! 🚀</textarea>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+              <label>Expected Duration (optional):</label>
+              <input type="text" id="withdrawalLockDuration" placeholder="e.g., 2-3 hours, Tomorrow 8am" style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px; margin-top: 5px;">
+            </div>
+            
+            <div style="background: #e8f0e8; border-radius: 15px; padding: 15px; margin: 15px 0;">
+              <h4 style="color: #28a745; margin-bottom: 10px;">📋 Preview</h4>
+              <div id="withdrawalLockPreview" style="background: white; border-radius: 10px; padding: 15px;">
+                <div style="color: #b45f06; font-weight: 700; margin-bottom: 5px;">🔧 SYSTEM MAINTENANCE</div>
+                <div style="color: #666; margin-bottom: 5px;">We're upgrading our withdrawal system to serve you better! Expected completion: 2-3 hours. Thank you for your patience! 🚀</div>
+                <div style="color: #28a745; font-size: 0.9rem;">⏱️ Estimated: 2-3 hours</div>
+              </div>
+            </div>
+            
+            <button onclick="applyWithdrawalLock()" style="background: #28a745; color: white; border: none; padding: 12px; border-radius: 30px; width: 100%; font-weight: 600; cursor: pointer; margin-bottom: 10px;">APPLY LOCK</button>
+            <button onclick="clearWithdrawalLock()" style="background: #f0f0f0; border: none; padding: 12px; border-radius: 30px; width: 100%; font-weight: 600; cursor: pointer;">CLEAR LOCK</button>
+          </div>
+
+          <!-- Automatic Holiday Settings -->
+          <div class="girare-admin-section">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">🗓️ Automatic Holiday Locking</h4>
+            
+            <div style="margin-bottom: 15px;">
+              <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <input type="checkbox" id="enableUgandaHolidays" checked> 🇺🇬 Enable Uganda holiday locking
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <input type="checkbox" id="enableItalyHolidays" checked> 🇮🇹 Enable Italy holiday locking
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <input type="checkbox" id="enableInternationalDays" checked> 🌍 Enable International day locking
+              </label>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+              <label>Holiday Message Template:</label>
+              <textarea id="holidayMessageTemplate" rows="3" style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 15px; margin-top: 5px;">Today we celebrate {holidays}. Our offices are closed. Withdrawals resume tomorrow at 8am. Thank you for understanding! 💚</textarea>
+            </div>
+            
+            <button onclick="saveHolidaySettings()" style="background: #7d5ba6; color: white; border: none; padding: 12px; border-radius: 30px; width: 100%; font-weight: 600; cursor: pointer;">SAVE HOLIDAY SETTINGS</button>
+          </div>
+
+          <!-- Withdrawal Amounts Management -->
+          <div class="girare-admin-section">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">💰 Withdrawal Amounts</h4>
+            
+            <div id="withdrawalAmountsList" style="margin-bottom: 15px;">
+              <!-- Will be populated by JavaScript -->
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+              <input type="number" id="newWithdrawalAmount" placeholder="Enter amount" style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 20px;">
+              <button onclick="addWithdrawalAmount()" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer;">ADD</button>
+            </div>
+          </div>
+
+          <!-- Current Status -->
+          <div style="background: #f5edff; border-radius: 15px; padding: 15px; margin-top: 20px;">
+            <h4 style="color: #4a3b5e; margin-bottom: 10px;">📊 Current Status</h4>
+            <div id="withdrawalCurrentStatus">
+              <p>🔓 Withdrawals: <strong>Active</strong></p>
+              <p>🌍 Today's holidays: <span id="todaysHolidaysDisplay">None</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FIX 1: USER WITHDRAWAL LOCK SECTION (NEW) -->
+        <div id="adminUserWithdrawLockSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-user-lock"></i> User Withdrawal Control</h3>
+          
+          <div class="user-withdraw-control">
+            <div class="user-withdraw-search">
+              <input type="text" id="userWithdrawSearch" placeholder="Enter phone number...">
+              <button onclick="searchUserForWithdrawLock()"><i class="fas fa-search"></i> Search</button>
+            </div>
+            
+            <div id="userWithdrawCard" class="user-withdraw-card" style="display: none;">
+              <div class="user-withdraw-info">
+                <div>
+                  <span class="user-withdraw-phone" id="withdrawUserPhone">0756673144</span>
+                  <span class="user-withdraw-level" id="withdrawUserLevel">D9</span>
+                </div>
+                <span class="user-withdraw-status" id="withdrawUserStatus">Active</span>
+              </div>
+              <div style="margin-bottom: 10px; color: #666;">
+                <i class="fas fa-user"></i> <span id="withdrawUserName">Admin User</span>
+              </div>
+              <div class="user-withdraw-buttons">
+                <button class="user-withdraw-btn lock" onclick="lockUserWithdraw()" id="lockWithdrawBtn"><i class="fas fa-lock"></i> LOCK</button>
+                <button class="user-withdraw-btn unlock" onclick="unlockUserWithdraw()" id="unlockWithdrawBtn"><i class="fas fa-lock-open"></i> UNLOCK</button>
+              </div>
+            </div>
+            
+            <div class="locked-users-list">
+              <h4 style="margin-bottom: 15px; color: #4a3b5e;">🔒 Locked Users</h4>
+              <div id="lockedUsersContainer"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ANNOUNCEMENT SECTION (FIXED) -->
+        <div id="adminAnnouncementSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-bullhorn"></i> Announcement Control</h3>
+          
+          <div class="admin-company-settings">
+            <div style="margin-bottom: 20px; text-align: center;">
+              <div style="font-size: 2rem; margin-bottom: 10px;">📢</div>
+              <h4 style="color: #7d5ba6;">Manage Announcements (Max 3)</h4>
+            </div>
+
+            <!-- Announcement 1 -->
+            <div style="background: #f5edff; border-radius: 15px; padding: 15px; margin-bottom: 20px;">
+              <h4 style="color: #7d5ba6; margin-bottom: 10px;">📢 Announcement #1</h4>
+              <div style="margin-bottom: 10px;">
+                <label style="display: flex; align-items: center; gap: 10px;">
+                  <input type="checkbox" id="announcement1Active"> Active
+                </label>
+              </div>
+              <div class="company-setting-row">
+                <label>Title:</label>
+                <input type="text" id="announcement1Title" placeholder="🎉 SPECIAL PROMOTION!" style="flex: 1;">
+              </div>
+              <div style="margin: 10px 0;">
+                <label>Message:</label>
+                <textarea id="announcement1Message" rows="3" style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 15px;" placeholder="Enter announcement message..."></textarea>
+              </div>
+              <div class="company-setting-row">
+                <label>Color:</label>
+                <select id="announcement1Color" style="flex: 1; padding: 8px; border: 2px solid #e0d0eb; border-radius: 20px;">
+                  <option value="purple">💜 Purple</option>
+                  <option value="green">💚 Green</option>
+                  <option value="blue">💙 Blue</option>
+                  <option value="orange">🧡 Orange</option>
+                  <option value="red">❤️ Red</option>
+                  <option value="yellow">💛 Yellow</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Announcement 2 -->
+            <div style="background: #f5edff; border-radius: 15px; padding: 15px; margin-bottom: 20px;">
+              <h4 style="color: #7d5ba6; margin-bottom: 10px;">📢 Announcement #2</h4>
+              <div style="margin-bottom: 10px;">
+                <label style="display: flex; align-items: center; gap: 10px;">
+                  <input type="checkbox" id="announcement2Active"> Active
+                </label>
+              </div>
+              <div class="company-setting-row">
+                <label>Title:</label>
+                <input type="text" id="announcement2Title" placeholder="⚠️ MAINTENANCE NOTICE" style="flex: 1;">
+              </div>
+              <div style="margin: 10px 0;">
+                <label>Message:</label>
+                <textarea id="announcement2Message" rows="3" style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 15px;" placeholder="Enter announcement message..."></textarea>
+              </div>
+              <div class="company-setting-row">
+                <label>Color:</label>
+                <select id="announcement2Color" style="flex: 1; padding: 8px; border: 2px solid #e0d0eb; border-radius: 20px;">
+                  <option value="purple">💜 Purple</option>
+                  <option value="green">💚 Green</option>
+                  <option value="blue">💙 Blue</option>
+                  <option value="orange">🧡 Orange</option>
+                  <option value="red">❤️ Red</option>
+                  <option value="yellow">💛 Yellow</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Announcement 3 -->
+            <div style="background: #f5edff; border-radius: 15px; padding: 15px; margin-bottom: 20px;">
+              <h4 style="color: #7d5ba6; margin-bottom: 10px;">📢 Announcement #3</h4>
+              <div style="margin-bottom: 10px;">
+                <label style="display: flex; align-items: center; gap: 10px;">
+                  <input type="checkbox" id="announcement3Active"> Active
+                </label>
+              </div>
+              <div class="company-setting-row">
+                <label>Title:</label>
+                <input type="text" id="announcement3Title" placeholder="🏆 WEEKLY WINNER" style="flex: 1;">
+              </div>
+              <div style="margin: 10px 0;">
+                <label>Message:</label>
+                <textarea id="announcement3Message" rows="3" style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 15px;" placeholder="Enter announcement message..."></textarea>
+              </div>
+              <div class="company-setting-row">
+                <label>Color:</label>
+                <select id="announcement3Color" style="flex: 1; padding: 8px; border: 2px solid #e0d0eb; border-radius: 20px;">
+                  <option value="purple">💜 Purple</option>
+                  <option value="green">💚 Green</option>
+                  <option value="blue">💙 Blue</option>
+                  <option value="orange">🧡 Orange</option>
+                  <option value="red">❤️ Red</option>
+                  <option value="yellow">💛 Yellow</option>
+                </select>
+              </div>
+            </div>
+            
+            <div style="background: #e8f0e8; padding: 15px; border-radius: 15px; margin-top: 20px;">
+              <p style="color: #28a745; font-weight: 600;"><i class="fas fa-info-circle"></i> When active, users see announcements on EVERY home page visit. Dismissal is temporary.</p>
+            </div>
+            
+            <button onclick="saveAllAnnouncements()" style="background: #28a745; color: white; border: none; padding: 15px; border-radius: 30px; width: 100%; font-size: 1.2rem; font-weight: 600; margin-top: 20px; cursor: pointer;">
+              <i class="fas fa-save"></i> SAVE ALL ANNOUNCEMENTS
+            </button>
+          </div>
+        </div>
+
+        <!-- LEVEL LOCK SECTION -->
+        <div id="adminLevelLockSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-ban"></i> Level Lock Control</h3>
+          
+          <div class="level-lock-control">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">🔒 Lock/Unlock Levels</h4>
+            <p style="color: #666; margin-bottom: 15px;">When locked, users see the level normally but get "Prossimamente" message when trying to join.</p>
+            
+            <div id="levelLockList"></div>
+            
+            <div class="level-lock-info">
+              <i class="fas fa-info-circle"></i> Locked levels appear normal to users. They only see "Prossimamente" when clicking "Click to join".
+            </div>
+            
+            <button onclick="saveAllLevelLocks()" style="background: #28a745; color: white; border: none; padding: 12px; border-radius: 30px; width: 100%; font-weight: 600; margin-top: 15px; cursor: pointer;">
+              <i class="fas fa-save"></i> SAVE ALL LEVEL LOCKS
+            </button>
+          </div>
+        </div>
+
+        <!-- FIX 3: MXL PASSWORD SECTION -->
+        <div id="adminMxlSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-key"></i> MXL Password Control</h3>
+          
+          <div class="admin-company-settings">
+            <div style="margin-bottom: 20px; text-align: center;">
+              <div style="font-size: 2rem; margin-bottom: 10px;">🔐</div>
+              <h4 style="color: #7d5ba6;">Change Admin Password</h4>
+            </div>
+
+            <div style="background: #f5edff; border-radius: 20px; padding: 20px; margin-bottom: 20px;">
+              <p><strong>Current Password:</strong> <span id="currentMxlDisplay">••••••••</span></p>
+              <p><small>Default: admin123</small></p>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <div class="company-setting-row" style="flex-wrap: wrap;">
+                <label style="width: 120px;">New Password:</label>
+                <input type="password" id="newMxlPassword" placeholder="Enter new password" style="flex: 1;">
+              </div>
+              
+              <div class="company-setting-row" style="flex-wrap: wrap;">
+                <label style="width: 120px;">Confirm Password:</label>
+                <input type="password" id="confirmMxlPassword" placeholder="Confirm new password" style="flex: 1;">
+              </div>
+              
+              <div style="margin-top: 20px;">
+                <button onclick="changeMxlPassword()" style="background: #28a745; color: white; border: none; padding: 12px 25px; border-radius: 30px; width: 100%; font-weight: 600; cursor: pointer;">
+                  <i class="fas fa-save"></i> CHANGE PASSWORD
+                </button>
+              </div>
+            </div>
+            
+            <div style="background: #e8f0e8; padding: 15px; border-radius: 15px; margin-top: 20px;">
+              <p style="color: #28a745; font-weight: 600;"><i class="fas fa-info-circle"></i> Access Info</p>
+              <p style="color: #666; font-size: 0.9rem;">Click the crown 15 times within 10 seconds to open admin login modal.</p>
+              <p style="color: #666; font-size: 0.9rem;">Default password: admin123</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FIX 6: TESTIMONIANZA GALLERY SECTION -->
+        <div id="adminTestimonianzaSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-images"></i> Testimonianza Gallery</h3>
+          
+          <div class="admin-company-settings">
+            <div style="margin-bottom: 20px; text-align: center;">
+              <div style="font-size: 2rem; margin-bottom: 10px;">📸</div>
+              <h4 style="color: #7d5ba6;">Upload Testimonial Photos</h4>
+              <p style="color: #666;">Photos appear on home dashboard between Company Profile and Live Activity</p>
+            </div>
+
+            <!-- Upload Area -->
+            <div style="background: #f5edff; border-radius: 20px; padding: 30px 20px; margin-bottom: 20px; text-align: center; border: 2px dashed #7d5ba6;">
+              <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #7d5ba6; margin-bottom: 15px;"></i>
+              <h4 style="color: #4a3b5e; margin-bottom: 10px;">Drag & Drop or Click to Upload</h4>
+              <p style="color: #666; margin-bottom: 20px;">PNG, JPG up to 5MB</p>
+              <input type="file" id="testimonianzaUpload" accept="image/*" style="display: none;" onchange="handleTestimonianzaUpload(this)">
+              <button onclick="document.getElementById('testimonianzaUpload').click()" style="background: #7d5ba6; color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 600; cursor: pointer;">
+                <i class="fas fa-upload"></i> SELECT PHOTO
+              </button>
+            </div>
+
+            <!-- Current Gallery -->
+            <div style="margin-bottom: 20px;">
+              <h4 style="color: #7d5ba6; margin-bottom: 15px;">Current Testimonials</h4>
+              <div id="testimonianzaAdminList" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                <!-- Will be populated by JavaScript -->
+              </div>
+            </div>
+
+            <!-- Preview on Home -->
+            <div style="background: #e8f0e8; border-radius: 15px; padding: 15px; margin-top: 20px;">
+              <p style="color: #28a745; font-weight: 600;"><i class="fas fa-eye"></i> Preview on Home Page</p>
+              <div style="background: white; border-radius: 10px; padding: 15px; margin-top: 10px;">
+                <div style="font-weight: 600; color: #4a3b5e; margin-bottom: 10px;">📸 TESTIMONIANZA</div>
+                <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;" id="testimonianzaPreview">
+                  <!-- Preview will show here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FIX 1: WEBSITE LOCK SECTION (NEW) -->
+        <div id="adminWebsiteLockSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-globe"></i> Website Lock Control</h3>
+          
+          <div class="admin-company-settings">
+            <div style="margin-bottom: 20px; text-align: center;">
+              <div style="font-size: 2rem; margin-bottom: 10px;">🔒</div>
+              <h4 style="color: #7d5ba6;">Current Website Status</h4>
+              
+              <div style="display: flex; justify-content: center; gap: 30px; margin: 20px 0;">
+                <label style="display: flex; align-items: center; gap: 10px; font-size: 1.2rem; cursor: pointer;">
+                  <input type="radio" name="websiteLockStatus" value="active" onchange="toggleWebsiteLock(true)"> 🔴 LOCKED
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; font-size: 1.2rem; cursor: pointer;">
+                  <input type="radio" name="websiteLockStatus" value="inactive" onchange="toggleWebsiteLock(false)" checked> 🟢 OPEN
+                </label>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <h4 style="color: #7d5ba6; margin-bottom: 15px;">Lock Message Settings</h4>
+              
+              <div class="company-setting-row">
+                <label>Title:</label>
+                <input type="text" id="websiteLockTitle" placeholder="🔒 SYSTEM UPDATE" style="flex: 1;">
+              </div>
+              
+              <div class="company-setting-row">
+                <label>Icon:</label>
+                <select id="websiteLockIcon" style="flex: 1; padding: 8px; border: 2px solid #e0d0eb; border-radius: 20px;">
+                  <option value="💰">💰 Financial Day</option>
+                  <option value="📅">📅 Holiday</option>
+                  <option value="⚙️">⚙️ Maintenance</option>
+                  <option value="🎉">🎉 Special Event</option>
+                  <option value="🔧">🔧 Upgrade</option>
+                  <option value="🌙">🌙 Night Mode</option>
+                </select>
+              </div>
+              
+              <div style="margin: 15px 0;">
+                <label>Message:</label>
+                <textarea id="websiteLockMessage" rows="4" style="width: 100%; padding: 10px; border: 2px solid #e0d0eb; border-radius: 15px; margin-top: 5px;" placeholder="Enter your lock message...">Today is Financial Day! System maintenance in progress. Please check back tomorrow. Thank you for your patience! 💚</textarea>
+              </div>
+              
+              <div style="margin: 15px 0;">
+                <label style="display: flex; align-items: center; gap: 10px;">
+                  <input type="checkbox" id="websiteLockAllowLogout" checked> Allow users to logout
+                </label>
+              </div>
+            </div>
+
+            <div style="background: #e8f0e8; padding: 15px; border-radius: 15px; margin-top: 20px;">
+              <h4 style="color: #28a745; margin-bottom: 10px;">📋 Sweet Message Templates</h4>
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                <button class="edit-btn" onclick="setWebsiteLockTemplate('financial')" style="padding: 10px;">💰 Financial Day</button>
+                <button class="edit-btn" onclick="setWebsiteLockTemplate('holiday')" style="padding: 10px;">📅 Holiday</button>
+                <button class="edit-btn" onclick="setWebsiteLockTemplate('maintenance')" style="padding: 10px;">⚙️ Maintenance</button>
+                <button class="edit-btn" onclick="setWebsiteLockTemplate('event')" style="padding: 10px;">🎉 Special Event</button>
+                <button class="edit-btn" onclick="setWebsiteLockTemplate('upgrade')" style="padding: 10px;">🔧 Upgrade</button>
+                <button class="edit-btn" onclick="setWebsiteLockTemplate('night')" style="padding: 10px;">🌙 Night Mode</button>
+              </div>
+            </div>
+
+            <div style="background: #f5edff; border-radius: 15px; padding: 15px; margin: 20px 0;">
+              <h4 style="color: #4a3b5e; margin-bottom: 10px;">🔍 Preview</h4>
+              <div style="background: linear-gradient(135deg, #7d5ba6, #b8a3d9); border-radius: 15px; padding: 20px; color: white; text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 10px;" id="previewLockIcon">💰</div>
+                <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 10px;" id="previewLockTitle">🔒 SYSTEM UPDATE</div>
+                <div style="font-size: 1rem; margin-bottom: 15px;" id="previewLockMessage">Today is Financial Day! System maintenance in progress. Please check back tomorrow. Thank you for your patience! 💚</div>
+                <div style="background: white; color: #7d5ba6; padding: 10px; border-radius: 30px; width: 100%;">LOGOUT</div>
+              </div>
+            </div>
+
+            <button onclick="saveWebsiteLockSettings()" style="background: #28a745; color: white; border: none; padding: 15px; border-radius: 30px; width: 100%; font-size: 1.2rem; font-weight: 600; margin-top: 20px; cursor: pointer;">
+              <i class="fas fa-save"></i> SAVE LOCK SETTINGS
+            </button>
+          </div>
+        </div>
+
+        <!-- FIX 2: REFERRAL VIEWER SECTION (NEW) -->
+        <div id="adminReferralViewerSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-chart-pie"></i> Referral Network Viewer</h3>
+          
+          <div class="admin-company-settings">
+            <!-- Search Bar -->
+            <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+              <input type="text" id="referralViewerSearch" placeholder="Search by phone or name..." style="flex: 1; padding: 12px; border: 2px solid #e0d0eb; border-radius: 30px;">
+              <button onclick="searchReferralViewer()" style="background: #7d5ba6; color: white; border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer;">🔍</button>
+              <button onclick="loadTopReferrers()" style="background: #28a745; color: white; border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer;">TOP</button>
+            </div>
+
+            <!-- Leaderboards -->
+            <div class="referral-leaderboard">
+              <div class="leaderboard-column">
+                <div class="leaderboard-title a-level">🔴 A-LEVEL</div>
+                <div id="aLeaderboard"></div>
+              </div>
+              <div class="leaderboard-column">
+                <div class="leaderboard-title b-level">🔵 B-LEVEL</div>
+                <div id="bLeaderboard"></div>
+              </div>
+              <div class="leaderboard-column">
+                <div class="leaderboard-title c-level">🟢 C-LEVEL</div>
+                <div id="cLeaderboard"></div>
+              </div>
+            </div>
+
+            <!-- Drill Down View -->
+            <div id="referralDrillDown" class="referral-drilldown" style="display: none;">
+              <div class="drilldown-header">
+                <span class="drilldown-title" id="drilldownTitle">A-Level Referrals</span>
+                <button class="drilldown-back" onclick="closeDrillDown()">← Back</button>
+              </div>
+              <div class="drilldown-list" id="drilldownList"></div>
+              <div class="pagination" id="drilldownPagination"></div>
+              <button class="export-btn" onclick="exportDrilldownList()">📋 Export List</button>
+            </div>
+
+            <!-- Search Results -->
+            <div id="referralSearchResults" class="referral-drilldown" style="display: none;">
+              <div class="drilldown-header">
+                <span class="drilldown-title">Search Results</span>
+                <button class="drilldown-back" onclick="closeSearchResults()">← Back</button>
+              </div>
+              <div class="drilldown-list" id="searchResultsList"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FIX 1: NEW DEPOSIT SETTINGS SECTION -->
+        <div id="adminDepositSettingsSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-coins"></i> Deposit Settings</h3>
+          
+          <div class="deposit-settings-container">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">💰 Minimum Deposit Amount</h4>
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 30px;">
+              <input type="number" id="minDepositAmount" placeholder="Enter minimum amount" style="flex: 1; padding: 12px; border: 2px solid #e0d0eb; border-radius: 20px;" value="10000">
+              <button onclick="saveMinDepositAmount()" style="background: #28a745; color: white; border: none; padding: 12px 25px; border-radius: 20px; cursor: pointer;">SAVE</button>
+            </div>
+          </div>
+
+          <div class="deposit-settings-container">
+            <h4 style="color: #7d5ba6; margin-bottom: 15px;">🎯 Deposit Amount Presets</h4>
+            <div id="depositPresetsList"></div>
+            
+            <div class="add-preset-row">
+              <input type="number" id="newPresetAmount" placeholder="Enter new preset amount">
+              <button onclick="addDepositPreset()">ADD PRESET</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FIX 2: QTPI PAY SETTINGS SECTION -->
+        <div id="adminQtpiPaySection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-credit-card"></i> QTPI PAY Control</h3>
+          
+          <div class="qtpi-settings-container">
+            <h4 style="color: #9c27b0; margin-bottom: 15px;">🔒 QTPI PAY Lock/Unlock</h4>
+            
+            <div style="display: flex; align-items: center; gap: 30px; margin-bottom: 20px;">
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 1.1rem;">
+                <input type="radio" name="qtpiLock" value="false" onchange="toggleQtpiLock(false)" checked> 🔓 UNLOCKED
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 1.1rem;">
+                <input type="radio" name="qtpiLock" value="true" onchange="toggleQtpiLock(true)"> 🔒 LOCKED
+              </label>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <label style="font-weight: 600; display: block; margin-bottom: 5px;">📋 Lock Message:</label>
+              <input type="text" id="qtpiLockMessage" placeholder="Enter message when locked..." style="width: 100%; padding: 12px; border: 2px solid #e0d0eb; border-radius: 20px;" value="🔒 QTPI PAY is coming soon! Please use other methods.">
+            </div>
+            
+            <button onclick="saveQtpiSettings()" style="background: #9c27b0; color: white; border: none; padding: 12px; border-radius: 30px; width: 100%; font-weight: 600; cursor: pointer;">
+              <i class="fas fa-save"></i> SAVE QTPI PAY SETTINGS
+            </button>
+          </div>
+        </div>
+
+        <!-- FIX 2: SUPPORT TICKETS ADMIN SECTION -->
+        <div id="adminTicketsSection" class="admin-section">
+          <h3 style="margin-bottom: 20px;"><i class="fas fa-ticket-alt"></i> Support Tickets Management</h3>
+          
+          <div style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <div style="display: flex; gap: 5px; background: #f0f0f0; padding: 5px; border-radius: 30px;">
+              <button class="filter-tab active" onclick="filterAdminTickets('all')" id="filter-ticket-all">ALL</button>
+              <button class="filter-tab" onclick="filterAdminTickets('open')" id="filter-ticket-open">🟢 OPEN</button>
+              <button class="filter-tab" onclick="filterAdminTickets('replied')" id="filter-ticket-replied">💬 REPLIED</button>
+              <button class="filter-tab" onclick="filterAdminTickets('closed')" id="filter-ticket-closed">🔒 CLOSED</button>
+            </div>
+            <input type="text" id="ticketSearchInput" placeholder="Search by user or subject..." style="flex: 1; padding: 10px; border: 2px solid #e0d0eb; border-radius: 30px;">
+            <button onclick="searchTickets()" style="background: #7d5ba6; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer;">Search</button>
+          </div>
+          
+          <div id="adminTicketsList" style="display: flex; flex-direction: column; gap: 15px;">
+            <!-- Tickets will be loaded here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- NEW ANNOUNCEMENT MODAL (FIXED) -->
   <div id="announcementModal" class="announcement-modal">
